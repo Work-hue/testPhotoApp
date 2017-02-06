@@ -1,0 +1,106 @@
+Task 1.1
+
+P(SYSTEM) = 0.518428
+P(ADVISORY) = 0.397508
+P(WARNING) = 0.058442
+P(CRISIS) = 0.025623
+
+P(LOW_OXY_SAT) = 0.421902
+P(APP_ERR) = 0.330467
+P(NW_ERR) = 0.150755
+
+
+Task 1.2
+
+P(Bed 921 Choose System) = 0.538462
+P(Bed 921 Choose Warning) = 0.076923
+P(Bed 921 Choose Crisis) = 0.096154
+P(Bed 921 Choose Advisory) = 0.288462
+
+P(Bed 923 Choose System) = 0.549745
+P(Bed 923 Choose Warning) = 0.098214
+P(Bed 923 Choose Crisis) = 0.019133
+P(Bed 923 Choose Advisory) = 0.332908
+
+P(Bed 940 Choose System) = 0.460627
+P(Bed 940 Choose Warning) = 0.022936
+P(Bed 940 Choose Crisis) = 0.021789
+P(Bed 940 Choose Advisory) = 0.494648
+
+P(Bed 942 Choose System) = 0.517073
+P(Bed 942 Choose Warning) = 0.043902
+P(Bed 942 Choose Crisis) = 0.014634
+P(Bed 942 Choose Advisory) = 0.424390
+
+P(Bed 943 Choose System) = 0.679144
+P(Bed 943 Choose Warning) = 0.037433
+P(Bed 943 Choose Crisis) = 0.021390
+P(Bed 943 Choose Advisory) = 0.262032
+
+P(Bed 944 Choose System) = 0.472000
+P(Bed 944 Choose Warning) = 0.224000
+P(Bed 944 Choose Crisis) = 0.056000
+P(Bed 944 Choose Advisory) = 0.248000
+
+P(Bed 946 Choose System) = 0.627273
+P(Bed 946 Choose Warning) = 0.036364
+P(Bed 946 Choose Crisis) = 0.009091
+P(Bed 946 Choose Advisory) = 0.327273
+
+P(Bed 947 Choose System) = 0.612371
+P(Bed 947 Choose Warning) = 0.022680
+P(Bed 947 Choose Crisis) = 0.022680
+P(Bed 947 Choose Advisory) = 0.342268
+
+P(Bed 952 Choose System) = 0.553571
+P(Bed 952 Choose Warning) = 0.058036
+P(Bed 952 Choose Crisis) = 0.040179
+P(Bed 952 Choose Advisory) = 0.348214
+
+P(Bed 953 Choose System) = 0.484487
+P(Bed 953 Choose Warning) = 0.164678
+P(Bed 953 Choose Crisis) = 0.040573
+P(Bed 953 Choose Advisory) = 0.310263
+
+P(Bed 955 Choose System) = 0.538462
+P(Bed 955 Choose Warning) = 0.153846
+P(Bed 955 Choose Crisis) = 0.000000
+P(Bed 955 Choose Advisory) = 0.307692
+
+P(Bed 956 Choose System) = 0.677215
+P(Bed 956 Choose Warning) = 0.082278
+P(Bed 956 Choose Crisis) = 0.037975
+P(Bed 956 Choose Advisory) = 0.202532
+
+P(Bed NaN Choose System) = NaN
+P(Bed NaN Choose Warning) = NaN
+P(Bed NaN Choose Crisis) = NaN
+P(Bed NaN Choose Advisory) = NaN
+
+
+Task 1.3
+
+Hour: 0		 Number of Alarms: 26
+Hour: 1		 Number of Alarms: 153
+Hour: 2		 Number of Alarms: 6
+Hour: 3		 Number of Alarms: 14
+Hour: 4		 Number of Alarms: 33
+Hour: 5		 Number of Alarms: 556
+Hour: 6		 Number of Alarms: 129
+Hour: 7		 Number of Alarms: 303
+Hour: 8		 Number of Alarms: 69
+Hour: 9		 Number of Alarms: 214
+Hour: 10	 Number of Alarms: 585
+Hour: 11	 Number of Alarms: 302
+Hour: 12	 Number of Alarms: 7
+Hour: 13	 Number of Alarms: 496
+Hour: 14	 Number of Alarms: 407
+Hour: 15	 Number of Alarms: 148
+Hour: 16	 Number of Alarms: 606
+Hour: 17	 Number of Alarms: 145
+Hour: 18	 Number of Alarms: 437
+Hour: 19	 Number of Alarms: 200
+Hour: 20	 Number of Alarms: 106
+Hour: 21	 Number of Alarms: 429
+Hour: 22	 Number of Alarms: 1
+Hour: 23	 Number of Alarms: 326
