@@ -26,7 +26,7 @@ data.StopTime = strrep(data.StopTime, '''', '');
 % open the result file
 % !! replace # with your own groupID
 
-fid = fopen('ECE313_Mini1_group659353980', 'w');
+fid = fopen('ECE313_Mini1_group20', 'w');
 
 % T1.1
 % !! subset your data for each alarm_type
