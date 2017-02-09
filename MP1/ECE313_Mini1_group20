@@ -166,3 +166,9 @@ Hour: 20		 Average Duration For Alarms: 5.926887 seconds
 Hour: 21		 Average Duration For Alarms: 7.443839 seconds
 Hour: 22		 Average Duration For Alarms: 3.985000 seconds
 Hour: 23		 Average Duration For Alarms: 0.809908 seconds
+
+
+Task3
+
+Metric: (number of CRISIS alarm *2 + number of WARNING alarm)
+The top two patient beds in a serious condition are No.940 and No.923

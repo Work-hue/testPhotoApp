@@ -163,8 +163,8 @@ for i=1:4,
     % !! subset your data
     % !! do the counts to derive your answers
     data_SYSTEM_CAUSE = data_SYSTEM(ismember(data_SYSTEM.Cause, causeSYSTEM(i)), :);
-    fprintf('%d\n',i);
-    fprintf('%f\n',height(data_SYSTEM_CAUSE)/height(data_SYSTEM));
+    %fprintf('%d\n',i);
+    %fprintf('%f\n',height(data_SYSTEM_CAUSE)/height(data_SYSTEM));
     fprintf(fid, 'P(%s) = %f\n', cell2mat(causeSYSTEM(i)), height(data_SYSTEM_CAUSE)/height(data_SYSTEM));
 end
 
@@ -256,19 +256,42 @@ title('Average Duration For Each Hour of the Day');
 xlabel('Hour');
 ylabel('Average Duration (in Seconds)');
 
-%%
-%{
 % START OF TASK 3
 
 % T3.
 fprintf(fid, '\n\nTask3\n\n');
 % !! Define the metric that identifies patients in a severe situation
+%fprintf(fid, '(Number of CRISIS alarm *2 + Number of CRISIS alarm) on average per hour');
+fprintf(fid, 'Metric: (number of CRISIS alarm *2 + number of WARNING alarm)\n');
 
 % !! Using your metric, find the top two patient beds in a severe situation
+beds = [921,923,940,942,943,944,946,947,952,953,955,956];
+metric = zeros(1,12);
+for i = 1:12
+    data_BED = data(ismember(data.Bed_No, beds(1,i)), :);
+    %printf('%d ', height(data_BED));
+    data_BED_CRISIS = data_BED(ismember(data_BED.Alarm_Type, 'CRISIS'), :);
+    %fprintf('%d ', height(data_BED_CRISIS));
+    data_BED_WARNING = data_BED(ismember(data_BED.Alarm_Type, 'WARNING'), :);
+    %fprintf('%d ', height(data_BED_WARNING));
+    %fprintf('%d \n', height(data_BED_CRISIS)*2 + height(data_BED_WARNING));
+    metric(1,i) = height(data_BED_CRISIS)*2 + height(data_BED_WARNING);
+end
+
+[first, idx1] = max(metric);
+%fprintf('%d',metric(idx1));
+metric2 = metric;
+metric2(idx1) = 0;
+[second, idx2] = max(metric2);
+%fprintf('%d',metric2(idx2));
+
+fprintf(fid, 'The top two patient beds in a serious condition are No.%d and No.%d', beds(1,idx1),beds(1,idx2));
 
 % !! Extract (split) the data of your interest
+data1 = data(ismember(data.Bed_No, beds(1,idx1)), :);
+data2 = data(ismember(data.Bed_No, beds(1,idx2)), :);
 
 % !! Write your own code for analysis (ref. codes for Task1 and Task2)
 
+
 fclose(fid);
-%}
