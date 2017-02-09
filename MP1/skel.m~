@@ -262,7 +262,7 @@ ylabel('Average Duration (in Seconds)');
 fprintf(fid, '\n\nTask3\n\n');
 % !! Define the metric that identifies patients in a severe situation
 %fprintf(fid, '(Number of CRISIS alarm *2 + Number of CRISIS alarm) on average per hour');
-fprintf(fid, 'Metric:\n value = total duration of CRISIS alarm * 1000\n + total duration of WARNING alarm * 100\n + total duration of SYSTEM alarm * 0\n + total duration of ADVISORY alarm * 0\n\n');
+fprintf(fid, 'Metric:\n value = total duration of CRISIS alarm * 4\n + total duration of WARNING alarm * 3\n + total duration of SYSTEM alarm * 2\n + total duration of ADVISORY alarm * 1\n\n');
 
 % !! Using your metric, find the top two patient beds in a severe situation
 beds = [921,923,940,942,943,944,946,947,952,953,955,956];
@@ -275,9 +275,7 @@ for i = 1:12
     data_BED_WARNING = data_BED(ismember(data_BED.Alarm_Type, 'WARNING'), :);
     %fprintf('%d ', height(data_BED_WARNING));
     %fprintf('%d \n', height(data_BED_CRISIS)*2 + height(data_BED_WARNING));
-    data_BED_SYSTEM = data_BED(ismember(data_BED.Alarm_Type, 'SYSTEM'), :);
-    data_BED_ADVISORY = data_BED(ismember(data_BED.Alarm_Type, 'ADVISORY'), :);
-    metric(1,i) = 1000*sum(data_BED_CRISIS.Duration) + 100*sum(data_BED_WARNING.Duration) + 0*sum(data_BED_SYSTEM.Duration) + 0*sum(data_BED_ADVISORY.Duration);
+    metric(1,i) = height(data_BED_CRISIS)*2 + height(data_BED_WARNING);
 end
 
 [first, idx1] = max(metric);
