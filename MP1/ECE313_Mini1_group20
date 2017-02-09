@@ -117,3 +117,11 @@ P(NW_ERR) = 0.290792
 
 Task 2.1b
 
+P(SYSTEM | APP_ERR) = 1.000000
+P(APP_ERR | SYSTEM) = 0.637441
+
+P(SYSTEM | APP_ERR) and P(APP_ERR | SYSTEM) are different.
+Given it is an APP_ERR, it must be a SYSTEM warning,
+because APP_ERR is a subset of SYSTEM warning.
+However given it is a SYSTEM warning, it is not necessarily an APP_ERR,
+because it could also be SIG_ARTIFACT, LEADS_FAILURE, or NW_ERR.
