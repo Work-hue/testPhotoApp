@@ -270,6 +270,13 @@ fprintf(fid, 'Metric:\n value = total duration of CRISIS alarm * 1000\n + total 
 
 % !! Using your metric, find the top two patient beds in a severe situation
 beds = [921,923,940,942,943,944,946,947,952,953,955,956];
+
+count = zeros(12,5);
+for i = 1:12
+    count(i,1) = beds(i);
+end
+
+
 metric = zeros(1,12);
 for i = 1:12
     data_BED = data(ismember(data.Bed_No, beds(1,i)), :);
