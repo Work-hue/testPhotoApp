@@ -104,3 +104,16 @@ Hour: 20	 Number of Alarms: 106
 Hour: 21	 Number of Alarms: 429
 Hour: 22	 Number of Alarms: 1
 Hour: 23	 Number of Alarms: 326
+
+
+Task 2.1a
+
+Probability of causes for SYSTEM alarms
+P(APP_ERR) = 0.637441
+P(SIG_ARTIFACT) = 0.030129
+P(LEADS_FAILURE) = 0.041638
+P(NW_ERR) = 0.290792
+
+
+Task 2.1b
+

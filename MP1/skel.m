@@ -157,15 +157,21 @@ ylabel('Number of Alarms');
 causeSYSTEM = {'APP_ERR', 'SIG_ARTIFACT', 'LEADS_FAILURE', 'NW_ERR'};
 
 
-fprintf(fid, '\n\nTask 2.1\n\n');
-
+fprintf(fid, '\n\nTask 2.1a\n\n');
 fprintf(fid, 'Probability of causes for SYSTEM alarms\n');
 for i=1:4,
     % !! subset your data
     % !! do the counts to derive your answers
-    fprintf(fid, 'P(%s) = %f\n', cell2mat(causeSYSTEM(i)), "PROBABILITY FOR CAUSE(i) and SYSTEM");
+    data_SYSTEM_CAUSE = data_SYSTEM(ismember(data_SYSTEM.Cause, causeSYSTEM(i)), :);
+    fprintf('%d\n',i);
+    fprintf('%f\n',height(data_SYSTEM_CAUSE)/height(data_SYSTEM));
+    fprintf(fid, 'P(%s) = %f\n', cell2mat(causeSYSTEM(i)), height(data_SYSTEM_CAUSE)/height(data_SYSTEM));
 end
 
+fprintf(fid, '\n\nTask 2.1b\n\n');
+data_SYSTEM_CAUSE
+
+%{
 % T2.2
 
 % !! Using the results from Task 2.1, derive the probability
@@ -228,3 +234,4 @@ fprintf(fid, '\n\nTask3\n\n');
 % !! Write your own code for analysis (ref. codes for Task1 and Task2)
 
 fclose(fid);
+%}
