@@ -264,6 +264,10 @@ fprintf(fid, '\n\nTask3\n\n');
 %fprintf(fid, '(Number of CRISIS alarm *2 + Number of CRISIS alarm) on average per hour');
 fprintf(fid, 'Metric:\n value = total duration of CRISIS alarm * 1000\n + total duration of WARNING alarm * 100\n + total duration of SYSTEM alarm * 0\n + total duration of ADVISORY alarm * 0\n\n');
 
+
+
+%%
+
 % !! Using your metric, find the top two patient beds in a severe situation
 beds = [921,923,940,942,943,944,946,947,952,953,955,956];
 metric = zeros(1,12);
