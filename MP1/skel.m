@@ -150,14 +150,14 @@ title('Histogram of Alarms Per Hour');
 xlabel('Hour');
 ylabel('Number of Alarms');
 
-%% START OF TASK 2
+% START OF TASK 2
 
 % T2.1 
 
 causeSYSTEM = {'APP_ERR', 'SIG_ARTIFACT', 'LEADS_FAILURE', 'NW_ERR'};
 
-
 fprintf(fid, '\n\nTask 2.1a\n\n');
+
 fprintf(fid, 'Probability of causes for SYSTEM alarms\n');
 for i=1:4,
     % !! subset your data
@@ -180,9 +180,6 @@ fprintf(fid, 'because APP_ERR is a subset of SYSTEM warning.\n');
 fprintf(fid, 'However given it is a SYSTEM warning, it is not necessarily an APP_ERR,\n');
 fprintf(fid, 'because it could also be SIG_ARTIFACT, LEADS_FAILURE, or NW_ERR.\n');
 
-
-
-
 % T2.2
 
 % !! Using the results from Task 2.1, derive the probability
@@ -191,7 +188,6 @@ fprintf(fid, '\n\nTask 2.2\n\n');
 
 fprintf(fid, 'P(APP_ERR and SYSTEM) = P(APP_ERR | SYSTEM) * P(SYSTEM) = %f\n', 0.637441 * 0.518428);
 
-
 % T2.3
 
 % !! Calculate the duration for each alarms
@@ -199,40 +195,68 @@ fprintf(fid, 'P(APP_ERR and SYSTEM) = P(APP_ERR | SYSTEM) * P(SYSTEM) = %f\n', 0
 
 % T2.3.a 
 
-fprintf(fid, '\n\nTask 2.3.a\n\n');
-for i=1:"NUMBER OF ALARM TYPES"
-    % !! Split the data interms of alarm type
-    
-    % !! Count the number of alarms for each alarm type
-    
-    % !! Calculate the average duration of each alarm type
-    
-    fprintf(fid, 'Average duration for alarm type %s: %f\n', "ALARMTYPE", "AVERAGE_DURATION");
-end
+fprintf(fid, '\n\nTask 2.3a\n\n');
+
+x_h = str2num(datestr(data.StartTime, 'HH'));
+x_m = str2num(datestr(data.StartTime, 'MM'));
+x_s = str2num(datestr(data.StartTime, 'SS.FFF'));
+
+y_h = str2num(datestr(data.StopTime, 'HH'));
+y_m = str2num(datestr(data.StopTime, 'MM'));
+y_s = str2num(datestr(data.StopTime, 'SS.FFF'));
+
+data.Duration = (y_h - x_h)*3600 + (y_m - x_m)*60 + (y_s - x_s);
+
+data_SYSTEM = data(ismember(data.Alarm_Type, 'SYSTEM'), :);
+data_WARNING = data(ismember(data.Alarm_Type, 'WARNING'), :);
+data_CRISIS = data(ismember(data.Alarm_Type, 'CRISIS'), :);
+data_ADVISORY = data(ismember(data.Alarm_Type, 'ADVISORY'), :);
+
+avg_dur_sys = sum(data_SYSTEM.Duration) / numSYSTEM;
+avg_dur_warn = sum(data_WARNING.Duration) / numWARNING;
+avg_dur_cris = sum(data_CRISIS.Duration) / numCRISIS;
+avg_dur_adv = sum(data_ADVISORY.Duration) / numADVISORY;
+
+fprintf(fid, 'The average duration of system alarms is %f seconds.\n', avg_dur_sys);
+fprintf(fid, 'The average duration of warning alarms is %f seconds.\n', avg_dur_warn);
+fprintf(fid, 'The average duration of crisis alarms is %f seconds.\n', avg_dur_cris);
+fprintf(fid, 'The average duration of advisory alarms is %f seconds.\n', avg_dur_adv);
 
 % T2.3.b
 
-fprintf(fid, '\n\nTask 2.3.b\n\n');
-for i=1:24,
-    % Please not that i loop from 1 to 24
-    % The hours in the data are from 0 to 23
+fprintf(fid, '\n\nTask 2.3b\n\n');
 
-    % !! Split the data in terms of hours
-    
-    % !! Calculate the average duration for each hour(i)
-    
-    fprintf(fid, 'Average duration for hh=%d = %f\n', "HOUR", "AVERAGE DURATION PER HOUR");
+alarmDurByHour = zeros(24,2);
+
+for i = 0:23
+    alarmDurByHour(i+1,1) = i; 
+    temp_table = data(ismember(data.Hours, i), :);
+    sumByHour = sum(temp_table.Duration);
+    alarmDurByHour(i+1,2) = sumByHour / height(temp_table);
 end
+
+% Print the result
+
+for i = 1:10
+    % !! Count the number of alarms for the given hour(i)
+    fprintf(fid, 'Hour: %d\t\t\t Average Duration For Alarms: %f seconds\n', alarmDurByHour(i,1), alarmDurByHour(i,2));
+end
+
+for i = 11:24
+    % !! Count the number of alarms for the given hour(i)
+    fprintf(fid, 'Hour: %d\t\t Average Duration For Alarms: %f seconds\n', alarmDurByHour(i,1), alarmDurByHour(i,2));
+end
+
 figure;
 % !! Draw a bar chart to plot the average duration per hour
+bar(alarmDurByHour(:,1),alarmDurByHour(:,2));
 
 % label the plot
-title('Average Duration for each hour of the day');
-ylabel('avg duration');
-hours = {'00h', '01h', '02h','03h','04h','05h','06h','07h','08h','09h','10h','11h','12h','13h','14h','15h','16h','17h','18h','19h','20h','21h','22h','23h'};
-set(gca, 'XTick', 0:23);
-set(gca,'XTickLabel',hours);
+title('Average Duration For Each Hour of the Day');
+xlabel('Hour');
+ylabel('Average Duration (in Seconds)');
 
+%%
 %{
 % START OF TASK 3
 

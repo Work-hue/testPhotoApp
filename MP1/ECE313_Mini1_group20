@@ -130,3 +130,39 @@ because it could also be SIG_ARTIFACT, LEADS_FAILURE, or NW_ERR.
 Task 2.2
 
 P(APP_ERR and SYSTEM) = P(APP_ERR | SYSTEM) * P(SYSTEM) = 0.330467
+
+
+Task 2.3a
+
+The average duration of system alarms is 4.096052 seconds.
+The average duration of warning alarms is 1.630664 seconds.
+The average duration of crisis alarms is 3.964918 seconds.
+The average duration of advisory alarms is 1.989024 seconds.
+
+
+Task 2.3b
+
+Hour: 0			 Average Duration For Alarms: 3.303308 seconds
+Hour: 1			 Average Duration For Alarms: 2.961961 seconds
+Hour: 2			 Average Duration For Alarms: 0.828000 seconds
+Hour: 3			 Average Duration For Alarms: 3.632643 seconds
+Hour: 4			 Average Duration For Alarms: 2.325606 seconds
+Hour: 5			 Average Duration For Alarms: 1.032000 seconds
+Hour: 6			 Average Duration For Alarms: 2.996085 seconds
+Hour: 7			 Average Duration For Alarms: 0.887043 seconds
+Hour: 8			 Average Duration For Alarms: 3.140435 seconds
+Hour: 9			 Average Duration For Alarms: 5.692818 seconds
+Hour: 10		 Average Duration For Alarms: 5.646274 seconds
+Hour: 11		 Average Duration For Alarms: 1.605248 seconds
+Hour: 12		 Average Duration For Alarms: 3.549000 seconds
+Hour: 13		 Average Duration For Alarms: 3.064395 seconds
+Hour: 14		 Average Duration For Alarms: 2.781391 seconds
+Hour: 15		 Average Duration For Alarms: 3.581797 seconds
+Hour: 16		 Average Duration For Alarms: 2.384219 seconds
+Hour: 17		 Average Duration For Alarms: 4.038876 seconds
+Hour: 18		 Average Duration For Alarms: 0.514499 seconds
+Hour: 19		 Average Duration For Alarms: 5.256825 seconds
+Hour: 20		 Average Duration For Alarms: 5.926887 seconds
+Hour: 21		 Average Duration For Alarms: 7.443839 seconds
+Hour: 22		 Average Duration For Alarms: 3.985000 seconds
+Hour: 23		 Average Duration For Alarms: 0.809908 seconds
