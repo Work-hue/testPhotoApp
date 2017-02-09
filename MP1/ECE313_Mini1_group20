@@ -125,3 +125,8 @@ Given it is an APP_ERR, it must be a SYSTEM warning,
 because APP_ERR is a subset of SYSTEM warning.
 However given it is a SYSTEM warning, it is not necessarily an APP_ERR,
 because it could also be SIG_ARTIFACT, LEADS_FAILURE, or NW_ERR.
+
+
+Task 2.2
+
+P(APP_ERR and SYSTEM) = P(APP_ERR | SYSTEM) * P(SYSTEM) = 0.330467

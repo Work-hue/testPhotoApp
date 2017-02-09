@@ -182,13 +182,15 @@ fprintf(fid, 'because it could also be SIG_ARTIFACT, LEADS_FAILURE, or NW_ERR.\n
 
 
 
-%{
+
 % T2.2
 
 % !! Using the results from Task 2.1, derive the probability
 
-fprintf(fid, '\n\nTask 2.1\n\n');
-fprintf(fid, 'P(LOW_OXY_SAT and SYSTEM) = %f\n', "PROBABILITY OF LOW_OXY_SAT and SYSTEM");
+fprintf(fid, '\n\nTask 2.2\n\n');
+
+fprintf(fid, 'P(APP_ERR and SYSTEM) = P(APP_ERR | SYSTEM) * P(SYSTEM) = %f\n', 0.637441 * 0.518428);
+
 
 % T2.3
 
@@ -198,7 +200,7 @@ fprintf(fid, 'P(LOW_OXY_SAT and SYSTEM) = %f\n', "PROBABILITY OF LOW_OXY_SAT and
 % T2.3.a 
 
 fprintf(fid, '\n\nTask 2.3.a\n\n');
-for i=1:"NUMBER OF ALARM TYPES",
+for i=1:"NUMBER OF ALARM TYPES"
     % !! Split the data interms of alarm type
     
     % !! Count the number of alarms for each alarm type
@@ -231,7 +233,7 @@ hours = {'00h', '01h', '02h','03h','04h','05h','06h','07h','08h','09h','10h','11
 set(gca, 'XTick', 0:23);
 set(gca,'XTickLabel',hours);
 
-
+%{
 % START OF TASK 3
 
 % T3.

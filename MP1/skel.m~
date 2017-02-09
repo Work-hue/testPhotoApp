@@ -172,22 +172,26 @@ fprintf(fid, '\n\nTask 2.1b\n\n');
 data_APP_ERR = data(ismember(data.Cause, 'APP_ERR'), :);
 data_APP_ERR_SYSTEM = data_APP_ERR(ismember(data_APP_ERR.Alarm_Type, 'SYSTEM'), :);
 fprintf(fid, 'P(SYSTEM | APP_ERR) = %f\n', height(data_APP_ERR_SYSTEM)/height(data_APP_ERR));
-fprintf(fid, 'P(APP_ERR | SYSTEM) = 0.637441\n');
+fprintf(fid, 'P(APP_ERR | SYSTEM) = 0.637441\n\n');
 
 fprintf(fid, 'P(SYSTEM | APP_ERR) and P(APP_ERR | SYSTEM) are different.\n'); 
-fprintf(fid, 'Given it is a APP_ERR, it must be a SYSTEM warning,\n because APP_ERR is a subset of SYSTEM warning.\n However');
+fprintf(fid, 'Given it is an APP_ERR, it must be a SYSTEM warning,\n'); 
+fprintf(fid, 'because APP_ERR is a subset of SYSTEM warning.\n');
+fprintf(fid, 'However given it is a SYSTEM warning, it is not necessarily an APP_ERR,\n');
+fprintf(fid, 'because it could also be SIG_ARTIFACT, LEADS_FAILURE, or NW_ERR.\n');
 
 
 
 
-%{
 % T2.2
 
 % !! Using the results from Task 2.1, derive the probability
 
-fprintf(fid, '\n\nTask 2.1\n\n');
-fprintf(fid, 'P(LOW_OXY_SAT and SYSTEM) = %f\n', "PROBABILITY OF LOW_OXY_SAT and SYSTEM");
+fprintf(fid, '\n\nTask 2.2\n\n');
 
+fprintf(fid, 'P(APP_ERR and SYSTEM) = P(APP_ERR | SYSTEM) * P(SYSTEM) = %f\n', 0.637441 * 0.518428);
+
+%{
 % T2.3
 
 % !! Calculate the duration for each alarms
