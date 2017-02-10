@@ -109,6 +109,7 @@ Hour: 23	 Number of Alarms: 326
 Task 2.1a
 
 Probability of causes for SYSTEM alarms
+
 P(APP_ERR) = 0.637441
 P(SIG_ARTIFACT) = 0.030129
 P(LEADS_FAILURE) = 0.041638
@@ -168,12 +169,149 @@ Hour: 22		 Average Duration For Alarms: 3.985000 seconds
 Hour: 23		 Average Duration For Alarms: 0.809908 seconds
 
 
-Task3
+Task 3.1
 
 Metric:
- value = total duration of CRISIS alarm * 1000
+ patValue = total duration of CRISIS alarm * 1000
  + total duration of WARNING alarm * 100
- + total duration of SYSTEM alarm * 0
- + total duration of ADVISORY alarm * 0
+ + total duration of SYSTEM alarm * 10
+ + total duration of ADVISORY alarm * 1
 
-The top two patient beds in a serious condition are No.940 and No.953
+The following is a table describing the number of alarms (of each type) for each bed.
+
+				CRISIS		WARNING		SYSTEM		  ADVISORY		 Metric
+
+Bed No.921		 5			 4			 28 			 15		   2.974458e+04		
+Bed No.923		 15			 77			 431 			 261		   8.786634e+04		
+Bed No.940		 57			 60			 1205 			 1294		   3.056960e+05		
+Bed No.942		 3			 9			 106 			 87		   9.498256e+03		
+Bed No.943		 8			 14			 254 			 98		   4.592722e+04		
+Bed No.944		 14			 56			 118 			 62		   6.353266e+04		
+Bed No.946		 1			 4			 69 			 36		   8.956690e+03		
+Bed No.947		 11			 11			 297 			 166		   4.958020e+04		
+Bed No.952		 9			 13			 124 			 78		   3.409110e+04		
+Bed No.953		 17			 69			 203 			 130		   9.127602e+04		
+Bed No.955		 0			 2			 7   			 4		   4.947360e+02		
+Bed No.956		 6			 13			 107 			 32		   3.183056e+04		
+
+The top two patient beds in a serious condition are No.940 and No.953.
+
+As you can see from the table above, beds 940 and 953 are the top two patients with serious conditions.
+Although bed 940 has the most number of crisis and warning alarms, it is hard to trust this data
+due to the fact that bed 940 also has an excessive amount of system alarms. It is possible that certain
+lab equipment may be defective triggering false alarms. However, the patient at this bed should still
+be checked in case the alarms are intentional. If the alarms are false, and the equipment has been validated 
+as defective, the top two patients to consider would be beds 923 and 953.
+
+Analysis for bed 940:
+
+	Total Number of CRISIS Alarms: 57
+		Average Duration (in sec) of CRISIS Alarms: 4.244193
+
+		Number of COUPLET Alarms: 2
+		Number of HA_BRADY Alarms: 2
+		Number of LOW_OXY_SAT Alarms: 51
+		Number of PAUSE Alarms: 2
+
+	Total Number of WARNING Alarms: 60
+		Average Duration (in sec) of WARNING Alarms: 1.603200
+
+		Number of ATR_FIB Alarms: 1
+		Number of HA_BRADY Alarms: 1
+		Number of LOW_OXY_SAT Alarms: 57
+		Number of PAUSE Alarms: 1
+
+	Total Number of SYSTEM Alarms: 1205
+		Average Duration (in sec) of SYSTEM Alarms: 4.284900
+
+		Number of APP_ERR Alarms: 779
+		Number of LEADS_FAILURE Alarms: 46
+		Number of NW_ERR Alarms: 336
+		Number of SIG_ARTIFACT Alarms: 44
+
+	Total Number of ADVISORY Alarms: 1294
+		Average Duration (in sec) of ADVISORY Alarms: 1.951132
+
+		Number of ATR_FIB Alarms: 3
+		Number of COUPLET Alarms: 4
+		Number of HA_BRADY Alarms: 23
+		Number of HA_VT_> Alarms: 5
+		Number of HA_V_BRADY Alarms: 2
+		Number of HIGH_PVC Alarms: 1
+		Number of LOW_OXY_SAT Alarms: 1237
+		Number of NA Alarms: 3
+		Number of PAUSE Alarms: 9
+		Number of SLEEP_DISORDER Alarms: 7
+
+Analysis for bed 953:
+
+	Total Number of CRISIS Alarms: 17
+		Average Duration (in sec) of CRISIS Alarms: 1.032000
+
+		Number of COUPLET Alarms: 1
+		Number of HA_V_TACHY Alarms: 4
+		Number of LOW_OXY_SAT Alarms: 12
+
+	Total Number of WARNING Alarms: 69
+		Average Duration (in sec) of WARNING Alarms: 1.930246
+
+		Number of ATR_FIB Alarms: 2
+		Number of COUPLET Alarms: 2
+		Number of HA_BRADY Alarms: 44
+		Number of HA_VT_> Alarms: 1
+		Number of LOW_OXY_SAT Alarms: 10
+		Number of SLEEP_DISORDER Alarms: 10
+
+	Total Number of SYSTEM Alarms: 203
+		Average Duration (in sec) of SYSTEM Alarms: 2.269714
+
+		Number of APP_ERR Alarms: 133
+		Number of LEADS_FAILURE Alarms: 9
+		Number of NW_ERR Alarms: 55
+		Number of SIG_ARTIFACT Alarms: 6
+
+	Total Number of ADVISORY Alarms: 130
+		Average Duration (in sec) of ADVISORY Alarms: 1.723538
+
+		Number of ATR_FIB Alarms: 15
+		Number of COUPLET Alarms: 8
+		Number of HA_BRADY Alarms: 4
+		Number of HA_VT_> Alarms: 2
+		Number of HIGH_PVC Alarms: 2
+		Number of LOW_OXY_SAT Alarms: 97
+		Number of PAUSE Alarms: 1
+		Number of SLEEP_DISORDER Alarms: 1
+
+Analysis for bed 923:
+
+	Total Number of CRISIS Alarms: 15
+		Average Duration (in sec) of CRISIS Alarms: 3.973667
+
+		Number of ATR_FIB Alarms: 1
+		Number of LOW_OXY_SAT Alarms: 14
+
+	Total Number of WARNING Alarms: 77
+		Average Duration (in sec) of WARNING Alarms: 1.248870
+
+		Number of ATR_FIB Alarms: 1
+		Number of HA_BRADY Alarms: 1
+		Number of LOW_OXY_SAT Alarms: 75
+
+	Total Number of SYSTEM Alarms: 431
+		Average Duration (in sec) of SYSTEM Alarms: 4.195158
+
+		Number of APP_ERR Alarms: 280
+		Number of LEADS_FAILURE Alarms: 22
+		Number of NW_ERR Alarms: 120
+		Number of SIG_ARTIFACT Alarms: 9
+
+	Total Number of ADVISORY Alarms: 261
+		Average Duration (in sec) of ADVISORY Alarms: 2.160582
+
+		Number of ATR_FIB Alarms: 1
+		Number of COUPLET Alarms: 7
+		Number of HA_BRADY Alarms: 6
+		Number of LOW_OXY_SAT Alarms: 244
+		Number of NA Alarms: 2
+		Number of PAUSE Alarms: 1
+

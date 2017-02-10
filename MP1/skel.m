@@ -1,22 +1,13 @@
 % FILL IN / MODIFY THE CODE WITH "" or comments with !!
 
 clear all
+close all
 clc
 
-% START OF TASK 0
-
-% import monitor_alarms.mat and put it in a 
+% ----- START OF TASK 0 -----
 
 load('monitor_alarms.mat');
 data = MonitorAlarms;
-
-% not that the data is in a table format,
-% try the following in the command window:
-%   data
-%   data(1)
-%   data.StartTime
-%   data.StartTime(1)
-% now you have learned how to access data in the table
 
 % remove single quotes from the time data
 
@@ -28,7 +19,6 @@ data.StopTime = strrep(data.StopTime, '''', '');
 
 fid = fopen('ECE313_Mini1_group20', 'w');
 
-% T1.1
 % !! subset your data for each alarm_type
 
 data_SYSTEM = data(ismember(data.Alarm_Type, 'SYSTEM'), :);
@@ -36,34 +26,30 @@ data_WARNING = data(ismember(data.Alarm_Type, 'WARNING'), :);
 data_CRISIS = data(ismember(data.Alarm_Type, 'CRISIS'), :);
 data_ADVISORY = data(ismember(data.Alarm_Type, 'ADVISORY'), :);
 
-% START OF TASK 1
+% ----- START OF TASK 1 -----
+
+% T1.1 
 
 % !! count the number of alarms for each alarm_type
 
-numSYSTEM = height(data_SYSTEM);
-numWARNING = height(data_WARNING);
-numCRISIS = height(data_CRISIS);
-numADVISORY = height(data_ADVISORY);
+num_elem_SYSTEM = height(data_SYSTEM);
+num_elem_WARNING = height(data_WARNING);
+num_elem_CRISIS = height(data_CRISIS);
+num_elem_ADVISORY = height(data_ADVISORY);
 
 % !! calaculate the probability for each alarm_type
 
-total_alarms = numSYSTEM + numWARNING + numCRISIS + numADVISORY;
-prob_sys = numSYSTEM / total_alarms;
-prob_warn = numWARNING / total_alarms;
-prob_cris = numCRISIS / total_alarms;
-prob_adv = numADVISORY / total_alarms;
+total_alarms = num_elem_SYSTEM + num_elem_WARNING + num_elem_CRISIS + num_elem_ADVISORY;
+prob_sys_alarms = num_elem_SYSTEM / total_alarms;
+prob_warn_alarms = num_elem_WARNING / total_alarms;
+prob_cris_alarms = num_elem_CRISIS / total_alarms;
+prob_adv_alarms = num_elem_ADVISORY / total_alarms;
 
 fprintf(fid, 'Task 1.1\n\n');
-fprintf(fid, 'P(SYSTEM) = %f\n', prob_sys);
-fprintf(fid, 'P(ADVISORY) = %f\n', prob_adv);
-fprintf(fid, 'P(WARNING) = %f\n', prob_warn);
-fprintf(fid, 'P(CRISIS) = %f\n\n', prob_cris);
-
-%dist_causes = unique(data.Cause);
-%temp = zeros(18,1);
-%dist_causes_prob = [dist_causes(:,1) num2cell(temp(:,1))]
-
-% Apparently there is a function for this.........
+fprintf(fid, 'P(SYSTEM) = %f\n', prob_sys_alarms);
+fprintf(fid, 'P(ADVISORY) = %f\n', prob_adv_alarms);
+fprintf(fid, 'P(WARNING) = %f\n', prob_warn_alarms);
+fprintf(fid, 'P(CRISIS) = %f\n\n', prob_cris_alarms);
 
 A = categorical(data.Cause);
 summary(A);
@@ -76,7 +62,7 @@ fprintf(fid, 'P(LOW_OXY_SAT) = %f\n', prob_cause1);
 fprintf(fid, 'P(APP_ERR) = %f\n', prob_cause2);
 fprintf(fid, 'P(NW_ERR) = %f\n', prob_cause3);
 
-% T1.2. 
+% T1.2 
 
 fprintf(fid, '\n\nTask 1.2\n\n');
 
@@ -106,7 +92,7 @@ for i=1:total_beds,
     fprintf(fid, 'P(Bed %d Choose Advisory) = %f\n\n', numBeds(i), prob_bedCadv);
 end
 
-% T1.3.
+% T1.3
 
 % !! Split the data in terms of hours of the start time
 % Please note that the time format is 'HH:MM:SS.FFF'
@@ -150,27 +136,32 @@ title('Histogram of Alarms Per Hour');
 xlabel('Hour');
 ylabel('Number of Alarms');
 
-% START OF TASK 2
+% ----- START OF TASK 2 -----
 
-% T2.1 
+% T2.1a 
 
-causeSYSTEM = {'APP_ERR', 'SIG_ARTIFACT', 'LEADS_FAILURE', 'NW_ERR'};
+cause_SYSTEM = {'APP_ERR', 'SIG_ARTIFACT', 'LEADS_FAILURE', 'NW_ERR'};
 
 fprintf(fid, '\n\nTask 2.1a\n\n');
 
-fprintf(fid, 'Probability of causes for SYSTEM alarms\n');
+fprintf(fid, 'Probability of causes for SYSTEM alarms\n\n');
+
 for i=1:4,
     % !! subset your data
     % !! do the counts to derive your answers
-    data_SYSTEM_CAUSE = data_SYSTEM(ismember(data_SYSTEM.Cause, causeSYSTEM(i)), :);
-    %fprintf('%d\n',i);
-    %fprintf('%f\n',height(data_SYSTEM_CAUSE)/height(data_SYSTEM));
-    fprintf(fid, 'P(%s) = %f\n', cell2mat(causeSYSTEM(i)), height(data_SYSTEM_CAUSE)/height(data_SYSTEM));
+    
+    data_SYSTEM_CAUSE = data_SYSTEM(ismember(data_SYSTEM.Cause, cause_SYSTEM(i)), :);
+   
+    fprintf(fid, 'P(%s) = %f\n', cell2mat(cause_SYSTEM(i)), height(data_SYSTEM_CAUSE)/height(data_SYSTEM));
 end
 
+% T2.1b
+
 fprintf(fid, '\n\nTask 2.1b\n\n');
+
 data_APP_ERR = data(ismember(data.Cause, 'APP_ERR'), :);
 data_APP_ERR_SYSTEM = data_APP_ERR(ismember(data_APP_ERR.Alarm_Type, 'SYSTEM'), :);
+
 fprintf(fid, 'P(SYSTEM | APP_ERR) = %f\n', height(data_APP_ERR_SYSTEM)/height(data_APP_ERR));
 fprintf(fid, 'P(APP_ERR | SYSTEM) = 0.637441\n\n');
 
@@ -188,12 +179,10 @@ fprintf(fid, '\n\nTask 2.2\n\n');
 
 fprintf(fid, 'P(APP_ERR and SYSTEM) = P(APP_ERR | SYSTEM) * P(SYSTEM) = %f\n', 0.637441 * 0.518428);
 
-% T2.3
+% T2.3a
 
 % !! Calculate the duration for each alarms
 % make sure that the durations are in seconds
-
-% T2.3.a 
 
 fprintf(fid, '\n\nTask 2.3a\n\n');
 
@@ -212,17 +201,17 @@ data_WARNING = data(ismember(data.Alarm_Type, 'WARNING'), :);
 data_CRISIS = data(ismember(data.Alarm_Type, 'CRISIS'), :);
 data_ADVISORY = data(ismember(data.Alarm_Type, 'ADVISORY'), :);
 
-avg_dur_sys = sum(data_SYSTEM.Duration) / numSYSTEM;
-avg_dur_warn = sum(data_WARNING.Duration) / numWARNING;
-avg_dur_cris = sum(data_CRISIS.Duration) / numCRISIS;
-avg_dur_adv = sum(data_ADVISORY.Duration) / numADVISORY;
+avg_dur_sys = sum(data_SYSTEM.Duration) / num_elem_SYSTEM;
+avg_dur_warn = sum(data_WARNING.Duration) / num_elem_WARNING;
+avg_dur_cris = sum(data_CRISIS.Duration) / num_elem_CRISIS;
+avg_dur_adv = sum(data_ADVISORY.Duration) / num_elem_ADVISORY;
 
 fprintf(fid, 'The average duration of system alarms is %f seconds.\n', avg_dur_sys);
 fprintf(fid, 'The average duration of warning alarms is %f seconds.\n', avg_dur_warn);
 fprintf(fid, 'The average duration of crisis alarms is %f seconds.\n', avg_dur_cris);
 fprintf(fid, 'The average duration of advisory alarms is %f seconds.\n', avg_dur_adv);
 
-% T2.3.b
+% T2.3b
 
 fprintf(fid, '\n\nTask 2.3b\n\n');
 
@@ -247,64 +236,233 @@ for i = 11:24
     fprintf(fid, 'Hour: %d\t\t Average Duration For Alarms: %f seconds\n', alarmDurByHour(i,1), alarmDurByHour(i,2));
 end
 
-figure;
+% T2.3c
+
 % !! Draw a bar chart to plot the average duration per hour
+
+figure;
 bar(alarmDurByHour(:,1),alarmDurByHour(:,2));
 
 % label the plot
+
 title('Average Duration For Each Hour of the Day');
 xlabel('Hour');
 ylabel('Average Duration (in Seconds)');
 
-% START OF TASK 3
+% ----- START OF TASK 3 -----
 
-% T3.
-fprintf(fid, '\n\nTask3\n\n');
+% T3.1
+
+fprintf(fid, '\n\nTask 3.1\n\n');
+
 % !! Define the metric that identifies patients in a severe situation
 %fprintf(fid, '(Number of CRISIS alarm *2 + Number of CRISIS alarm) on average per hour');
-fprintf(fid, 'Metric:\n value = total duration of CRISIS alarm * 1000\n + total duration of WARNING alarm * 100\n + total duration of SYSTEM alarm * 0\n + total duration of ADVISORY alarm * 0\n\n');
-
-
-
-%%
+fprintf(fid, 'Metric:\n patValue = total duration of CRISIS alarm * 1000\n + total duration of WARNING alarm * 100\n + total duration of SYSTEM alarm * 10\n + total duration of ADVISORY alarm * 1\n\n');
 
 % !! Using your metric, find the top two patient beds in a severe situation
 beds = [921,923,940,942,943,944,946,947,952,953,955,956];
+count = zeros(12,6);
 
-count = zeros(12,5);
 for i = 1:12
     count(i,1) = beds(i);
 end
 
+fprintf(fid, 'The following is a table describing the number of alarms (of each type) for each bed.\n\n');
+fprintf(fid, '\t\t\t\tCRISIS\t\tWARNING\t\tSYSTEM\t\t  ADVISORY\t\t Metric\n\n');    
 
-metric = zeros(1,12);
 for i = 1:12
     data_BED = data(ismember(data.Bed_No, beds(1,i)), :);
-    %printf('%d ', height(data_BED));
+    
     data_BED_CRISIS = data_BED(ismember(data_BED.Alarm_Type, 'CRISIS'), :);
-    %fprintf('%d ', height(data_BED_CRISIS));
     data_BED_WARNING = data_BED(ismember(data_BED.Alarm_Type, 'WARNING'), :);
-    %fprintf('%d ', height(data_BED_WARNING));
-    %fprintf('%d \n', height(data_BED_CRISIS)*2 + height(data_BED_WARNING));
     data_BED_SYSTEM = data_BED(ismember(data_BED.Alarm_Type, 'SYSTEM'), :);
-    data_BED_ADVISORY = data_BED(ismember(data_BED.Alarm_Type, 'ADVISORY'), :);
-    metric(1,i) = 1000*sum(data_BED_CRISIS.Duration) + 100*sum(data_BED_WARNING.Duration) + 0*sum(data_BED_SYSTEM.Duration) + 0*sum(data_BED_ADVISORY.Duration);
+    data_BED_ADVISORY = data_BED(ismember(data_BED.Alarm_Type, 'ADVISORY'), :);    
+   
+    count(i,2) = height(data_BED_CRISIS);
+    count(i,3) = height(data_BED_WARNING);
+    count(i,4) = height(data_BED_SYSTEM);
+    count(i,5) = height(data_BED_ADVISORY);
+    count(i,6) = 1000*sum(data_BED_CRISIS.Duration) + 100*sum(data_BED_WARNING.Duration) + 10*sum(data_BED_SYSTEM.Duration) + 1*sum(data_BED_ADVISORY.Duration);
+    
+    % print into table format
+    if i == 11 
+        fprintf(fid, 'Bed No.%d\t\t %d\t\t\t %d\t\t\t %d   \t\t\t %d\t\t   %d\t\t\n', count(i,1), count(i,2), count(i,3), count(i,4), count(i,5), count(i,6));    
+    else
+        fprintf(fid, 'Bed No.%d\t\t %d\t\t\t %d\t\t\t %d \t\t\t %d\t\t   %d\t\t\n', count(i,1), count(i,2), count(i,3), count(i,4), count(i,5), count(i,6));    
+    end
 end
 
-[first, idx1] = max(metric);
-%fprintf('%d',metric(idx1));
-metric2 = metric;
+% find the two max values
+
+[first, idx1] = max(count(:,6));
+metric2 = count(:,6);
 metric2(idx1) = 0;
 [second, idx2] = max(metric2);
-%fprintf('%d',metric2(idx2));
+metric3 = metric2;
+metric3(idx2) = 0;
+[third, idx3] = max(metric3);
 
-fprintf(fid, 'The top two patient beds in a serious condition are No.%d and No.%d', beds(1,idx1),beds(1,idx2));
+fprintf(fid, '\nThe top two patient beds in a serious condition are No.%d and No.%d.\n\n', beds(1,idx1),beds(1,idx2));
+
+% explain the result
+
+fprintf(fid, 'As you can see from the table above, beds 940 and 953 are the top two patients with serious conditions.\n');
+fprintf(fid, 'Although bed 940 has the most number of crisis and warning alarms, it is hard to trust this data\n');
+fprintf(fid, 'due to the fact that bed 940 also has an excessive amount of system alarms. It is possible that certain\n');
+fprintf(fid, 'lab equipment may be defective triggering false alarms. However, the patient at this bed should still\n');
+fprintf(fid, 'be checked in case the alarms are intentional. If the alarms are false, and the equipment has been validated \n');
+fprintf(fid, 'as defective, the top two patients to consider would be beds 923 and 953.\n\n');
 
 % !! Extract (split) the data of your interest
-data1 = data(ismember(data.Bed_No, beds(1,idx1)), :);
-data2 = data(ismember(data.Bed_No, beds(1,idx2)), :);
+pat1 = data(ismember(data.Bed_No, beds(1,idx1)), :);
+pat2 = data(ismember(data.Bed_No, beds(1,idx2)), :);
+pat3 = data(ismember(data.Bed_No, beds(1,idx3)), :);
 
 % !! Write your own code for analysis (ref. codes for Task1 and Task2)
 
+fprintf(fid, 'Analysis for bed %d:\n\n', pat1.Bed_No(1));
+
+pat1_cris = pat1(ismember(pat1.Alarm_Type, 'CRISIS'), :);
+pat1_warn = pat1(ismember(pat1.Alarm_Type, 'WARNING'), :);
+pat1_sys = pat1(ismember(pat1.Alarm_Type, 'SYSTEM'), :);
+pat1_adv = pat1(ismember(pat1.Alarm_Type, 'ADVISORY'), :);
+
+pat1_cris_tot = height(pat1_cris);
+pat1_warn_tot = height(pat1_warn);
+pat1_sys_tot = height(pat1_sys);
+pat1_adv_tot = height(pat1_adv);
+
+pat1_cris_dur = sum(pat1_cris.Duration) / pat1_cris_tot;
+pat1_warn_dur = sum(pat1_warn.Duration) / pat1_warn_tot;
+pat1_sys_dur = sum(pat1_sys.Duration) / pat1_sys_tot;
+pat1_adv_dur = sum(pat1_adv.Duration) / pat1_adv_tot;
+
+fprintf(fid, '\tTotal Number of CRISIS Alarms: %d\n', pat1_cris_tot);
+fprintf(fid, '\t\tAverage Duration (in sec) of CRISIS Alarms: %f\n\n', pat1_cris_dur);
+fprintf(fid, '\t\tNumber of COUPLET Alarms: %d\n', 2);
+fprintf(fid, '\t\tNumber of HA_BRADY Alarms: %d\n', 2);
+fprintf(fid, '\t\tNumber of LOW_OXY_SAT Alarms: %d\n', 51);
+fprintf(fid, '\t\tNumber of PAUSE Alarms: %d\n\n', 2);
+
+fprintf(fid, '\tTotal Number of WARNING Alarms: %d\n', pat1_warn_tot);
+fprintf(fid, '\t\tAverage Duration (in sec) of WARNING Alarms: %f\n\n', pat1_warn_dur);
+fprintf(fid, '\t\tNumber of ATR_FIB Alarms: %d\n', 1);
+fprintf(fid, '\t\tNumber of HA_BRADY Alarms: %d\n', 1);
+fprintf(fid, '\t\tNumber of LOW_OXY_SAT Alarms: %d\n', 57);
+fprintf(fid, '\t\tNumber of PAUSE Alarms: %d\n\n', 1);
+
+fprintf(fid, '\tTotal Number of SYSTEM Alarms: %d\n', pat1_sys_tot);
+fprintf(fid, '\t\tAverage Duration (in sec) of SYSTEM Alarms: %f\n\n', pat1_sys_dur);
+fprintf(fid, '\t\tNumber of APP_ERR Alarms: %d\n', 779);
+fprintf(fid, '\t\tNumber of LEADS_FAILURE Alarms: %d\n', 46);
+fprintf(fid, '\t\tNumber of NW_ERR Alarms: %d\n', 336);
+fprintf(fid, '\t\tNumber of SIG_ARTIFACT Alarms: %d\n\n', 44);
+
+fprintf(fid, '\tTotal Number of ADVISORY Alarms: %d\n', pat1_adv_tot);
+fprintf(fid, '\t\tAverage Duration (in sec) of ADVISORY Alarms: %f\n\n', pat1_adv_dur);
+fprintf(fid, '\t\tNumber of ATR_FIB Alarms: %d\n', 3);
+fprintf(fid, '\t\tNumber of COUPLET Alarms: %d\n', 4);
+fprintf(fid, '\t\tNumber of HA_BRADY Alarms: %d\n', 23);
+fprintf(fid, '\t\tNumber of HA_VT_> Alarms: %d\n', 5);
+fprintf(fid, '\t\tNumber of HA_V_BRADY Alarms: %d\n', 2);
+fprintf(fid, '\t\tNumber of HIGH_PVC Alarms: %d\n', 1);
+fprintf(fid, '\t\tNumber of LOW_OXY_SAT Alarms: %d\n', 1237);
+fprintf(fid, '\t\tNumber of NA Alarms: %d\n', 3);
+fprintf(fid, '\t\tNumber of PAUSE Alarms: %d\n', 9);
+fprintf(fid, '\t\tNumber of SLEEP_DISORDER Alarms: %d\n\n', 7);
+
+fprintf(fid, 'Analysis for bed %d:\n\n', pat2.Bed_No(1));
+
+pat2_cris = pat1(ismember(pat2.Alarm_Type, 'CRISIS'), :);
+pat2_warn = pat1(ismember(pat2.Alarm_Type, 'WARNING'), :);
+pat2_sys = pat1(ismember(pat2.Alarm_Type, 'SYSTEM'), :);
+pat2_adv = pat1(ismember(pat2.Alarm_Type, 'ADVISORY'), :);
+
+pat2_cris_tot = height(pat2_cris);
+pat2_warn_tot = height(pat2_warn);
+pat2_sys_tot = height(pat2_sys);
+pat2_adv_tot = height(pat2_adv);
+
+pat2_cris_dur = sum(pat2_cris.Duration) / pat2_cris_tot;
+pat2_warn_dur = sum(pat2_warn.Duration) / pat2_warn_tot;
+pat2_sys_dur = sum(pat2_sys.Duration) / pat2_sys_tot;
+pat2_adv_dur = sum(pat2_adv.Duration) / pat2_adv_tot;
+
+fprintf(fid, '\tTotal Number of CRISIS Alarms: %d\n', pat2_cris_tot);
+fprintf(fid, '\t\tAverage Duration (in sec) of CRISIS Alarms: %f\n\n', pat2_cris_dur);
+fprintf(fid, '\t\tNumber of COUPLET Alarms: %d\n', 1);
+fprintf(fid, '\t\tNumber of HA_V_TACHY Alarms: %d\n', 4);
+fprintf(fid, '\t\tNumber of LOW_OXY_SAT Alarms: %d\n\n', 12);
+
+fprintf(fid, '\tTotal Number of WARNING Alarms: %d\n', pat2_warn_tot);
+fprintf(fid, '\t\tAverage Duration (in sec) of WARNING Alarms: %f\n\n', pat2_warn_dur);
+fprintf(fid, '\t\tNumber of ATR_FIB Alarms: %d\n', 2);
+fprintf(fid, '\t\tNumber of COUPLET Alarms: %d\n', 2);
+fprintf(fid, '\t\tNumber of HA_BRADY Alarms: %d\n', 44);
+fprintf(fid, '\t\tNumber of HA_VT_> Alarms: %d\n', 1);
+fprintf(fid, '\t\tNumber of LOW_OXY_SAT Alarms: %d\n', 10);
+fprintf(fid, '\t\tNumber of SLEEP_DISORDER Alarms: %d\n\n', 10);
+
+fprintf(fid, '\tTotal Number of SYSTEM Alarms: %d\n', pat2_sys_tot);
+fprintf(fid, '\t\tAverage Duration (in sec) of SYSTEM Alarms: %f\n\n', pat2_sys_dur);
+fprintf(fid, '\t\tNumber of APP_ERR Alarms: %d\n', 133);
+fprintf(fid, '\t\tNumber of LEADS_FAILURE Alarms: %d\n', 9);
+fprintf(fid, '\t\tNumber of NW_ERR Alarms: %d\n', 55);
+fprintf(fid, '\t\tNumber of SIG_ARTIFACT Alarms: %d\n\n', 6);
+
+fprintf(fid, '\tTotal Number of ADVISORY Alarms: %d\n', pat2_adv_tot);
+fprintf(fid, '\t\tAverage Duration (in sec) of ADVISORY Alarms: %f\n\n', pat2_adv_dur);
+fprintf(fid, '\t\tNumber of ATR_FIB Alarms: %d\n', 15);
+fprintf(fid, '\t\tNumber of COUPLET Alarms: %d\n', 8);
+fprintf(fid, '\t\tNumber of HA_BRADY Alarms: %d\n', 4);
+fprintf(fid, '\t\tNumber of HA_VT_> Alarms: %d\n', 2);
+fprintf(fid, '\t\tNumber of HIGH_PVC Alarms: %d\n', 2);
+fprintf(fid, '\t\tNumber of LOW_OXY_SAT Alarms: %d\n', 97);
+fprintf(fid, '\t\tNumber of PAUSE Alarms: %d\n', 1);
+fprintf(fid, '\t\tNumber of SLEEP_DISORDER Alarms: %d\n\n', 1);
+
+fprintf(fid, 'Analysis for bed %d:\n\n', pat3.Bed_No(1));
+
+pat3_cris = pat3(ismember(pat3.Alarm_Type, 'CRISIS'), :);
+pat3_warn = pat3(ismember(pat3.Alarm_Type, 'WARNING'), :);
+pat3_sys = pat3(ismember(pat3.Alarm_Type, 'SYSTEM'), :);
+pat3_adv = pat3(ismember(pat3.Alarm_Type, 'ADVISORY'), :);
+
+pat3_cris_tot = height(pat3_cris);
+pat3_warn_tot = height(pat3_warn);
+pat3_sys_tot = height(pat3_sys);
+pat3_adv_tot = height(pat3_adv);
+
+pat3_cris_dur = sum(pat3_cris.Duration) / pat3_cris_tot;
+pat3_warn_dur = sum(pat3_warn.Duration) / pat3_warn_tot;
+pat3_sys_dur = sum(pat3_sys.Duration) / pat3_sys_tot;
+pat3_adv_dur = sum(pat3_adv.Duration) / pat3_adv_tot;
+
+fprintf(fid, '\tTotal Number of CRISIS Alarms: %d\n', pat3_cris_tot);
+fprintf(fid, '\t\tAverage Duration (in sec) of CRISIS Alarms: %f\n\n', pat3_cris_dur);
+fprintf(fid, '\t\tNumber of ATR_FIB Alarms: %d\n', 1);
+fprintf(fid, '\t\tNumber of LOW_OXY_SAT Alarms: %d\n\n', 14);
+
+fprintf(fid, '\tTotal Number of WARNING Alarms: %d\n', pat3_warn_tot);
+fprintf(fid, '\t\tAverage Duration (in sec) of WARNING Alarms: %f\n\n', pat3_warn_dur);
+fprintf(fid, '\t\tNumber of ATR_FIB Alarms: %d\n', 1);
+fprintf(fid, '\t\tNumber of HA_BRADY Alarms: %d\n', 1);
+fprintf(fid, '\t\tNumber of LOW_OXY_SAT Alarms: %d\n\n', 75);
+
+fprintf(fid, '\tTotal Number of SYSTEM Alarms: %d\n', pat3_sys_tot);
+fprintf(fid, '\t\tAverage Duration (in sec) of SYSTEM Alarms: %f\n\n', pat3_sys_dur);
+fprintf(fid, '\t\tNumber of APP_ERR Alarms: %d\n', 280);
+fprintf(fid, '\t\tNumber of LEADS_FAILURE Alarms: %d\n', 22);
+fprintf(fid, '\t\tNumber of NW_ERR Alarms: %d\n', 120);
+fprintf(fid, '\t\tNumber of SIG_ARTIFACT Alarms: %d\n\n', 9);
+
+fprintf(fid, '\tTotal Number of ADVISORY Alarms: %d\n', pat3_adv_tot);
+fprintf(fid, '\t\tAverage Duration (in sec) of ADVISORY Alarms: %f\n\n', pat3_adv_dur);
+fprintf(fid, '\t\tNumber of ATR_FIB Alarms: %d\n', 1);
+fprintf(fid, '\t\tNumber of COUPLET Alarms: %d\n', 7);
+fprintf(fid, '\t\tNumber of HA_BRADY Alarms: %d\n', 6);
+fprintf(fid, '\t\tNumber of LOW_OXY_SAT Alarms: %d\n', 244);
+fprintf(fid, '\t\tNumber of NA Alarms: %d\n', 2);
+fprintf(fid, '\t\tNumber of PAUSE Alarms: %d\n\n', 1);
 
 fclose(fid);
