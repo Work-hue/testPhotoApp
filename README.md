@@ -7,9 +7,9 @@ The deadline for the projects are as follows (UPDATE AS NEEDED):
 
 Mini Project 1:
 
-Task 0+1 (Individual) - due Feb 6, 2017 at 10:00am on Compass
+Task 0+1 (Individual) - due Feb 6, 2017 at 10:00am on Compass [DONE AND SUBMITTED]
 
-Task 2+3 (Group)      - due Feb 10, 2017 at 10:00am on Compass
+Task 2+3 (Group)      - due Feb 10, 2017 at 10:00am on Compass [DONE AND SUBMITTED]
 
 Mini Project 2:
 
