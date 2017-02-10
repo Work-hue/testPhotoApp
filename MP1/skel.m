@@ -547,6 +547,40 @@ fprintf(fid, 'could benefit from an early morning caregiver.\n\n');
 
 % T3.3b
 
+metric4 = zeros(24,4);
+top3 = [940, 953, 923];
 
+for j = 1:3
+    for i = 0:23
+        metric4(i+1,1) = i;
+        data_HOUR = data(ismember(data.Hours, i),:);
+        data_BED = data_HOUR(ismember(data_HOUR.Bed_No, top3(1,j)), :);
+
+        data_BED_CRISIS = data_BED(ismember(data_BED.Alarm_Type, 'CRISIS'), :);
+        data_BED_WARNING = data_BED(ismember(data_BED.Alarm_Type, 'WARNING'), :);
+        data_BED_SYSTEM = data_BED(ismember(data_BED.Alarm_Type, 'SYSTEM'), :);
+        data_BED_ADVISORY = data_BED(ismember(data_BED.Alarm_Type, 'ADVISORY'), :);    
+
+        metric4(i+1,j+1) = 1000*sum(data_BED_CRISIS.Duration) + 100*sum(data_BED_WARNING.Duration) + 10*sum(data_BED_SYSTEM.Duration) + 1*sum(data_BED_ADVISORY.Duration);
+    end
+end
+
+figure;
+bar(metric4(:,1),metric4(:,2));
+title('Histogram of Metric Value Per Hour for Bed 940');
+xlabel('Hour');
+ylabel('Number of Alarms');
+
+figure;
+bar(metric4(:,1),metric4(:,3));
+title('Histogram of Metric Value Per Hour for Bed 953');
+xlabel('Hour');
+ylabel('Number of Alarms');
+
+figure;
+bar(metric4(:,1),metric4(:,4));
+title('Histogram of Metric Value Per Hour for Bed 923');
+xlabel('Hour');
+ylabel('Number of Alarms');
 
 fclose(fid);

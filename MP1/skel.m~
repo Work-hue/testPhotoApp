@@ -519,26 +519,77 @@ title('Histogram of C/W Alarms Per Hour for Bed 923');
 xlabel('Hour');
 ylabel('Number of Alarms');
 
-% T3.3
+% T3.3a
 
 fprintf(fid, 'Here are our 3 observations from this patient data subset.\n\n');
 
+fprintf(fid, 'OBSERVATION 1:\n');
 fprintf(fid, 'The top cause of all patients crisis alarm was found to be LOW_OXY_SAT.\n');
 fprintf(fid, 'This data is an indicator that these patients often have issues with low\n');
 fprintf(fid, 'blood oxygen levels. To reduce the frequency of this alarm cause, a suggestion\n');
 fprintf(fid, 'would be to increase oxygen supplementation to patients with such conditions.\n\n');
 
+fprintf(fid, 'OBSERVATION 2:\n');
 fprintf(fid, 'The patient at bed 953 has a longer average duration for the warning alarm compared with those at beds 940 and 923.\n');
 fprintf(fid, 'This is probably because their top causes for the warning alarm are different. \n');
 fprintf(fid, 'Specifically, the top cause for the warning alarm is HA_BRADY for the patient at bed 953, \n');
 fprintf(fid, 'whereas the top cause for the warning alarm is LOW_OXY_SAT for the other two patients. \n'); 
-fprintf(fid, 'So we can infer that the warning alarm due to LOW_OXY_SAT has a smaller average duration than warning alarm due to HA_BRADY.\n');
+fprintf(fid, 'From this we can infer that the warning alarm due to LOW_OXY_SAT has a smaller average duration than the warning alarm due to HA_BRADY.\n');
 fprintf(fid, 'In addition, unlike the patient at bed 953, those at beds 940 and 923 both have high average durations\n');
-fprintf(fid, 'for their crisis alarms.\n]n');
+fprintf(fid, 'for their crisis alarms.\n\n');
 
-fprintf(fid, 'In the histograms, one can see that the majority\n');
-fprintf(fid, 'of their alarms are triggered from around 8am to 11am for bed 940, and at\n');
-fprintf(fid, 'around 11am for bed 923. From this data we can infer that both patients require\n');
-fprintf(fid, 'more attention for their conditions during times before noon.\n');
+fprintf(fid, 'OBSERVATION 3:\n');
+fprintf(fid, 'In the histograms, one can see that the majority of the alarms are triggered \n');
+fprintf(fid, 'from around 8am to 11am for bed 940, at around 11am for bed 923, and from 4am to 1pm\n');
+fprintf(fid, 'for bed 953. From this data, we can infer that the patients at beds 940 and 923 require\n');
+fprintf(fid, 'more attention for their life-threatening conditions before noon. The patient at bed 953\n');
+fprintf(fid, 'could benefit from an early morning caregiver.\n\n');
+
+% T3.3b
+
+metric4 = zeros(24,4);
+top3 = [940, 953, 923];
+
+for j = 1:3
+    for i = 0:23
+        metric4(i+1,1) = i;
+        data_HOUR = data(ismember(data.Hours, i),:);
+        data_BED = data_HOUR(ismember(data_HOUR.Bed_No, top3(1,j)), :);
+
+        data_BED_CRISIS = data_BED(ismember(data_BED.Alarm_Type, 'CRISIS'), :);
+        data_BED_WARNING = data_BED(ismember(data_BED.Alarm_Type, 'WARNING'), :);
+        data_BED_SYSTEM = data_BED(ismember(data_BED.Alarm_Type, 'SYSTEM'), :);
+        data_BED_ADVISORY = data_BED(ismember(data_BED.Alarm_Type, 'ADVISORY'), :);    
+
+        metric4(i+1,j) = 1000*sum(data_BED_CRISIS.Duration) + 100*sum(data_BED_WARNING.Duration) + 10*sum(data_BED_SYSTEM.Duration) + 1*sum(data_BED_ADVISORY.Duration);
+    end
+end
+
+figure;
+hist(metric4(:,2),24);
+h4 = findobj(gca,'Type','patch');
+h4.FaceColor = [0 0.5 0.5];
+h4.EdgeColor = 'w';
+title('Histogram of Metric Value Per Hour for Bed 940');
+xlabel('Hour');
+ylabel('Number of Alarms');
+
+figure;
+bar(metric4(:,3),24);
+h5 = findobj(gca,'Type','patch');
+h5.FaceColor = [0 0.5 0.5];
+h5.EdgeColor = 'w';
+title('Histogram of Metric Value Per Hour for Bed 953');
+xlabel('Hour');
+ylabel('Number of Alarms');
+
+figure;
+hist(metric4(:,4),24);
+h6 = findobj(gca,'Type','patch');
+h6.FaceColor = [0 0.5 0.5];
+h6.EdgeColor = 'w';
+title('Histogram of Metric Value Per Hour for Bed 923');
+xlabel('Hour');
+ylabel('Number of Alarms');
 
 fclose(fid);
