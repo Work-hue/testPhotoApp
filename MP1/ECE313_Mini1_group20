@@ -177,22 +177,30 @@ Metric:
  + total duration of SYSTEM alarm * 10
  + total duration of ADVISORY alarm * 1
 
+This metric is effective because it establishes different weights to the different alarm types. Crisis alarms
+have the most weight because they are life threatening. The order is crisis, warning, system and advisory alarms.
+The total duration of each alarm type has also been incorporated in this metric because it is a measure of
+how much care/attention the patient is already receiving.
+
+
+Task 3.2
+
 The following is a table describing the number of alarms (of each type) for each bed.
 
 				CRISIS		WARNING		SYSTEM		  ADVISORY		 Metric
 
-Bed No.921		 5			 4			 28 			 15		   2.974458e+04		
-Bed No.923		 15			 77			 431 			 261		   8.786634e+04		
-Bed No.940		 57			 60			 1205 			 1294		   3.056960e+05		
-Bed No.942		 3			 9			 106 			 87		   9.498256e+03		
-Bed No.943		 8			 14			 254 			 98		   4.592722e+04		
-Bed No.944		 14			 56			 118 			 62		   6.353266e+04		
-Bed No.946		 1			 4			 69 			 36		   8.956690e+03		
-Bed No.947		 11			 11			 297 			 166		   4.958020e+04		
-Bed No.952		 9			 13			 124 			 78		   3.409110e+04		
-Bed No.953		 17			 69			 203 			 130		   9.127602e+04		
-Bed No.955		 0			 2			 7   			 4		   4.947360e+02		
-Bed No.956		 6			 13			 107 			 32		   3.183056e+04		
+Bed No.921		 5			 4			 28 			 15  		 2.974458e+04		
+Bed No.923		 15			 77			 431 			 261  		 8.786634e+04		
+Bed No.940		 57			 60			 1205 			 1294  		 3.056960e+05		
+Bed No.942		 3			 9			 106 			 87  		 9.498256e+03		
+Bed No.943		 8			 14			 254 			 98  		 4.592722e+04		
+Bed No.944		 14			 56			 118 			 62  		 6.353266e+04		
+Bed No.946		 1			 4			 69 			 36  		 8.956690e+03		
+Bed No.947		 11			 11			 297 			 166  		 4.958020e+04		
+Bed No.952		 9			 13			 124 			 78  		 3.409110e+04		
+Bed No.953		 17			 69			 203 			 130  		 9.127602e+04		
+Bed No.955		 0			 2			 7   			 4  		 4.947360e+02		
+Bed No.956		 6			 13			 107 			 32  		 3.183056e+04		
 
 The top two patient beds in a serious condition are No.940 and No.953.
 
@@ -201,7 +209,8 @@ Although bed 940 has the most number of crisis and warning alarms, it is hard to
 due to the fact that bed 940 also has an excessive amount of system alarms. It is possible that certain
 lab equipment may be defective triggering false alarms. However, the patient at this bed should still
 be checked in case the alarms are intentional. If the alarms are false, and the equipment has been validated 
-as defective, the top two patients to consider would be beds 923 and 953.
+as defective, the top two patients to consider would be beds 923 and 953. Therefore, from this point on,
+we will be considering the top three patients in need.
 
 Analysis for bed 940:
 
@@ -314,4 +323,28 @@ Analysis for bed 923:
 		Number of LOW_OXY_SAT Alarms: 244
 		Number of NA Alarms: 2
 		Number of PAUSE Alarms: 1
+
+Here are our 3 observations from this patient data subset.
+
+OBSERVATION 1:
+The top cause of all patients crisis alarm was found to be LOW_OXY_SAT.
+This data is an indicator that these patients often have issues with low
+blood oxygen levels. To reduce the frequency of this alarm cause, a suggestion
+would be to increase oxygen supplementation to patients with such conditions.
+
+OBSERVATION 2:
+The patient at bed 953 has a longer average duration for the warning alarm compared with those at beds 940 and 923.
+This is probably because their top causes for the warning alarm are different. 
+Specifically, the top cause for the warning alarm is HA_BRADY for the patient at bed 953, 
+whereas the top cause for the warning alarm is LOW_OXY_SAT for the other two patients. 
+From this we can infer that the warning alarm due to LOW_OXY_SAT has a smaller average duration than the warning alarm due to HA_BRADY.
+In addition, unlike the patient at bed 953, those at beds 940 and 923 both have high average durations
+for their crisis alarms.
+
+OBSERVATION 3:
+In the histograms, one can see that the majority of the alarms are triggered 
+from around 8am to 11am for bed 940, at around 11am for bed 923, and from 4am to 1pm
+for bed 953. From this data, we can infer that the patients at beds 940 and 923 require
+more attention for their life-threatening conditions before noon. The patient at bed 953
+could benefit from an early morning caregiver.
 

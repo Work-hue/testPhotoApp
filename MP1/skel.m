@@ -258,6 +258,12 @@ fprintf(fid, '\n\nTask 3.1\n\n');
 % !! Define the metric that identifies patients in a severe situation
 %fprintf(fid, '(Number of CRISIS alarm *2 + Number of CRISIS alarm) on average per hour');
 fprintf(fid, 'Metric:\n patValue = total duration of CRISIS alarm * 1000\n + total duration of WARNING alarm * 100\n + total duration of SYSTEM alarm * 10\n + total duration of ADVISORY alarm * 1\n\n');
+fprintf(fid, 'This metric is effective because it establishes different weights to the different alarm types. Crisis alarms\n');
+fprintf(fid, 'have the most weight because they are life threatening. The order is crisis, warning, system and advisory alarms.\n');
+fprintf(fid, 'The total duration of each alarm type has also been incorporated in this metric because it is a measure of\n');
+fprintf(fid, 'how much care/attention the patient is already receiving.\n');
+
+fprintf(fid, '\n\nTask 3.2\n\n');
 
 % !! Using your metric, find the top two patient beds in a severe situation
 beds = [921,923,940,942,943,944,946,947,952,953,955,956];
@@ -286,9 +292,9 @@ for i = 1:12
     
     % print into table format
     if i == 11 
-        fprintf(fid, 'Bed No.%d\t\t %d\t\t\t %d\t\t\t %d   \t\t\t %d\t\t   %d\t\t\n', count(i,1), count(i,2), count(i,3), count(i,4), count(i,5), count(i,6));    
+        fprintf(fid, 'Bed No.%d\t\t %d\t\t\t %d\t\t\t %d   \t\t\t %d  \t\t %d\t\t\n', count(i,1), count(i,2), count(i,3), count(i,4), count(i,5), count(i,6));    
     else
-        fprintf(fid, 'Bed No.%d\t\t %d\t\t\t %d\t\t\t %d \t\t\t %d\t\t   %d\t\t\n', count(i,1), count(i,2), count(i,3), count(i,4), count(i,5), count(i,6));    
+        fprintf(fid, 'Bed No.%d\t\t %d\t\t\t %d\t\t\t %d \t\t\t %d  \t\t %d\t\t\n', count(i,1), count(i,2), count(i,3), count(i,4), count(i,5), count(i,6));    
     end
 end
 
@@ -311,7 +317,8 @@ fprintf(fid, 'Although bed 940 has the most number of crisis and warning alarms,
 fprintf(fid, 'due to the fact that bed 940 also has an excessive amount of system alarms. It is possible that certain\n');
 fprintf(fid, 'lab equipment may be defective triggering false alarms. However, the patient at this bed should still\n');
 fprintf(fid, 'be checked in case the alarms are intentional. If the alarms are false, and the equipment has been validated \n');
-fprintf(fid, 'as defective, the top two patients to consider would be beds 923 and 953.\n\n');
+fprintf(fid, 'as defective, the top two patients to consider would be beds 923 and 953. Therefore, from this point on,\n');
+fprintf(fid, 'we will be considering the top three patients in need.\n\n');
 
 % !! Extract (split) the data of your interest
 pat1 = data(ismember(data.Bed_No, beds(1,idx1)), :);
@@ -472,12 +479,13 @@ data_BED = data(ismember(data.Bed_No, 940),:);
 data_BED_CRISIS = data_BED(ismember(data_BED.Alarm_Type, 'CRISIS'),:).Hours;
 data_BED_WARNING = data_BED(ismember(data_BED.Alarm_Type, 'WARNING'),:).Hours;
 data_BED_CandW = [data_BED_CRISIS; data_BED_WARNING];
+
 figure;
 hist(data_BED_CandW,24);
 h1 = findobj(gca,'Type','patch');
 h1.FaceColor = [0 0.5 0.5];
 h1.EdgeColor = 'w';
-title('Histogram of Alarms Per Hour for Bed 940');
+title('Histogram of C/W Alarms Per Hour for Bed 940');
 xlabel('Hour');
 ylabel('Number of Alarms');
 
@@ -486,12 +494,13 @@ data_BED = data(ismember(data.Bed_No, 953),:);
 data_BED_CRISIS = data_BED(ismember(data_BED.Alarm_Type, 'CRISIS'),:).Hours;
 data_BED_WARNING = data_BED(ismember(data_BED.Alarm_Type, 'WARNING'),:).Hours;
 data_BED_CandW = [data_BED_CRISIS; data_BED_WARNING];
+
 figure;
 hist(data_BED_CandW,24);
 h2 = findobj(gca,'Type','patch');
 h2.FaceColor = [0 0.5 0.5];
 h2.EdgeColor = 'w';
-title('Histogram of Alarms Per Hour for Bed 953');
+title('Histogram of C/W Alarms Per Hour for Bed 953');
 xlabel('Hour');
 ylabel('Number of Alarms');
 
@@ -500,14 +509,44 @@ data_BED = data(ismember(data.Bed_No, 923),:);
 data_BED_CRISIS = data_BED(ismember(data_BED.Alarm_Type, 'CRISIS'),:).Hours;
 data_BED_WARNING = data_BED(ismember(data_BED.Alarm_Type, 'WARNING'),:).Hours;
 data_BED_CandW = [data_BED_CRISIS; data_BED_WARNING];
+
 figure;
 hist(data_BED_CandW,24);
 h3 = findobj(gca,'Type','patch');
 h3.FaceColor = [0 0.5 0.5];
 h3.EdgeColor = 'w';
-title('Histogram of Alarms Per Hour for Bed 923');
+title('Histogram of C/W Alarms Per Hour for Bed 923');
 xlabel('Hour');
 ylabel('Number of Alarms');
+
+% T3.3a
+
+fprintf(fid, 'Here are our 3 observations from this patient data subset.\n\n');
+
+fprintf(fid, 'OBSERVATION 1:\n');
+fprintf(fid, 'The top cause of all patients crisis alarm was found to be LOW_OXY_SAT.\n');
+fprintf(fid, 'This data is an indicator that these patients often have issues with low\n');
+fprintf(fid, 'blood oxygen levels. To reduce the frequency of this alarm cause, a suggestion\n');
+fprintf(fid, 'would be to increase oxygen supplementation to patients with such conditions.\n\n');
+
+fprintf(fid, 'OBSERVATION 2:\n');
+fprintf(fid, 'The patient at bed 953 has a longer average duration for the warning alarm compared with those at beds 940 and 923.\n');
+fprintf(fid, 'This is probably because their top causes for the warning alarm are different. \n');
+fprintf(fid, 'Specifically, the top cause for the warning alarm is HA_BRADY for the patient at bed 953, \n');
+fprintf(fid, 'whereas the top cause for the warning alarm is LOW_OXY_SAT for the other two patients. \n'); 
+fprintf(fid, 'From this we can infer that the warning alarm due to LOW_OXY_SAT has a smaller average duration than the warning alarm due to HA_BRADY.\n');
+fprintf(fid, 'In addition, unlike the patient at bed 953, those at beds 940 and 923 both have high average durations\n');
+fprintf(fid, 'for their crisis alarms.\n\n');
+
+fprintf(fid, 'OBSERVATION 3:\n');
+fprintf(fid, 'In the histograms, one can see that the majority of the alarms are triggered \n');
+fprintf(fid, 'from around 8am to 11am for bed 940, at around 11am for bed 923, and from 4am to 1pm\n');
+fprintf(fid, 'for bed 953. From this data, we can infer that the patients at beds 940 and 923 require\n');
+fprintf(fid, 'more attention for their life-threatening conditions before noon. The patient at bed 953\n');
+fprintf(fid, 'could benefit from an early morning caregiver.\n\n');
+
+% T3.3b
+
 
 
 fclose(fid);
