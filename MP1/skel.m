@@ -521,6 +521,8 @@ ylabel('Number of Alarms');
 
 % T3.3a
 
+fprintf(fid, '\nTask 3.3a\n\n');
+
 fprintf(fid, 'Here are our 3 observations from this patient data subset.\n\n');
 
 fprintf(fid, 'OBSERVATION 1:\n');
@@ -534,9 +536,9 @@ fprintf(fid, 'The patient at bed 953 has a longer average duration for the warni
 fprintf(fid, 'This is probably because their top causes for the warning alarm are different. \n');
 fprintf(fid, 'Specifically, the top cause for the warning alarm is HA_BRADY for the patient at bed 953, \n');
 fprintf(fid, 'whereas the top cause for the warning alarm is LOW_OXY_SAT for the other two patients. \n'); 
-fprintf(fid, 'From this we can infer that the warning alarm due to LOW_OXY_SAT has a smaller average duration than the warning alarm due to HA_BRADY.\n');
-fprintf(fid, 'In addition, unlike the patient at bed 953, those at beds 940 and 923 both have high average durations\n');
-fprintf(fid, 'for their crisis alarms.\n\n');
+fprintf(fid, 'From this we can infer that the warning alarm due to LOW_OXY_SAT has a smaller average duration than\n');
+fprintf(fid, 'the warning alarm due to HA_BRADY. In addition, unlike the patient at bed 953, those at beds 940\n');
+fprintf(fid, 'and 923 both have high average durations for their crisis alarms.\n\n');
 
 fprintf(fid, 'OBSERVATION 3:\n');
 fprintf(fid, 'In the histograms, one can see that the majority of the alarms are triggered \n');
@@ -546,6 +548,8 @@ fprintf(fid, 'more attention for their life-threatening conditions before noon. 
 fprintf(fid, 'could benefit from an early morning caregiver.\n\n');
 
 % T3.3b
+
+fprintf(fid, '\nTask 3.3b\n\n');
 
 metric4 = zeros(24,4);
 top3 = [940, 953, 923];
@@ -567,20 +571,33 @@ end
 
 figure;
 bar(metric4(:,1),metric4(:,2));
-title('Histogram of Metric Value Per Hour for Bed 940');
+title('Bar Graph of Metric Value Per Hour for Bed 940');
 xlabel('Hour');
-ylabel('Number of Alarms');
+ylabel('Metric Value');
 
 figure;
 bar(metric4(:,1),metric4(:,3));
-title('Histogram of Metric Value Per Hour for Bed 953');
+title('Bar Graph of Metric Value Per Hour for Bed 953');
 xlabel('Hour');
-ylabel('Number of Alarms');
+ylabel('Metric Value');
 
 figure;
 bar(metric4(:,1),metric4(:,4));
-title('Histogram of Metric Value Per Hour for Bed 923');
+title('Bar Graph of Metric Value Per Hour for Bed 923');
 xlabel('Hour');
-ylabel('Number of Alarms');
+ylabel('Metric Value');
+
+fprintf(fid, 'As shown by figures 6-8, the metric value increases from 12am to 10am where it reaches its peak value.\n');
+fprintf(fid, 'The metric value then decreases. The change in the metric value from 12am to 11:59pm resembles\n');
+fprintf(fid, 'a dirac delta function rather than a traditional bell curve. These graphs are consistent with\n');
+fprintf(fid, 'the fact that most crisis alarms occur between 9am and 11am for these three patients.\n');
+
+fprintf(fid, '\n\nGROUP DISTRIBUTION:\n\n');
+
+fprintf(fid, 'Harsh Modhera (hmodhe2) - 33.33 percent\n');
+fprintf(fid, 'Herman Pineda (hpineda2) - 33.33 percent\n');
+fprintf(fid, 'Yuchen Li (li215) - 33.33 percent\n\n');
+
+fprintf(fid, 'We all met up in Grainger basement on Feb 8th and 9th and worked through all of the tasks together.\n');
 
 fclose(fid);

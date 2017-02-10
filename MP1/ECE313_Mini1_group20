@@ -324,6 +324,9 @@ Analysis for bed 923:
 		Number of NA Alarms: 2
 		Number of PAUSE Alarms: 1
 
+
+Task 3.3a
+
 Here are our 3 observations from this patient data subset.
 
 OBSERVATION 1:
@@ -337,9 +340,9 @@ The patient at bed 953 has a longer average duration for the warning alarm compa
 This is probably because their top causes for the warning alarm are different. 
 Specifically, the top cause for the warning alarm is HA_BRADY for the patient at bed 953, 
 whereas the top cause for the warning alarm is LOW_OXY_SAT for the other two patients. 
-From this we can infer that the warning alarm due to LOW_OXY_SAT has a smaller average duration than the warning alarm due to HA_BRADY.
-In addition, unlike the patient at bed 953, those at beds 940 and 923 both have high average durations
-for their crisis alarms.
+From this we can infer that the warning alarm due to LOW_OXY_SAT has a smaller average duration than
+the warning alarm due to HA_BRADY. In addition, unlike the patient at bed 953, those at beds 940
+and 923 both have high average durations for their crisis alarms.
 
 OBSERVATION 3:
 In the histograms, one can see that the majority of the alarms are triggered 
@@ -348,3 +351,19 @@ for bed 953. From this data, we can infer that the patients at beds 940 and 923 
 more attention for their life-threatening conditions before noon. The patient at bed 953
 could benefit from an early morning caregiver.
 
+
+Task 3.3b
+
+As shown by figures 6-8, the metric value increases from 12am to 10am where it reaches its peak value.
+The metric value then decreases. The change in the metric value from 12am to 11:59pm resembles
+a dirac delta function rather than a traditional bell curve. These graphs are consistent with
+the fact that most crisis alarms occur between 9am and 11am for these three patients.
+
+
+GROUP DISTRIBUTION:
+
+Harsh Modhera (hmodhe2) - 33.33 percent
+Herman Pineda (hpineda2) - 33.33 percent
+Yuchen Li (li215) - 33.33 percent
+
+We all met up in Grainger basement on Feb 8th and 9th and worked through all of the tasks together.
