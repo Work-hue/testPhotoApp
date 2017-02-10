@@ -466,48 +466,15 @@ fprintf(fid, '\t\tNumber of NA Alarms: %d\n', 2);
 fprintf(fid, '\t\tNumber of PAUSE Alarms: %d\n\n', 1);
 
 % for each patient, plot # of CRISIS & WARNING alarms during each hour
+hist(data(ismember(data.Bed_No, 940),:).Hours,24);
+h = findobj(gca,'Type','patch');
+h.FaceColor = [0 0.5 0.5];
+h.EdgeColor = 'w';
 
-% No. 940
-data_BED = data(ismember(data.Bed_No, 940),:);
-data_BED_CRISIS = data_BED(ismember(data_BED.Alarm_Type, 'CRISIS'),:).Hours;
-data_BED_WARNING = data_BED(ismember(data_BED.Alarm_Type, 'WARNING'),:).Hours;
-data_BED_CandW = [data_BED_CRISIS; data_BED_WARNING];
-figure;
-hist(data_BED_CandW,24);
-h1 = findobj(gca,'Type','patch');
-h1.FaceColor = [0 0.5 0.5];
-h1.EdgeColor = 'w';
-title('Histogram of Alarms Per Hour for Bed 940');
+% Labeling the figure
+
+title('Histogram of Alarms Per Hour');
 xlabel('Hour');
 ylabel('Number of Alarms');
-
-% No. 953
-data_BED = data(ismember(data.Bed_No, 953),:);
-data_BED_CRISIS = data_BED(ismember(data_BED.Alarm_Type, 'CRISIS'),:).Hours;
-data_BED_WARNING = data_BED(ismember(data_BED.Alarm_Type, 'WARNING'),:).Hours;
-data_BED_CandW = [data_BED_CRISIS; data_BED_WARNING];
-figure;
-hist(data_BED_CandW,24);
-h2 = findobj(gca,'Type','patch');
-h2.FaceColor = [0 0.5 0.5];
-h2.EdgeColor = 'w';
-title('Histogram of Alarms Per Hour for Bed 953');
-xlabel('Hour');
-ylabel('Number of Alarms');
-
-% No. 923
-data_BED = data(ismember(data.Bed_No, 923),:);
-data_BED_CRISIS = data_BED(ismember(data_BED.Alarm_Type, 'CRISIS'),:).Hours;
-data_BED_WARNING = data_BED(ismember(data_BED.Alarm_Type, 'WARNING'),:).Hours;
-data_BED_CandW = [data_BED_CRISIS; data_BED_WARNING];
-figure;
-hist(data_BED_CandW,24);
-h3 = findobj(gca,'Type','patch');
-h3.FaceColor = [0 0.5 0.5];
-h3.EdgeColor = 'w';
-title('Histogram of Alarms Per Hour for Bed 923');
-xlabel('Hour');
-ylabel('Number of Alarms');
-
 
 fclose(fid);
