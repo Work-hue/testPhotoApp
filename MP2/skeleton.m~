@@ -12,9 +12,9 @@ fid = fopen('ECE313_Mini2_group#', 'w');
 
 %% T0
 % !! Subset your data for each signal
-HR = data(1,:);
-PR = data(2,:);
-X = data(3,:);
+HR = data(1)
+PR = data(2)
+X = data(3)
 
 % Part a
 % !! Plot each signal over time
@@ -25,10 +25,10 @@ subplot(3,1,1);
 plot(x,HR);
 title(labels(1));
 subplot(3,1,2);
-plot(x,PR);
+plot('PR');
 title(labels(2));
 subplot(3,1,3);
-plot(x,X);
+plot('X');
 title(labels(3));
 xlabel('Time(seconds)')
 
