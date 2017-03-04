@@ -35,7 +35,7 @@ xlabel('Time(seconds)')
 
 % Note that Tasks 1.1 and 1.2 should be done only for the respiration rate signal 
 % Tasks 2.1 and 2.2 should be performed using all three signals.
-%% T1.1
+% T1.1
 % Part a
 % Generating three sample sets of different sizes
 sampleset = [70,1000,30000];
@@ -53,10 +53,11 @@ for k = 1:3
     h = get(gca,'children'); set(h,'LineWidth',2);set(h,'Color','r')
     
     % !! Call the funcion for calculating and ploting pdf and CDF of X     
+    %pdf_cdf(X);
     
     title(strcat(strcat(char(labels(3)),' - Sample Size = '),char(num2str(sampleset(k)))));
 end
-
+%%
 % Part b
 % !! Use the tabulate function in MATLAB over X and floor(X). 
 
@@ -72,8 +73,8 @@ fprintf(fid, 'Observed Property of PDF = %s\n\n', 'e.g. F(X) is non-decreasing?'
 % Part c
 % !! Using CDF of X, find values a and b such that P(X <= a) <= 0.02 and P(X <= b) >= 0.98.
 
-a = 
-b = 
+%a = 
+%b = 
 fprintf(fid, 'Task 1.1 - Part c\n');
 fprintf(fid, 'Empirical a = %f\n', 'Empirical a');
 fprintf(fid, 'Empirical b = %f\n\n', 'Empirical b');
