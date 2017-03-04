@@ -15,6 +15,9 @@ function  pdf_cdf(X)
     
     x = min_Y:1:max_Y;
     bar(x,Pmf);
+    xlabel('X');
+    ylabel('Probability');
+    title('PMF and PDF');
     
     hold on; % For the next plots to be on the same figure
     

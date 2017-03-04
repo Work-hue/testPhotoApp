@@ -11,5 +11,62 @@ Min of tabulate(X) = 0.003333%
 Max of tabulate(X) = 0.003333%
 Min of tabulate(floor(X)) = 0.000000%
 Max of tabulate(floor(X)) = 5.490000%
-Observed Property of PDF: The integral of f(x) for all x is equal to 1.
 
+Question 1:
+Tabulate(X) gives an estimated pdf because the original dataset of all possible respiration rates is meant to be continuous.
+Furthermore, tabulate(X) returns the probabilities representing the relative likelihood of all possible respiration rate values.
+Tabulate (Y) gives a pmf because after using the floor function on X, all the possible respiration rates are truncated. This causes
+the random variable to take on discrete values.
+
+Question 2:
+For the X dataset, the min and max probabilities are equal, because without the floor function, each respiration rate is distinct 
+and therefore is as likely to appear as any other respiration rate. 
+For the Y dataset, the min and max probabilities are not equal because with the floor function, all the values corresponding to the respiration 
+rates are truncated. Hence, multiple respiration rates from the original data now share common Y values. Consequently, the frequency for each Y 
+value can vary.
+
+Question 3:
+The probability that X will be contained in an interval of length  around the point a is approximately f(a).
+If we let  be small enough such that each interval of length  only contains at most one sample, then each existing respiration rate value
+corresponds to exactly one sample, which accounts for the reason that for the X dataset, the min and max probabilities are equal.
+However, that is not true for PMF, since after taking Y = floor(X) in this case, necessarily some Y value could correspond to multiple samples.
+Consequently, the frequency for each Y value can vary, and therefore for the Y dataset, the min and max probabilities are not equal.
+
+Task 1.1c
+
+Empirical a = 10.146654
+Empirical b = 37.085962
+
+Task 1.2a
+
+Mean RESP = 21.741818
+Standard Deviation RESP = 7.104292
+
+Task 1.2c
+
+The dataset generated in this part is normally distributed, but the dataset from 1.1
+is right-skewed. In the dataset from 1.1, the variable X is approximately normally
+distributed when 12 <= X <= 38, but not normally distributed when X<12 or X>38. 
+
+Task 1.2d
+
+PDF of normal distribution: 
+f(x) = 1/(7.104292 * sqrt(2*Pi)) * exp(-0.5*((x-21.741818)/7.104292)^2) 
+CDF of normal distribution: 
+CDF does not have closed form, according to lecture slides.
+
+Theoretical a = 7.142497
+Theoretical b = 36.341138
+
+Theoretical a and b are both a little bit less than the empirical a and b.
+This is probably because our actual dataset from 1.1 is right-skewed, 
+whereas a normal distribution is not skewed.
+
+
+GROUP DISTRIBUTION:
+
+Harsh Modhera (hmodhe2) - 33.33 percent
+Herman Pineda (hpineda2) - 33.33 percent
+Yuchen Li (li215) - 33.33 percent
+
+We all met up in Grainger basement on Mar 4 and worked through all of the tasks together.

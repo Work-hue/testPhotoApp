@@ -110,6 +110,7 @@ fprintf(fid, 'rates are truncated. Hence, multiple respiration rates from the or
 fprintf(fid, 'value can vary.\n\n');
 
 fprintf(fid, 'Question 3:\n');
+fprintf(fid, 'Observed Property of PDF f(x): \n');
 fprintf(fid, 'The probability that X will be contained in an interval of length ? around the point a is approximately ?f(a).\n');
 fprintf(fid, 'If we let ? be small enough such that each interval of length ? only contains at most one sample, then each existing respiration rate value\n');
 fprintf(fid, 'corresponds to exactly one sample, which accounts for the reason that for the X dataset, the min and max probabilities are equal.\n');
@@ -122,7 +123,7 @@ fprintf(fid, 'Consequently, the frequency for each Y value can vary, and therefo
 sorted_X = sort(X);
 a = sorted_X(600);
 b = sorted_X(29400);
-fprintf(fid, 'Task 1.1c\n\n');
+fprintf(fid, 'Task 1.1 - Part c\n');
 fprintf(fid, 'Empirical a = %f\n', a);
 fprintf(fid, 'Empirical b = %f\n\n', b);
 
@@ -132,11 +133,11 @@ fprintf(fid, 'Empirical b = %f\n\n', b);
 % !! Calculate mean of the signal
 mean_X = mean(X);
 fprintf(fid, 'Task 1.2a\n\n');
-fprintf(fid, 'Mean RESP = %f\n', mean_X);
+fprintf(fid, 'Mean RESP = %f\n\n', mean_X);
 
 % !! Calculate standard deviation of the signal
 std_X = std(X);
-fprintf(fid, 'Standard Deviation RESP = %f\n\n', std_X);
+fprintf(fid, 'Standard Deviation RESP = %f\n', std_X);
 
 % Part b
 % !! Generate a normal random variable with the same mean & standard deviation 
@@ -162,7 +163,7 @@ figure;
 title(strcat(char(labels(3)),' Normplot'));
 % !! Use normplot function to estimate the difference between distributions
 normplot(X)
-fprintf(fid, 'Task 1.2c\n\n');
+fprintf(fid, 'Task 1.2c\n');
 fprintf(fid, 'The dataset generated in this part is normally distributed, but the dataset from 1.1\n'); 
 fprintf(fid, 'is right-skewed. In the dataset from 1.1, the variable X is approximately normally\n');
 fprintf(fid, 'distributed when 12 <= X <= 38, but not normally distributed when X<12 or X>38. \n\n');
@@ -170,7 +171,7 @@ fprintf(fid, 'distributed when 12 <= X <= 38, but not normally distributed when 
 
 % Part d
 % !! Show your work in the report, then plug in the numbers that you calculated here
-fprintf(fid, 'Task 1.2d\n\n');
+fprintf(fid, 'Task 1.2 - Part d\n');
 fprintf(fid, 'PDF of normal distribution: \n');
 fprintf(fid, 'f(x) = 1/(%f * sqrt(2*Pi)) * exp(-0.5*((x-%f)/%f)^2) \n', std_X, mean_X, std_X);
 fprintf(fid, 'CDF of normal distribution: \n');
@@ -185,16 +186,6 @@ fprintf(fid, 'Theoretical b = %f\n\n', ther_b);
 fprintf(fid, 'Theoretical a and b are both a little bit less than the empirical a and b.\n');
 fprintf(fid, 'This is probably because our actual dataset from 1.1 is right-skewed, \n');
 fprintf(fid, 'whereas a normal distribution is not skewed.\n');
-
-fprintf(fid, '\n\nGROUP DISTRIBUTION:\n\n');
-
-fprintf(fid, 'Harsh Modhera (hmodhe2) - 33.33 percent\n');
-fprintf(fid, 'Herman Pineda (hpineda2) - 33.33 percent\n');
-fprintf(fid, 'Yuchen Li (li215) - 33.33 percent\n\n');
-
-fprintf(fid, 'We all met up in Grainger basement on Mar 4 and worked through all of the tasks together.\n');
-
-fclose(fid);
 
 %% Task 2.1;
 % Tasks 2.1 and 2.2 should be done twice, 
