@@ -1,4 +1,6 @@
 %   FILL IN / MODIFY THE CODE WITH '' or comments with !!
+
+clc
 close all;
 clear all;
 
@@ -8,9 +10,9 @@ labels = {'Heart Rate','Pulse Rate','Respiration Rate'};
 
 % open the result file
 % !! replace # with your own groupID
-fid = fopen('ECE313_Mini2_group#', 'w');
+fid = fopen('ECE313_Mini2_group20', 'w');
 
-%% T0
+% T0
 % !! Subset your data for each signal
 HR = data(1,:);
 PR = data(2,:);
@@ -23,53 +25,84 @@ m = size(data,2);
 x = [1:1:m];
 subplot(3,1,1);
 plot(x,HR);
+xlabel('Time(seconds)');
+ylabel('Number of Contractions');
 title(labels(1));
 subplot(3,1,2);
 plot(x,PR);
+xlabel('Time(seconds)');
+ylabel('Pulse')
 title(labels(2));
 subplot(3,1,3);
 plot(x,X);
+xlabel('Time(seconds)');
+ylabel('Breaths')
 title(labels(3));
-xlabel('Time(seconds)')
-
 
 % Note that Tasks 1.1 and 1.2 should be done only for the respiration rate signal 
 % Tasks 2.1 and 2.2 should be performed using all three signals.
 % T1.1
 % Part a
 % Generating three sample sets of different sizes
+
 sampleset = [70,1000,30000];
 for k = 1:3
     % Pick a random sample of size sampleset(k) from the data set  
     % (Without replacement)
-    Sample = datasample('X',sampleset(k),'Replace',false);
-
+    
+    Sample = datasample(X, sampleset(k), 'Replace', false);
+    
     % Plot the CDF of the whole data set as the reference (in red color)
     figure;  
     subplot(2,1,1);
-    [p, xx] = ecdf('X');
+    [p, xx] = ecdf(Sample);
     plot(xx,p);
-    hold on;% For the next plots to be on the same figure        
+    %hold on;% For the next plots to be on the same figure        
     h = get(gca,'children'); set(h,'LineWidth',2);set(h,'Color','r')
     
     % !! Call the funcion for calculating and ploting pdf and CDF of X     
-    %pdf_cdf(X);
+    pdf_cdf(Sample);
     
     title(strcat(strcat(char(labels(3)),' - Sample Size = '),char(num2str(sampleset(k)))));
 end
-%%
+
+fprintf(fid, 'Task 1.1a \n\n');
+fprintf(fid, 'The biggest difference between the pmf and the pdf is that the pmf depicts interval based probabilities while the pdf approximates\n');
+fprintf(fid, 'the probabilities over a continuum of sample points. The pdf can be seen as an upper envelope of the pmf given a particular dataset. As\n');
+fprintf(fid, 'the number of samples increases, the pdf takes on a more accurate upper envelope of the pmf. As the sample size increases,\n');
+fprintf(fid, 'the pmf and the pdf of the sampleset more closely resemble the pmf and pdf of the entire dataset.\n\n');
+
+%
 % Part b
 % !! Use the tabulate function in MATLAB over X and floor(X). 
 
+X_tab = tabulate(X);
+Y = floor(X);
+Y_tab = tabulate(Y);
+
+X_tab_min = min(X_tab(:,3)); 
+X_tab_max = max(X_tab(:,3));
+Y_tab_min = min(Y_tab(:,3));
+Y_tab_max = max(Y_tab(:,3));
 
 % !! Answer the question by filling in the following printf
-fprintf(fid, 'Task 1.1 - Part b\n');
-fprintf(fid, 'Min of tabulate(X) = %f\n', 'min_tabulate_X');
-fprintf(fid, 'Max of tabulate(X) = %f\n', 'max_tabulate_X');
-fprintf(fid, 'Min of tabulate(floor(X)) = %f\n', 'min_tabulate_floor_X');
-fprintf(fid, 'Max of tabulate(floor(X)) = %f\n', 'max_tabulate_floor_X');
-fprintf(fid, 'Observed Property of PDF = %s\n\n', 'e.g. F(X) is non-decreasing?');
+fprintf(fid, 'Task 1.1b\n\n');
+fprintf(fid, 'Min of tabulate(X) = %f%%\n', X_tab_min);
+fprintf(fid, 'Max of tabulate(X) = %f%%\n', X_tab_max);
+fprintf(fid, 'Min of tabulate(floor(X)) = %f%%\n', Y_tab_min);
+fprintf(fid, 'Max of tabulate(floor(X)) = %f%%\n', Y_tab_max);
 
+
+fprintf(fid, 'Question 1:\n');
+fprintf(fid, 'Tabulate(X) gives an estimated pdf because the original dataset of all possible respiration rates is meant to be continuous. X  \n');
+fprintf(fid, '\n\n');
+fprintf(fid, 'Question 2:\n');
+fprintf(fid, '\n');
+fprintf(fid, '\n\n');
+fprintf(fid, 'Question 3:\n');
+fprintf(fid, 'Observed Property of PDF: %s\n\n', 'The integral of f(x) for all x is equal to 1.');
+
+%%
 % Part c
 % !! Using CDF of X, find values a and b such that P(X <= a) <= 0.02 and P(X <= b) >= 0.98.
 
@@ -214,8 +247,8 @@ nFold_p_md = [];
 for i=1:3
     % Hint: z = [x y]; merges the two datasets x and y
 
-    trainData = 
-    testData = 
+  %  trainData = 
+   % testData = 
 
     % Part b: Train the decision model using trainData
 

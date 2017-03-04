@@ -1,0 +1,15 @@
+Task 1.1a 
+
+The biggest difference between the pmf and the pdf is that the pmf depicts interval based probabilities while the pdf approximates
+the probabilities over a continuum of sample points. The pdf can be seen as an upper envelope of the pmf given a particular dataset. As
+the number of samples increases, the pdf takes on a more accurate upper envelope of the pmf. As the sample size increases,
+the pmf and the pdf of the sampleset more closely resemble the pmf and pdf of the entire dataset.
+
+Task 1.1b
+
+Min of tabulate(X) = 0.003333%
+Max of tabulate(X) = 0.003333%
+Min of tabulate(floor(X)) = 0.000000%
+Max of tabulate(floor(X)) = 5.490000%
+Observed Property of PDF: The integral of f(x) for all x is equal to 1.
+
