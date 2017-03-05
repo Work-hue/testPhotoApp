@@ -26,8 +26,8 @@ rates are truncated. Hence, multiple respiration rates from the original data no
 value can vary.
 
 Question 3:
-The probability that X will be contained in an interval of length  around the point a is approximately f(a).
-If we let  be small enough such that each interval of length  only contains at most one sample, then each existing respiration rate value
+The probability that X will be contained in an interval of length ? around the point a is approximately ?f(a).
+If we let ? be small enough such that each interval of length ? only contains at most one sample, then each existing respiration rate value
 corresponds to exactly one sample, which accounts for the reason that for the X dataset, the min and max probabilities are equal.
 However, that is not true for PMF, since after taking Y = floor(X) in this case, necessarily some Y value could correspond to multiple samples.
 Consequently, the frequency for each Y value can vary, and therefore for the Y dataset, the min and max probabilities are not equal.
@@ -53,7 +53,7 @@ Task 1.2d
 PDF of normal distribution: 
 f(x) = 1/(7.104292 * sqrt(2*Pi)) * exp(-0.5*((x-21.741818)/7.104292)^2) 
 CDF of normal distribution: 
-CDF does not have closed form, according to lecture slides.
+F(x) = 1/(sqrt(2*Pi)) * Integrate for t from -infinity to (x-21.741818)/7.104292 { exp(-0.5* t^2) dt} 
 
 Theoretical a = 7.142497
 Theoretical b = 36.341138

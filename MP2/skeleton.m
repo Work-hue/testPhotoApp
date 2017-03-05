@@ -174,7 +174,7 @@ fprintf(fid, 'Task 1.2d\n\n');
 fprintf(fid, 'PDF of normal distribution: \n');
 fprintf(fid, 'f(x) = 1/(%f * sqrt(2*Pi)) * exp(-0.5*((x-%f)/%f)^2) \n', std_X, mean_X, std_X);
 fprintf(fid, 'CDF of normal distribution: \n');
-fprintf(fid, 'CDF does not have closed form, according to lecture slides.\n\n');
+fprintf(fid, 'F(x) = 1/(sqrt(2*Pi)) * Integrate for t from -infinity to (x-%f)/%f { exp(-0.5* t^2) dt} \n\n', mean_X, std_X);
 
 z_score = 2.055;
 ther_a = mean_X - z_score*std_X;
@@ -197,6 +197,7 @@ fprintf(fid, 'We all met up in Grainger basement on Mar 4 and worked through all
 fclose(fid);
 
 %% Task 2.1;
+%{
 % Tasks 2.1 and 2.2 should be done twice, 
 % once with the empirical threshold, and once with the theoretical threshold
 % !! Change the code to do this.
@@ -233,6 +234,7 @@ title('Golden Alarms');
 bar('Golden Alarms','r');
 
 %% Task 2.2;
+
 % Parts a and b
 % !! Write the code to calculate the probabilities of:
 %    false alarm, miss detection and error 
@@ -317,5 +319,5 @@ fprintf(fid, 'Mean Probability of False Alarm = %f\n', 'Mean False Alarm');
 fprintf(fid, 'Mean Probability of Miss Detection = %f\n', 'Mean Miss Detection');
 fprintf(fid, 'Mean Probability of Error = %f\n', 'Mean Error');
 
-
-fclose(fid);
+%}
+%fclose(fid);
