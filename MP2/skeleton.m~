@@ -216,14 +216,8 @@ X_alarm_TH = threshold_func(X, 7.142497, 36.341138);
 % !! Write the code for coalescing alarms and majority voting here 
 
 HR_alarm_EM_Coal = coalesce(HR_alarm_EM);
-HR_alarm_TH_Coal = coalesce(HR_alarm_TH);
-PR_alarm_EM_Coal = coalesce(PR_alarm_EM);
-PR_alarm_TH_Coal = coalesce(PR_alarm_TH);
-X_alarm_EM_Coal = coalesce(X_alarm_EM);
-X_alarm_TH_Coal = coalesce(X_alarm_TH);
+HR_alarm_TH
 
-Voted_Alarm_EM = vote()
-Voted_Alarm_TH = 
 
 % Part d
 % !! Fill in the bar functions with the name of vectors storing your alarms
