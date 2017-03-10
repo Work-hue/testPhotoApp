@@ -95,7 +95,6 @@ fprintf(fid, 'Max of tabulate(X) = %f%%\n', X_tab_max);
 fprintf(fid, 'Min of tabulate(floor(X)) = %f%%\n', Y_tab_min);
 fprintf(fid, 'Max of tabulate(floor(X)) = %f%%\n\n', Y_tab_max);
 
-
 fprintf(fid, 'Question 1:\n');
 fprintf(fid, 'Tabulate(X) gives an estimated pdf because the original dataset of all possible respiration rates is meant to be continuous.\n');
 fprintf(fid, 'Furthermore, tabulate(X) returns the probabilities representing the relative likelihood of all possible respiration rate values.\n');
@@ -282,11 +281,11 @@ fprintf(fid, 'Probability of Miss Detection = %f\n', probMiss_TH);
 fprintf(fid, 'Probability Error             = %f\n\n', probError_TH);
 
 fprintf(fid, 'For both the empirical and theoretical signals, the probability of the error is slightly higher but\n');
-fprintf(fid, 'very similiar to the probabilty of the false alarm. For the empirical signal, the probabilty of the false alarm\n');
-fprintf(fid, 'is higher than the probabilty of the missed alarm (which is 0). However, for the theoretical signal, the inverse is true.\n\n');
+fprintf(fid, 'very similar to the probability of the false alarm. For the empirical signal, the probability of the false alarm\n');
+fprintf(fid, 'is higher than the probability of the missed alarm (which is 0). However, for the theoretical signal, the inverse is true.\n\n');
 
 fprintf(fid, 'The lessons we learned from observing the results generated from the empirical vs theoretical approaches:\n');
-fprintf(fid, '- According to the empirical data, the designer of the monitoring system is successul in fully eliminating any\n');
+fprintf(fid, '- According to the empirical data, the designer of the monitoring system is successful in fully eliminating any\n');
 fprintf(fid, '  chance of a missed detection. This is a reasonable design implementation because ethically it is better to\n');
 fprintf(fid, '  tend to patients who are not in need than not being there when they are dying.\n');
 fprintf(fid, '- The monitoring system generates data having a similar probability distribution to that based on a normal distribution because\n');
@@ -294,7 +293,7 @@ fprintf(fid, '  as shown on the bar graphs outputted, the empirical and theoreti
 fprintf(fid, '- We have also learned that it is important to consider both empirical and theoretical results in order to\n');
 fprintf(fid, '  optimize a solution, which in this case is a health monitoring system.\n\n');
 
-%% Task 3
+% Task 3
 
 % Done further below
 % Prob. of error from the testing process of each fold
@@ -314,7 +313,6 @@ d3 = data(:, 20001:30000);
 g1 = golden_alarms(:, 1:1000);
 g2 = golden_alarms(:, 1001:2000);
 g3 = golden_alarms(:, 2001:3000);
-
 
 for i=1:3
     
@@ -387,8 +385,6 @@ probFalseAvg = (probFalse_d1 + probFalse_d2 + probFalse_d3)/3;
 probMissAvg = (probMiss_d1 + probMiss_d2 + probMiss_d3)/3;
 probErrorAvg = (probError_d1 + probError_d2 + probError_d3)/3;
 
-
-
 fprintf(fid, 'Task 3.c\n\n');
 fprintf(fid, 'Mean Probability of False Alarm = %f\n', probFalseAvg);
 fprintf(fid, 'Mean Probability of Miss Detection = %f\n', probMissAvg);
@@ -400,7 +396,6 @@ fprintf(fid, 'This is because in Task 2.2, we trained and tested on the same dat
 fprintf(fid, 'whereas in Task 3, we used 3-fold cross validation, which means we used different datasets for\n');
 fprintf(fid, 'training and testing. Besides, the data used in Task 2.2 was larger in amount (30000 instead of 20000),\n');
 fprintf(fid, 'and generally, larger datasets provide more accurate results.\n\n');
-
 
 fprintf(fid, 'GROUP DISTRIBUTION:\n\n');
 

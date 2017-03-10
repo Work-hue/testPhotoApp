@@ -77,11 +77,11 @@ Probability of Miss Detection = 0.052632
 Probability Error             = 0.016333
 
 For both the empirical and theoretical signals, the probability of the error is slightly higher but
-very similiar to the probabilty of the false alarm. For the empirical signal, the probabilty of the false alarm
-is higher than the probabilty of the missed alarm (which is 0). However, for the theoretical signal, the inverse is true.
+very similar to the probability of the false alarm. For the empirical signal, the probability of the false alarm
+is higher than the probability of the missed alarm (which is 0). However, for the theoretical signal, the inverse is true.
 
 The lessons we learned from observing the results generated from the empirical vs theoretical approaches:
-- According to the empirical data, the designer of the monitoring system is successul in fully eliminating any
+- According to the empirical data, the designer of the monitoring system is successful in fully eliminating any
   chance of a missed detection. This is a reasonable design implementation because ethically it is better to
   tend to patients who are not in need than not being there when they are dying.
 - The monitoring system generates data having a similar probability distribution to that based on a normal distribution because
