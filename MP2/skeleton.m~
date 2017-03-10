@@ -282,17 +282,16 @@ fprintf(fid, 'Probability of Miss Detection = %f\n', probMiss_TH);
 fprintf(fid, 'Probability Error             = %f\n\n', probError_TH);
 
 fprintf(fid, 'For both the empirical and theoretical signals, the probability of the error is slightly higher but\n');
-fprintf(fid, 'very similiar to the probabilty of the false alarm. For the empirical signal, the probabilty of the false alarm\n');
+fprintf(fid, 'very similiar to the probabilty of the false alarm. For the emperical signal, the probabilty of the false alarm\n');
 fprintf(fid, 'is higher than the probabilty of the missed alarm (which is 0). However, for the theoretical signal, the inverse is true.\n\n');
 
 fprintf(fid, 'The lessons we learned from observing the results generated from the empirical vs theoretical approaches:\n');
 fprintf(fid, '- According to the empirical data, the designer of the monitoring system is successul in fully eliminating any\n');
 fprintf(fid, '  chance of a missed detection. This is a reasonable design implementation because ethically it is better to\n');
-fprintf(fid, '  tend to patients who are not in need than not being there when they are dying.\n');
-fprintf(fid, '- The monitoring system generates data having a similar probability distribution to that based on a normal distribution because\n');
-fprintf(fid, '  as shown on the bar graphs outputted, the empirical and theoretical values are similar.\n');
-fprintf(fid, '- We have also learned that it is important to consider both empirical and theoretical results in order to\n');
-fprintf(fid, '  optimize a solution, which in this case is a health monitoring system.\n\n');
+fprintf(fid, '  tend to patients when not in need than vice versa.\n');
+fprintf(fid, '- The monitoring system consists of similar probability values to those based on a normal distribution because\n');
+fprintf(fid, '  based on the bar graphs outputted, the empirical and theoretical results are similar as well.\n');
+fprintf(fid, '- A;SLDKFJAS;DLKFJA;SKDFJA;SKDFJA;SKDFJA;SKLDFJA;SKLDJFA;DF !!!!!!!!!!!! GO BACK HERE !!!\n\n');
 
 %% Task 3
 
@@ -389,11 +388,13 @@ probErrorAvg = (probError_d1 + probError_d2 + probError_d3)/3;
 
 
 
-fprintf(fid, 'Task 3.c\n\n');
+fprintf(fid, 'Task 3\n');
 fprintf(fid, 'Mean Probability of False Alarm = %f\n', probFalseAvg);
 fprintf(fid, 'Mean Probability of Miss Detection = %f\n', probMissAvg);
 fprintf(fid, 'Mean Probability of Error = %f\n\n', probErrorAvg);
 
+
+fprintf(fid, 'Task 3.c\n');
 fprintf(fid, 'P(miss detection) remains zero as in Task 2.2. \n');
 fprintf(fid, 'However, the averages of P(false alarm) and P(error) are greater than the results from Task 2.2.\n');
 fprintf(fid, 'This is because in Task 2.2, we trained and tested on the same dataset (all the data we have),\n');
@@ -402,7 +403,7 @@ fprintf(fid, 'training and testing. Besides, the data used in Task 2.2 was large
 fprintf(fid, 'and generally, larger datasets provide more accurate results.\n\n');
 
 
-fprintf(fid, 'GROUP DISTRIBUTION:\n\n');
+fprintf(fid, '\nGROUP DISTRIBUTION:\n\n');
 
 fprintf(fid, 'Harsh Modhera (hmodhe2) - 33.33 percent\n');
 fprintf(fid, 'Herman Pineda (hpineda2) - 33.33 percent\n');
