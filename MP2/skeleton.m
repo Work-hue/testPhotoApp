@@ -156,7 +156,6 @@ h = get(gca,'children'); set(h,'LineWidth',2);set(h,'Color','r')
 pdf_cdf(R);
 title(strcat(char(labels(3)),' Normal Approximation'));
 
-
 % Part c
 figure;
 title(strcat(char(labels(3)),' Normplot'));
@@ -166,7 +165,6 @@ fprintf(fid, 'Task 1.2c\n\n');
 fprintf(fid, 'The dataset generated in this part is normally distributed, but the dataset from 1.1\n'); 
 fprintf(fid, 'is right-skewed. In the dataset from 1.1, the variable X is approximately normally\n');
 fprintf(fid, 'distributed when 12 <= X <= 38, but not normally distributed when X<12 or X>38. \n\n');
-
 
 % Part d
 % !! Show your work in the report, then plug in the numbers that you calculated here
@@ -184,19 +182,11 @@ fprintf(fid, 'Theoretical a = %f\n', ther_a);
 fprintf(fid, 'Theoretical b = %f\n\n', ther_b);
 fprintf(fid, 'Theoretical a and b are both a little bit less than the empirical a and b.\n');
 fprintf(fid, 'This is probably because our actual dataset from 1.1 is right-skewed, \n');
-fprintf(fid, 'whereas a normal distribution is not skewed.\n');
-
-fprintf(fid, '\n\nGROUP DISTRIBUTION:\n\n');
-
-fprintf(fid, 'Harsh Modhera (hmodhe2) - 33.33 percent\n');
-fprintf(fid, 'Herman Pineda (hpineda2) - 33.33 percent\n');
-fprintf(fid, 'Yuchen Li (li215) - 33.33 percent\n\n');
-
-fprintf(fid, 'We all met up in Grainger basement on Mar 4 and worked through all of the tasks together.\n');
+fprintf(fid, 'whereas a normal distribution is not skewed.\n\n');
 
 %fclose(fid);
 
-%% Task 2.1;
+% Task 2.1;
 
 % Tasks 2.1 and 2.2 should be done twice, 
 % once with the empirical threshold, and once with the theoretical threshold
@@ -208,7 +198,6 @@ fprintf(fid, 'We all met up in Grainger basement on Mar 4 and worked through all
 HR_alarm_EM = threshold_func(HR, 80.17, 98.52);
 PR_alarm_EM = threshold_func(PR, 79.00, 97.07);
 X_alarm_EM = threshold_func(X, 10.146654, 37.085962);
-
 
 % Parts b and c
 % !! Write the code for coalescing alarms and majority voting here 
@@ -235,24 +224,23 @@ subplot(5,1,4);
 bar(Voted_Alarm_EM);
 title('Majority Voter Alarms - Empirical Thresholds');
 subplot(5,1,5);
-title('Golden Alarms');
 bar(golden_alarms,'r');
+title('Golden Alarms');
+xlabel('Time');
 
-%% Task 2.2;
+% Task 2.2;
 
 % Parts a and b
 % !! Write the code to calculate the probabilities of:
 %    false alarm, miss detection and error 
 
+[probFalse_EM, probMiss_EM, probError_EM] = CompareVoter(Voted_Alarm_EM, golden_alarms);
 
-
-
-
-fprintf(fid, 'Task 2.2 - Parts a and b\n');
+fprintf(fid, 'Task 2.2 - Parts a and b\n\n');
 fprintf(fid, 'Using Empirical Thresholds:\n');
-fprintf(fid, 'Probability of False Alarm    = %f\n', 'False Alarm');
-fprintf(fid, 'Probability of Miss Detection = %f\n', 'Miss Detect');
-fprintf(fid, 'Probability of Error          = %f\n\n', 'Error');
+fprintf(fid, 'Probability of False Alarm    = %f\n', probFalse_EM);
+fprintf(fid, 'Probability of Miss Detection = %f\n', probMiss_EM);
+fprintf(fid, 'Probability of Error          = %f\n\n', probError_EM);
 
 % Part c
 % !! Repeat Tasks 2.1 and 2.2 with Theoretical thresholds
@@ -267,32 +255,42 @@ X_alarm_TH_Coal = coalesce(X_alarm_TH);
 
 Voted_Alarm_TH = vote(HR_alarm_TH_Coal, PR_alarm_TH_Coal, X_alarm_TH_Coal);
 
-
 figure;
 subplot(5,1,1);
-bar('HR Alarms');
+bar(HR_alarm_TH_Coal);
 title(strcat(char(labels(1)),' Alarms'));
 subplot(5,1,2);
-bar('PR Alarms');
+bar(PR_alarm_TH_Coal);
 title(strcat(char(labels(2)),' Alarms'));
 subplot(5,1,3);
-bar('RESP Alarms');
+bar(X_alarm_TH_Coal);
 title(strcat(char(labels(3)),' Alarms'));
 subplot(5,1,4);
-bar('Majority Voter Alarms');
+bar(Voted_Alarm_TH);
 title('Majority Voter Alarms - Theoretical Thresholds');
 subplot(5,1,5);
+bar(golden_alarms,'r');
 title('Golden Alarms');
-bar('Golden Alarms','r');
+xlabel('Time');
 
+[probFalse_TH, probMiss_TH, probError_TH] = CompareVoter(Voted_Alarm_TH, golden_alarms);
 
-fprintf(fid, 'Task 2.2 - Part c\n');
+fprintf(fid, 'Task 2.2 - Part c\n\n');
 fprintf(fid, 'Using Theoretical Thresholds:\n');
-fprintf(fid, 'Probability of False Alarm    = %f\n', 'False Alarm');
-fprintf(fid, 'Probability of Miss Detection = %f\n', 'Miss Detect');
-fprintf(fid, 'Probability Error             = %f\n\n', 'Error');
+fprintf(fid, 'Probability of False Alarm    = %f\n', probFalse_TH);
+fprintf(fid, 'Probability of Miss Detection = %f\n', probMiss_TH);
+fprintf(fid, 'Probability Error             = %f\n\n', probError_TH);
 
+fprintf(fid, 'For both the empirical and theoretical signals, the probability of the error is slightly higher but\n');
+fprintf(fid, 'very similiar to the probabilty of the false alarm. For the emperical signal, the probabilty of the false alarm\n');
+fprintf(fid, 'is higher than the probabilty of the missed alarm (which is 0). However, for the theoretical signal, the inverse is true.\n\n');
 
+fprintf(fid, 'The lessons we learned from observing the results generated from the emperical vs theoretical approaches are\n');
+fprintf(fid, '\n');
+fprintf(fid, '\n');
+fprintf(fid, '\n');
+fprintf(fid, '\n');
+fprintf(fid, '\n\n');
 
 %% Task 3
 
@@ -333,5 +331,12 @@ fprintf(fid, 'Mean Probability of False Alarm = %f\n', 'Mean False Alarm');
 fprintf(fid, 'Mean Probability of Miss Detection = %f\n', 'Mean Miss Detection');
 fprintf(fid, 'Mean Probability of Error = %f\n', 'Mean Error');
 
+fprintf(fid, '\n\nGROUP DISTRIBUTION:\n\n');
+
+fprintf(fid, 'Harsh Modhera (hmodhe2) - 33.33 percent\n');
+fprintf(fid, 'Herman Pineda (hpineda2) - 33.33 percent\n');
+fprintf(fid, 'Yuchen Li (li215) - 33.33 percent\n\n');
+
+fprintf(fid, 'We all met up in Grainger basement on March 9 and worked through all of the tasks together.\n');
 
 fclose(fid);

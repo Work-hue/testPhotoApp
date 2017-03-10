@@ -62,11 +62,17 @@ Theoretical a and b are both a little bit less than the empirical a and b.
 This is probably because our actual dataset from 1.1 is right-skewed, 
 whereas a normal distribution is not skewed.
 
+Task 2.2 - Parts a and b
 
-GROUP DISTRIBUTION:
+Using Empirical Thresholds:
+Probability of False Alarm    = 0.023482
+Probability of Miss Detection = 0.000000
+Probability of Error          = 0.023333
 
-Harsh Modhera (hmodhe2) - 33.33 percent
-Herman Pineda (hpineda2) - 33.33 percent
-Yuchen Li (li215) - 33.33 percent
+Task 2.2 - Part c
 
-We all met up in Grainger basement on Mar 4 and worked through all of the tasks together.
+Using Theoretical Thresholds:
+Probability of False Alarm    = 0.016102
+Probability of Miss Detection = 0.052632
+Probability Error             = 0.016333
+
