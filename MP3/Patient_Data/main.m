@@ -8,6 +8,7 @@ clear all;
 % !! replace # with your own groupID
 fid = fopen('ECE313_Final_group20_(winning_group)', 'w');
 
+abcd = 'hi guy, fuck matlab';
 
 % TASK 0
 
