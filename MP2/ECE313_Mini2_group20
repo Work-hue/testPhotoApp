@@ -1,0 +1,111 @@
+Task 1.1a 
+
+The biggest difference between the pmf and the pdf is that the pmf depicts interval based probabilities while the pdf approximates
+the probabilities over a continuum of sample points. The pdf can be seen as an upper envelope of the pmf given a particular dataset. As
+the number of samples increases, the pdf takes on a more accurate upper envelope of the pmf. As the sample size increases,
+the pmf and the pdf of the sampleset more closely resemble the pmf and pdf of the entire dataset.
+
+Task 1.1b
+
+Min of tabulate(X) = 0.003333%
+Max of tabulate(X) = 0.003333%
+Min of tabulate(floor(X)) = 0.000000%
+Max of tabulate(floor(X)) = 5.490000%
+
+Question 1:
+Tabulate(X) gives an estimated pdf because the original dataset of all possible respiration rates is meant to be continuous.
+Furthermore, tabulate(X) returns the probabilities representing the relative likelihood of all possible respiration rate values.
+Tabulate (Y) gives a pmf because after using the floor function on X, all the possible respiration rates are truncated. This causes
+the random variable to take on discrete values.
+
+Question 2:
+For the X dataset, the min and max probabilities are equal, because without the floor function, each respiration rate is distinct 
+and therefore is as likely to appear as any other respiration rate. 
+For the Y dataset, the min and max probabilities are not equal because with the floor function, all the values corresponding to the respiration 
+rates are truncated. Hence, multiple respiration rates from the original data now share common Y values. Consequently, the frequency for each Y 
+value can vary.
+
+Question 3:
+The probability that X will be contained in an interval of length ? around the point a is approximately ?f(a).
+If we let ? be small enough such that each interval of length ? only contains at most one sample, then each existing respiration rate value
+corresponds to exactly one sample, which accounts for the reason that for the X dataset, the min and max probabilities are equal.
+However, that is not true for PMF, since after taking Y = floor(X) in this case, necessarily some Y value could correspond to multiple samples.
+Consequently, the frequency for each Y value can vary, and therefore for the Y dataset, the min and max probabilities are not equal.
+
+Task 1.1c
+
+Empirical a = 10.146654
+Empirical b = 37.085962
+
+Task 1.2a
+
+Mean RESP = 21.741818
+Standard Deviation RESP = 7.104292
+
+Task 1.2c
+
+The dataset generated in this part is normally distributed, but the dataset from 1.1
+is right-skewed. In the dataset from 1.1, the variable X is approximately normally
+distributed when 12 <= X <= 38, but not normally distributed when X<12 or X>38. 
+
+Task 1.2d
+
+PDF of normal distribution: 
+f(x) = 1/(7.104292 * sqrt(2*Pi)) * exp(-0.5*((x-21.741818)/7.104292)^2) 
+CDF of normal distribution: 
+F(x) = 1/(sqrt(2*Pi)) * Integrate for t from -infinity to (x-21.741818)/7.104292 { exp(-0.5* t^2) dt} 
+
+Theoretical a = 7.142497
+Theoretical b = 36.341138
+
+Theoretical a and b are both a little bit less than the empirical a and b.
+This is probably because our actual dataset from 1.1 is right-skewed, 
+whereas a normal distribution is not skewed.
+
+Task 2.2 - Parts a and b
+
+Using Empirical Thresholds:
+Probability of False Alarm    = 0.023482
+Probability of Miss Detection = 0.000000
+Probability of Error          = 0.023333
+
+Task 2.2 - Part c
+
+Using Theoretical Thresholds:
+Probability of False Alarm    = 0.016102
+Probability of Miss Detection = 0.052632
+Probability Error             = 0.016333
+
+For both the empirical and theoretical signals, the probability of the error is slightly higher but
+very similar to the probability of the false alarm. For the empirical signal, the probability of the false alarm
+is higher than the probability of the missed alarm (which is 0). However, for the theoretical signal, the inverse is true.
+
+The lessons we learned from observing the results generated from the empirical vs theoretical approaches:
+- According to the empirical data, the designer of the monitoring system is successful in fully eliminating any
+  chance of a missed detection. This is a reasonable design implementation because ethically it is better to
+  tend to patients who are not in need than not being there when they are dying.
+- The monitoring system generates data having a similar probability distribution to that based on a normal distribution because
+  as shown on the bar graphs outputted, the empirical and theoretical values are similar.
+- We have also learned that it is important to consider both empirical and theoretical results in order to
+  optimize a solution, which in this case is a health monitoring system.
+
+Task 3.c
+
+Mean Probability of False Alarm = 0.101170
+Mean Probability of Miss Detection = 0.000000
+Mean Probability of Error = 0.101000
+
+P(miss detection) remains zero as in Task 2.2. 
+However, the averages of P(false alarm) and P(error) are greater than the results from Task 2.2.
+This is because in Task 2.2, we trained and tested on the same dataset (all the data we have),
+whereas in Task 3, we used 3-fold cross validation, which means we used different datasets for
+training and testing. Besides, the data used in Task 2.2 was larger in amount (30000 instead of 20000),
+and generally, larger datasets provide more accurate results.
+
+GROUP DISTRIBUTION:
+
+Harsh Modhera (hmodhe2) - 33.33 percent
+Herman Pineda (hpineda2) - 33.33 percent
+Yuchen Li (li215) - 33.33 percent
+
+We all met up in Grainger basement on March 9 and worked through all of the tasks together.

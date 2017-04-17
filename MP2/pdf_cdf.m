@@ -1,13 +1,23 @@
 % !! Write a funcion for calculating and ploting pdf and CDF of X    
 function  pdf_cdf(X)       
     % !! Find the possible values of Y
-
+    Y = floor(X);
+    Floors = unique(floor(X));
     
     % !! Calculate the PMF of Y 
-
+    max_Y = Floors(size(Floors,2));
+    min_Y = Floors(1);
+    Freqs = hist(Y,max_Y-min_Y+1);
+    Pmf = Freqs/size(X,2);
     
     % !! Bar Plot the PMF of Y
     subplot(2,1,2);
+    
+    x = min_Y:1:max_Y;
+    bar(x,Pmf);
+    xlabel('X');
+    ylabel('Probability');
+    title('PMF and PDF');
     
     hold on; % For the next plots to be on the same figure
     
@@ -23,6 +33,7 @@ function  pdf_cdf(X)
     
     % !! Calculate and plot CDF of X - First hold on subplot(2,1,1)
     subplot(2,1,1); hold on;
+end
     
 
     
