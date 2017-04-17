@@ -210,3 +210,16 @@ for i = 1:9
     end
 end
 
+%% TASK 1.1C
+for i = 1:9
+    figure(i);
+    for j = 1:7
+        subplot(7, 1, j);
+        plot(patient(i).mats{1,j}(1,:), patient(i).mats{1,j}(3,:));  
+        hold on;  
+        plot(patient(i).mats{1,j}(1,:), patient(i).mats{1,j}(2,:)); 
+        legend('H0 pmf', 'H1 pmf');
+    end
+end
+
+%% TASK 1.1D

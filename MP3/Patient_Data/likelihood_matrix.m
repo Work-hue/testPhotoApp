@@ -21,8 +21,10 @@ function [mat] = likelihood_matrix(feat, labels)
     
     mat_row1 = zeros(1,num_col);
     mat_row0 = zeros(1,num_col);
+    mat_row_val = zeros(1,num_col);
     
     for i = 1:num_col
+        mat_row_val(1,i) = min_feat_val+i-1;
         if (sum(values1==min_feat_val+i-1)>0) % min_feat_val+i-1 is in values1
             val_idx = find(values1==min_feat_val+i-1);
             mat_row1(1,i) = probs1(val_idx,1);
@@ -33,7 +35,7 @@ function [mat] = likelihood_matrix(feat, labels)
         end
     end
     
-    mat = [mat_row1; mat_row0];
+    mat = [mat_row_val; mat_row1; mat_row0];
     
     %length(mat_row1)
     %length(mat_row1(1,:))
