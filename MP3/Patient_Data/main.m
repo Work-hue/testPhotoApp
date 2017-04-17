@@ -8,8 +8,6 @@ clear all;
 % !! replace # with your own groupID
 fid = fopen('ECE313_Final_group20_(winning_group)', 'w');
 
-abcd = 'hi guy, fuck matlab';
-
 % TASK 0
 
 %LOAD PATIENT DATA
@@ -159,7 +157,6 @@ end
 % test_pat_9 = pat_flr9(:, (floor(((2/3)*length_9)+1):length_9));
 % test_lab_9 = label_9(:, 1:floor(((2/3)*length_9)));
 
-
 %% TASK 1.1A
 % % Patient 1
 % p1_h1 = sum(train_lab_1)/length_1;
@@ -205,9 +202,11 @@ end
 %% TASK 1.1B
 
 for i = 1:9
-    patient(i).mats = cell(1,7)
+    patient(i).mats = cell(1,7);
+    patient(i).maxminfeat = cell(1,7);
     for j = 1:7
         patient(i).mats{1,j} = likelihood_matrix(patient(i).train_data(j,:), patient(i).train_labels);
+        patient(i).mmfeat{1,j} = mmfeat(patient(i).mats{1,j});
     end
 end
 
