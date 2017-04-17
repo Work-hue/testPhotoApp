@@ -204,9 +204,9 @@ end
 %% TASK 1.1B
 
 for i = 1:9
-    patient(i).mats = cell(1,7)
     for j = 1:7
-        patient(i).mats{1,j} = likelihood_matrix(patient(i).train_data(j,:), patient(i).train_labels);
+        feature_mats(j) = likelihood_matrix(patient(i).train_data(j,:), patient(i).train_labels);
     end
+    patient(i).mats = ;
+    
 end
-

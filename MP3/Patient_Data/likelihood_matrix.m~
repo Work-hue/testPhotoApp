@@ -10,13 +10,11 @@ function [mat] = likelihood_matrix(feat, labels)
     tab0 = tabulate(feat0);
         
     values1 = tab1(:,1);
-    probs1 = tab1(:,3)/100;
+    probs1 = tab1(:,3);
     
     values0 = tab1(:,1);
-    probs0 = tab1(:,3)/100;
+    probs0 = tab1(:,3);
     
-    mat_row1 = probs1';
-    mat_row0 = probs0';
+    mat
     
-    mat = [mat_row1; mat_row0];
 end
