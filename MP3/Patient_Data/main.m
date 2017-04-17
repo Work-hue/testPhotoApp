@@ -206,7 +206,7 @@ for i = 1:9
     patient(i).maxminfeat = cell(1,7);
     for j = 1:7
         patient(i).mats{1,j} = likelihood_matrix(patient(i).train_data(j,:), patient(i).train_labels);
-        patient(i).mmfeat{1,j} = mmfeat(patient(i).mats{1,j});
+        %patient(i).mmfeat{1,j} = mmfeat(patient(i).mats{1,j});
     end
 end
 
