@@ -89,7 +89,18 @@ HT_table_array = cell(9,7);
 
 for i = 1:9
     for j = 1:7
-        HT_table_array{i,j} = create_ht_table(patient(i), j);
+        ml_dr_vec = zeros(1,size(patient(i).mats{1,j},2));
+        map_dr_vec = zeros(1,size(patient(i).mats{1,j},2));
+        for k = 1:size(patient(i).mats{1,j},2)
+            if (patient(i).mats{1,j}(2,k) >= patient(i).mats{1,j}(3,k))
+                ml_dr_vec(1,k) = 1;
+            end
+            if (patient(i).mats{1,j}(2,k)*patient(i).h1 >= patient(i).mats{1,j}(3,k)*patient(i).h0)
+               map_dr_vec(1,k) = 1;
+            end 
+        end
+        patient(i).ml_vecs{1,j} = ml_dr_vec;
+        patient(i).map_vecs{1,j} = map_dr_vec;
     end
 end
 
