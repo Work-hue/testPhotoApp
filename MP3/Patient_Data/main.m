@@ -99,6 +99,7 @@ Error_table_array = cell(9,7);
 
 for i = 1:9
     for j = 1:7
+        fprintf('%d %d\n', i, j);
         % Problem encountered: Test data does not appear in training data
         % Wait for answer in Piazza
         Error_table_array = create_error_table(patient(i), j, HT_table_array{i,j});

@@ -89,18 +89,20 @@ HT_table_array = cell(9,7);
 
 for i = 1:9
     for j = 1:7
-        ml_dr_vec = zeros(1,size(patient(i).mats{1,j},2));
-        map_dr_vec = zeros(1,size(patient(i).mats{1,j},2));
-        for k = 1:size(patient(i).mats{1,j},2)
-            if (patient(i).mats{1,j}(2,k) >= patient(i).mats{1,j}(3,k))
-                ml_dr_vec(1,k) = 1;
-            end
-            if (patient(i).mats{1,j}(2,k)*patient(i).h1 >= patient(i).mats{1,j}(3,k)*patient(i).h0)
-               map_dr_vec(1,k) = 1;
-            end 
-        end
-        patient(i).ml_vecs{1,j} = ml_dr_vec;
-        patient(i).map_vecs{1,j} = map_dr_vec;
+        HT_table_array{i,j} = create_ht_table(patient(i), j);
+    end
+end
+
+%% Task 1.2
+
+Error_table_array = cell(9,7);
+
+for i = 1:9
+    for j = 1:7
+        
+        % Problem encountered: Test data does not appear in training data
+        % Wait for answer in Piazza
+        Error_table_array = create_error_table(patient(i), j, HT_table_array{i,j});
     end
 end
 

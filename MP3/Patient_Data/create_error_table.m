@@ -12,12 +12,14 @@ function [mat] = create_error_table(pat, feat_idx, ht_table)
     for i = 1:num_data
         row_indices_in_ht = find(ht_table==data_vec(i));
         if (size(row_indices_in_ht,1)==0)
-            fprintf('Test data do not appear in training data');
+            fprintf('Test data do not appear in training data\n');
+        else
+            % ML rule
+            predicted_labels_ml(1,i) = ht_table(row_indices_in_ht(1,1),4);
+            % MAP rule
+            predicted_labels_map(1,i) = ht_table(row_indices_in_ht(1,1),5);
         end
-        % ML rule
-        predicted_labels_ml(1,i) = ht_table(row_indices_in_ht(1,1),4);
-        % MAP rule
-        predicted_labels_map(1,i) = ht_table(row_indices_in_ht(1,1),5);
+        
     end
     
     % ML rule
