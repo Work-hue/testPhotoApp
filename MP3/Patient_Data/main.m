@@ -99,10 +99,69 @@ Error_table_array = cell(9,7);
 
 for i = 1:9
     for j = 1:7
-        fprintf('%d %d\n', i, j);
+        % fprintf('%d %d\n', i, j);
         % Problem encountered: Test data does not appear in training data
         % Wait for answer in Piazza
         Error_table_array = create_error_table(patient(i), j, HT_table_array{i,j});
     end
 end
 
+%% Task 2.1A
+
+% Not solved yet!!!
+
+% Questions on corrcoef function for array of different dimension
+
+corrlation_matrix = zeros(72,1);
+count = 1;
+
+for i = 1:9
+    for k = i+1:9
+        for j = 1:7
+        fprintf('pat %d & pat %d, feat %d\n', i, k, j);
+        len1 = size(patient(i).train_data(j,:),2);
+        len2 = size(patient(k).train_data(j,:),2);
+        minlen = min(len1,len2);
+        %fprintf('line 121');
+        train1 = patient(i).train_data(j,:);
+        train2 = patient(k).train_data(j,:);
+        %fprintf('line 124');
+        tmp = corrcoef(train1(1:minlen), train2(1:minlen));
+        %fprintf('line 127');
+        corrlation_matrix(count,1) = tmp;
+        %fprintf('line 128');
+        count = count+1;
+        end
+    end
+end
+
+%% Task 2.2
+
+% debug
+%[feat_idx1, feat_idx2] = select_two_feats_ML_MAP(patient(1), HT_table_array(1,:))
+%[feat_idx1, feat_idx2] = select_two_feats_cor_golden(patient(1));
+
+% for each patient, use a vote to select the best two features
+% break ties arbitrarily
+
+best_feat_indices = zeros(9,2);
+
+for i = 1:9
+    votes = zeros(1,7);
+    [feat_idx1, feat_idx2] = select_two_feats_ML_MAP(patient(i), HT_table_array(i,:));
+    votes(1,feat_idx1) = votes(1,feat_idx1)+1;
+    votes(1,feat_idx2) = votes(1,feat_idx2)+1;
+    [feat_idx1, feat_idx2] = select_two_feats_cor_golden(patient(i));
+    votes(1,feat_idx1) = votes(1,feat_idx1)+1;
+    votes(1,feat_idx2) = votes(1,feat_idx2)+1;
+    
+    [val, feat_idx1] = max(votes);
+    votes2 = votes(:);
+    votes2(feat_idx1) = -inf;
+    [val2, feat_idx2] = max(votes2);
+    
+    best_feat_indices(i,1) = feat_idx1;
+    best_feat_indices(i,2) = feat_idx2;
+end
+
+disp(best_feat_indices);
