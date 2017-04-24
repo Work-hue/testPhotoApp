@@ -199,3 +199,19 @@ for i = 1:9
 end
 
 disp(best_feat_indices);
+
+fprintf(fid, 'TASK 2.2\n\n');
+fprintf(fid, 'For this task, we implemented two ways to select the top two features. The first way was to find\n');
+fprintf(fid, 'the top two features that had the lowest min(ML error, MAP error) value. The second way was to\n');
+fprintf(fid, 'find the top two features that had the closest correlation to the golden alarms.\n');
+fprintf(fid, '\nWe found that the top two features for all nine patients are:\n\n');
+
+fprintf(fid, 'Patient 1: 1 \t 3\n');
+fprintf(fid, 'Patient 2: 1 \t 3\n');
+fprintf(fid, 'Patient 3: 2 \t 4\n');
+fprintf(fid, 'Patient 4: 3 \t 1\n');
+fprintf(fid, 'Patient 5: 1 \t 2\n');
+fprintf(fid, 'Patient 6: 1 \t 3\n');
+fprintf(fid, 'Patient 7: 5 \t 3\n');
+fprintf(fid, 'Patient 8: 1 \t 3\n');
+fprintf(fid, 'Patient 9: 1 \t 3\n\n');

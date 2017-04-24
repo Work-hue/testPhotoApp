@@ -25,6 +25,10 @@ For this task, we constructed the likelihood matrices for each of the seven feat
 for each patient. This information can be seen in the patients structure. For each patient,
 there exists a 1x7 cell called "mats".
 
+TASK 1.1C
+
+When the code runs, 9 figures will be presented. These figures summarize our results as required.
+
 TASK 1.1D
 
 For this task, we constructed the ML and MAP vectors for each patient. These vectors
@@ -40,4 +44,22 @@ TASK 1.2
 For this task, we constructed the 9x7 Error_table_array. Each index into the array is an 2x3 array.
 This smaller array contains the following information: P(False Alarm), P(Missed Detection),
 and P(Error). These values are presented in reference to both ML and MAP rules.
+
+TASK 2.2
+
+For this task, we implemented two ways to select the top two features. The first way was to find
+the top two features that had the lowest min(ML error, MAP error) value. The second way was to
+find the top two features that had the closest correlation to the golden alarms.
+
+We found that the top two features for all nine patients are:
+
+Patient 1: 1 	 3
+Patient 2: 1 	 3
+Patient 3: 2 	 4
+Patient 4: 3 	 1
+Patient 5: 1 	 2
+Patient 6: 1 	 3
+Patient 7: 5 	 3
+Patient 8: 1 	 3
+Patient 9: 1 	 3
 
