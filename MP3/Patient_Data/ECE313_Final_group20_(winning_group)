@@ -25,10 +25,6 @@ For this task, we constructed the likelihood matrices for each of the seven feat
 for each patient. This information can be seen in the patients structure. For each patient,
 there exists a 1x7 cell called "mats".
 
-TASK 1.1C
-
-When the code runs, 9 figures will be presented. These figures summarize our results as required.
-
 TASK 1.1D
 
 For this task, we constructed the ML and MAP vectors for each patient. These vectors
