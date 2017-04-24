@@ -31,11 +31,24 @@ for i = 1:9
     patient(i).test_labels = patient(i).all_labels(:, (floor(((2/3)*patient(i).len))+1):patient(i).len);
 end
 
+fprintf(fid, 'TASK 0\n\n');
+fprintf(fid, 'In this task, we created an array of patient structures to keep track of all patient data.\n');
+fprintf(fid, 'Each module loaded consisted of "all_data" and "all_labels" vectors. These vectors were\n');
+fprintf(fid, 'stored in the patient structure. Next, the test and training data/label sets were created for\n');
+fprintf(fid, 'each patient and appended.\n\n');
+
 %% TASK 1.1A
 
 for i = 1:9
-    patient(i).h1 = sum(patient(i).train_data)/length(patient(i).train_data);
+    patient(i).h1 = sum(patient(i).train_labels)/length(patient(i).train_labels);
     patient(i).h0 = 1 - patient(i).h1;
+end
+
+fprintf(fid, 'TASK 1.1A\n\n');
+fprintf(fid, 'The following are the prior probabilities of H1 and H0 respectively for each patient.\n\n');
+
+for i = 1:9
+    fprintf(fid, 'P(H1)=%d \t\t\t P(H0)=%d\n', patient(i).h1, patient(i).h0);
 end
 
 %% TASK 1.1B
@@ -49,6 +62,11 @@ for i = 1:9
     end
 end
 
+fprintf(fid, '\nTASK 1.1B\n\n');
+fprintf(fid, 'For this task, we constructed the likelihood matrices for each of the seven features\n');
+fprintf(fid, 'for each patient. This information can be seen in the patients structure. For each patient,\n');
+fprintf(fid, 'there exists a 1x7 cell called "mats".\n\n');
+
 %% TASK 1.1C
 
 for i = 1:9
@@ -61,6 +79,9 @@ for i = 1:9
         legend('H0 pmf', 'H1 pmf');
     end
 end
+
+fprintf(fid, 'TASK 1.1C\n\n');
+fprintf(fid, 'When the code runs, 9 figures will be presented. These figures summarize our results as required.\n\n');
 
 %% TASK 1.1D
 
@@ -83,6 +104,10 @@ for i = 1:9
     end
 end
 
+fprintf(fid, 'TASK 1.1D\n\n');
+fprintf(fid, 'For this task, we constructed the ML and MAP vectors for each patient. These vectors\n');
+fprintf(fid, 'were appended to each patient structure in the patient array.\n\n');
+
 %% TASK 1.1E
 
 HT_table_array = cell(9,7);
@@ -93,6 +118,10 @@ for i = 1:9
     end
 end
 
+fprintf(fid, 'TASK 1.1E\n\n');
+fprintf(fid, 'For this task, we constructed the 9x7 HT_table_array. Each index into the array is an Fx5 array,\n');
+fprintf(fid, 'where F is total number of distinct values a particular feature can take.\n\n');
+
 %% Task 1.2
 
 Error_table_array = cell(9,7);
@@ -102,9 +131,14 @@ for i = 1:9
         % fprintf('%d %d\n', i, j);
         % Problem encountered: Test data does not appear in training data
         % Wait for answer in Piazza
-        Error_table_array = create_error_table(patient(i), j, HT_table_array{i,j});
+        Error_table_array{i,j} = create_error_table(patient(i), j, HT_table_array{i,j});
     end
 end
+
+fprintf(fid, 'TASK 1.2\n\n');
+fprintf(fid, 'For this task, we constructed the 9x7 Error_table_array. Each index into the array is an 2x3 array.\n');
+fprintf(fid, 'This smaller array contains the following information: P(False Alarm), P(Missed Detection),\n');
+fprintf(fid, 'and P(Error). These values are presented in reference to both ML and MAP rules.\n\n');
 
 %% Task 2.1A
 

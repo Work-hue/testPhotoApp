@@ -1,0 +1,47 @@
+TASK 0
+
+In this task, we created an array of patient structures to keep track of all patient data.
+Each module loaded consisted of "all_data" and "all_labels" vectors. These vectors were
+stored in the patient structure. Next, the test and training data/label sets were created for
+each patient and appended.
+
+TASK 1.1A
+
+The following are the prior probabilities of H1 and H0 respectively for each patient.
+
+P(H1)=2.651779e-02 			 P(H0)=9.734822e-01
+P(H1)=1.634684e-02 			 P(H0)=9.836532e-01
+P(H1)=2.094972e-03 			 P(H0)=9.979050e-01
+P(H1)=2.492522e-03 			 P(H0)=9.975075e-01
+P(H1)=1.046025e-03 			 P(H0)=9.989540e-01
+P(H1)=2.176966e-02 			 P(H0)=9.782303e-01
+P(H1)=1.710297e-02 			 P(H0)=9.828970e-01
+P(H1)=7.790368e-03 			 P(H0)=9.922096e-01
+P(H1)=2.176966e-02 			 P(H0)=9.782303e-01
+
+TASK 1.1B
+
+For this task, we constructed the likelihood matrices for each of the seven features
+for each patient. This information can be seen in the patients structure. For each patient,
+there exists a 1x7 cell called "mats".
+
+TASK 1.1C
+
+When the code runs, 9 figures will be presented. These figures summarize our results as required.
+
+TASK 1.1D
+
+For this task, we constructed the ML and MAP vectors for each patient. These vectors
+were appended to each patient structure in the patient array.
+
+TASK 1.1E
+
+For this task, we constructed the 9x7 HT_table_array. Each index into the array is an Fx5 array,
+where F is total number of distinct values a particular feature can take.
+
+TASK 1.2
+
+For this task, we constructed the 9x7 Error_table_array. Each index into the array is an 2x3 array.
+This smaller array contains the following information: P(False Alarm), P(Missed Detection),
+and P(Error). These values are presented in reference to both ML and MAP rules.
+
