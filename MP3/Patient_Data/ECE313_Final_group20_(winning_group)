@@ -47,107 +47,38 @@ and P(Error). These values are presented in reference to both ML and MAP rules.
 
 TASK 2.1
 
-Patients 1 and 1 have the same data.
-Patients 2 and 2 have the same data.
-Patients 3 and 3 have the same data.
-Patients 4 and 4 have the same data.
-Patients 5 and 5 have the same data.
-Patients 6 and 6 have the same data.
+TASK 2.1
+
+TASK 2.1
+
 Patients 6 and 9 have the same data.
-Patients 7 and 7 have the same data.
+
 Patients 9 and 6 have the same data.
-Patients 9 and 9 have the same data.
-TASK 2.2
 
-For this task, we implemented two ways to select the top two features. The first way was to find
-the top two features that had the lowest min(ML error, MAP error) value. The second way was to
-find the top two features that had the closest correlation to the golden alarms.
+The correlation matrix is stored in the correlation_matrix variable. As one can see in the data structure, apart
+from the datasets of the same patients correlating with themselves, we can also see that there are datasets of different
+patients that have exactly the same data. These patients are patients 6 and 9. This redundancy is problematic and
+to improve our data overall we can choose to eliminate either patients data.
 
-We found that the top two features for all nine patients are:
+TASK 2.1
 
-Patient 1: 1 	 3
-Patient 2: 1 	 3
-Patient 3: 2 	 4
-Patient 4: 3 	 1
-Patient 5: 1 	 2
-Patient 6: 1 	 3
-Patient 7: 5 	 3
-Patient 8: 1 	 3
-Patient 9: 1 	 3
+Patients 6 and 9 have the same data.
 
-TASK 2.2
+Patients 9 and 6 have the same data.
 
-For this task, we implemented two ways to select the top two features. The first way was to find
-the top two features that had the lowest min(ML error, MAP error) value. The second way was to
-find the top two features that had the closest correlation to the golden alarms.
+The correlation matrix is stored in the correlation_matrix variable. As one can see in the data structure, apart
+from the datasets of the same patients correlating with themselves, we can also see that there are datasets of different
+patients that have exactly the same data. These patients are patients 6 and 9. This redundancy is problematic and
+to improve our data overall we can choose to eliminate either patients data.
 
-We found that the top two features for all nine patients are:
+TASK 2.1
 
-Patient 1: 1 	 3
-Patient 2: 1 	 3
-Patient 3: 2 	 4
-Patient 4: 3 	 1
-Patient 5: 1 	 2
-Patient 6: 1 	 3
-Patient 7: 5 	 3
-Patient 8: 1 	 3
-Patient 9: 1 	 3
+Patients 6 and 9 have the same data.
 
-TASK 2.2
+Patients 9 and 6 have the same data.
 
-For this task, we implemented two ways to select the top two features. The first way was to find
-the top two features that had the lowest min(ML error, MAP error) value. The second way was to
-find the top two features that had the closest correlation to the golden alarms.
-
-We found that the top two features for all nine patients are:
-
-Patient 1: 1 	 3
-Patient 2: 1 	 3
-Patient 3: 2 	 4
-Patient 4: 3 	 1
-Patient 5: 1 	 2
-Patient 6: 1 	 3
-Patient 7: 5 	 3
-Patient 8: 1 	 3
-Patient 9: 1 	 3
-
-TASK 2.2
-
-For this task, we implemented two ways to select the top two features. The first way was to find
-the top two features that had the lowest min(ML error, MAP error) value. The second way was to
-find the top two features that had the closest correlation to the golden alarms.
-
-We found that the top two features for all nine patients are:
-
-Patient 1: 1 	 3
-Patient 2: 1 	 3
-Patient 3: 2 	 4
-Patient 4: 3 	 1
-Patient 5: 1 	 2
-Patient 6: 1 	 3
-Patient 7: 5 	 3
-Patient 8: 1 	 3
-Patient 9: 1 	 3
-
-TASK 2.2
-
-For this task, we implemented two ways to select the top two features. The first way was to find
-the top two features that had the lowest min(ML error, MAP error) value. The second way was to
-find the top two features that had the closest correlation to the golden alarms.
-
-We found that the top two features for all nine patients are:
-
-Patient 1: 1 	 3
-Patient 2: 1 	 3
-Patient 3: 2 	 4
-Patient 4: 3 	 1
-Patient 5: 1 	 2
-Patient 6: 1 	 3
-Patient 7: 5 	 3
-Patient 8: 1 	 3
-Patient 9: 1 	 3
-
-TASK 1.1C
-
-When the code runs, 9 figures will be presented. These figures summarize our results as required.
+The correlation matrix is stored in the correlation_matrix variable. As one can see in the data structure, apart
+from the datasets of the same patients correlating with themselves, we can also see that there are datasets of different
+patients that have exactly the same data. These patients are patients 6 and 9. This redundancy is problematic and
+to improve our data overall we can choose to eliminate either patients data.
 

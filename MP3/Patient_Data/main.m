@@ -77,9 +77,13 @@ for i = 1:9
         plot(patient(i).mats{1,j}(1,:), patient(i).mats{1,j}(3,:));  
         hold on;  
         plot(patient(i).mats{1,j}(1,:), patient(i).mats{1,j}(2,:)); 
+        xlabel(['Feature']);
+        ylabel('Probability');
+        title('Probabilities of H0 & H1 vs. Feature');
         legend('H0 pmf', 'H1 pmf');
     end
 end
+
 
 fprintf(fid, 'TASK 1.1C\n\n');
 fprintf(fid, 'When the code runs, 9 figures will be presented. These figures summarize our results as required.\n\n');
@@ -158,13 +162,18 @@ for i = 1:9
 
         correlation_matrix(i,k) = cor(1,2);
         
-        if(cor == 1)
+        if((cor==1) & (i ~= k))
             %patients i and k have share same data
-            fprintf(fid, 'Patients %d and %d have the same data.\n', i, k);
+            fprintf(fid, 'Patients %d and %d have the same data.\n\n', i, k);
         end
             
     end
 end
+
+fprintf(fid, 'The correlation matrix is stored in the correlation_matrix variable. As one can see in the data structure, apart\n');
+fprintf(fid, 'from the datasets of the same patients correlating with themselves, we can also see that there are datasets of different\n');
+fprintf(fid, 'patients that have exactly the same data. These patients are patients 6 and 9. This redundancy is problematic and\n');
+fprintf(fid, 'to improve our data overall we can choose to eliminate either patients data.\n\n');
 
 %% Task 2.2
 
@@ -172,12 +181,14 @@ end
 %[feat_idx1, feat_idx2] = select_two_feats_ML_MAP(patient(1), HT_table_array(1,:))
 %[feat_idx1, feat_idx2] = select_two_feats_cor_golden(patient(1));
 
+% metric 1 - lowest ML/MAP & metric 2 - golden correlation
+
 % for each patient, use a vote to select the best two features
 % break ties arbitrarily
 
-best_feat_indices = zeros(9,2);
+best_feat_indices = zeros(3,2);
 
-for i = 1:9
+for i = 1:3
     votes = zeros(1,7);
     [feat_idx1, feat_idx2] = select_two_feats_ML_MAP(patient(i), HT_table_array(i,:));
     votes(1,feat_idx1) = votes(1,feat_idx1)+1;
@@ -195,20 +206,36 @@ for i = 1:9
     best_feat_indices(i,2) = feat_idx2;
 end
 
-%disp(best_feat_indices);
+% metric 3 - correlation (not used)
 
-errors = zeros(1,9);
-for i = 1:9
-    errors(1,i) = p_error_map(patient(i), best_feat_indices(i,1), HT_table_array(i,:));
-end
-disp(errors)
+best_feat_corr = zeros(3,2);
 
-% sanity check that our feature selection actually works 
-errors2 = zeros(1,9);
-for i = 1:9
-    errors2(1,i) = p_error_map(patient(i), 2, HT_table_array(i,:));
+for i = 1:3
+    patient(i).feat_corr = feature_corrs(patient(i));
+    min_corr = min(min(patient(i).feat_corr));
+    [min_row, min_col] = find(patient(i).feat_corr==min_corr);
+    min_row = min_row(1);
+    min_col = min_col(1);
+    best_feat_corr(i,1) = min_row;
+    best_feat_corr(i,2) = min_col;
 end
-disp(errors2)
+
+% This section calculates errors
+
+% errors = zeros(1,9);
+% for i = 1:9
+%     errors(1,i) = p_error_map(patient(i), best_feat_indices(i,1), HT_table_array(i,:));
+% end
+% disp(errors)
+
+% % sanity check that our feature selection actually works 
+% errors2 = zeros(1,9);
+% for i = 1:9
+%     errors2(1,i) = p_error_map(patient(i), 2, HT_table_array(i,:));
+% end
+% disp(errors2)
+
+% Technique 4: weights (calculated but not used)
 
 weights_for_all_pat = zeros(9,7);
 for i = 1:9
@@ -216,70 +243,26 @@ for i = 1:9
     patient(i).weights = weights_for_all_pat(i,:);
 end
 
-errors_weighted = zeros(1,9);
-for i = 1:9
-   errors_weighted(i) = calc_weighted_error(patient(i), HT_table_array); 
-end
-disp(errors_weighted)
-
-errors3 = zeros(1,9);
-for i = 1:9
-   errors3(i) = calc_weighted_error_top_two(patient(i), HT_table_array, best_feat_indices(i,1), best_feat_indices(i,2)); 
-end
-disp(errors3)
-
-
-for i = 1:9
-    patient(i).weighted_data = zeros(7,patient(i).len);
-    for j = 1:7
-        patient(i).weighted_data(j,:) = patient(i).all_data(j,:) * patient(i).weights(1,j);
-        patient(i).train_weighted_data = patient(i).weighted_data_flr(:, 1:floor(((2/3)*patient(i).len)));
-        patient(i).test_weighted_data = patient(i).weighted_data_flr(:, (floor(((2/3)*patient(i).len))+1):patient(i).len);
-    end
-end
-
-errors4 = zeros(1,9);
-for i = 1:9
-    errors4(1,i) = p_error_map_whole(patient(i), 2, HT_table_array(i,:));
-end
-disp(errors4)
-
-sum(errors)
-sum(errors2)
-sum(errors_weighted)
-sum(errors3)
-
-
 
 fprintf(fid, 'TASK 2.2\n\n');
 fprintf(fid, 'For this task, we implemented two ways to select the top two features. The first way was to find\n');
-fprintf(fid, 'the top two features that had the lowest min(ML error, MAP error) value. The second way was to\n');
-fprintf(fid, 'find the top two features that had the closest correlation to the golden alarms.\n');
-fprintf(fid, '\nWe found that the top two features for all nine patients are:\n\n');
+fprintf(fid, 'the top two features that had the lowest min(ML error, MAP error) value. This method is expected to work because\n');
+fprintf(fid, 'intuitively, a feature is good if it has the lowest error using the MAP or ML decision rules. \n');
+fprintf(fid, 'The second way was to find the top two features that had the closest correlation to the golden alarms.\n');
+fprintf(fid, 'It is a good method because intuitively, a feature has a strong influence on the actual result if it is \n');
+fprintf(fid, 'strongly correlated with the golden labels.\n');
+fprintf(fid, '\nWe found that the top two features for the three patients we chose (1,2,3) are:\n\n');
 
 fprintf(fid, 'Patient 1: 1 \t 3\n');
 fprintf(fid, 'Patient 2: 1 \t 3\n');
-fprintf(fid, 'Patient 3: 2 \t 4\n');
-fprintf(fid, 'Patient 4: 3 \t 1\n');
-fprintf(fid, 'Patient 5: 1 \t 2\n');
-fprintf(fid, 'Patient 6: 1 \t 3\n');
-fprintf(fid, 'Patient 7: 5 \t 3\n');
-fprintf(fid, 'Patient 8: 1 \t 3\n');
-fprintf(fid, 'Patient 9: 1 \t 3\n\n');
+fprintf(fid, 'Patient 3: 2 \t 4\n\n');
 
-%%
-cor_mat_1 = zeros(7,7);
-for i = 1:7
-    for k = 1:7
-        data1 = patient(1).train_data(i,:);
-        data2 = patient(1).train_data(k,:);
-        cor = corrcoef(data1, data2);
-        cor_mat_1(i,k) = cor(1,2);
-    end
-end
-
-for i = 1:7
-    cor_mat_1(i,i) = 0
-end
-
-disp(abs(cor_mat_1))
+fprintf(fid, 'We attempted to conclude a better pair of features by experimenting with metrics 3 and 4. After doing a majority vote\n');
+fprintf(fid, 'using metrics 1 and 2, we wanted to verify the pair of features we obtained using metric 3s feature correlation.\n');
+fprintf(fid, 'When taking the minimum correlation between pairs of features, we noticed that the pairs we got differed from the pairs obtained\n');
+fprintf(fid, 'we obtained earlier. From this point, we concluded that there was no evidence that justified which pair to choose from the pool.\n');
+fprintf(fid, '\nWe also attempted to use metric 4 to create a new feature consisting of a weighted sum of the original features.\n');
+fprintf(fid, 'We calculated the weights of each feature based on its accuracy in MAP decision rule. The weights are stored in patient(i).weights\n');
+fprintf(fid, 'variable. However, we did not make use of the weights to find our top two choices of features, because we decided that there is no\n');
+fprintf(fid, 'convenient way to test on the new feature created.\n\n');
+fprintf(fid, ' \n');
