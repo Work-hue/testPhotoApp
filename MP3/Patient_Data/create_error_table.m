@@ -1,4 +1,4 @@
-function [mat] = create_error_table(pat, feat_idx, ht_table)
+ function [mat] = create_error_table(pat, feat_idx, ht_table)
 
     pat_mat = pat.mats{1,feat_idx};
 

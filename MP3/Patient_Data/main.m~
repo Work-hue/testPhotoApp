@@ -160,6 +160,12 @@ for i = 1:9
                 train2 = patient(k).train_data(j,:);
                 tmp = corrcoef(train1(1:len1), train2(1:len1));
                 
+                subplot(7, 1, j);
+                plot(patient(i).mats{1,j}(1,:), patient(i).mats{1,j}(3,:));  
+                hold on;  
+                plot(patient(i).mats{1,j}(1,:), patient(i).mats{1,j}(2,:)); 
+                legend('feature', 'H1 pmf');
+                
                 if(tmp == 1)
                     %patients i and k have share same data
                     correlation_matrix(i,1) = i;
