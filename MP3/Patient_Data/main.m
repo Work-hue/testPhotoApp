@@ -29,6 +29,7 @@ for i = 1:9
     patient(i).train_labels = patient(i).all_labels(:, 1:floor(((2/3)*patient(i).len)));
     patient(i).test_data = patient(i).all_data_flr(:, (floor(((2/3)*patient(i).len))+1):patient(i).len);
     patient(i).test_labels = patient(i).all_labels(:, (floor(((2/3)*patient(i).len))+1):patient(i).len);
+    patient(i).pat_idx = i;
 end
 
 fprintf(fid, 'TASK 0\n\n');
@@ -142,32 +143,26 @@ fprintf(fid, 'and P(Error). These values are presented in reference to both ML a
 
 %% Task 2.1A
 
-% Not solved yet!!!
+fprintf(fid, 'TASK 2.1\n\n');
 
-% Questions on corrcoef function for array of different dimension
-
-correlation_matrix = zeros(9,2);
+correlation_matrix = zeros(9,9);
 
 for i = 1:9
-    for k = i+1:9
-        for j = 1:7
-            fprintf('pat %d & pat %d, feat %d\n', i, k, j);
-            len1 = size(patient(i).train_data(j,:),2);
-            len2 = size(patient(k).train_data(j,:),2);
+    for k = 1:9
+        len1 = size(patient(i).train_data,2);
+        len2 = size(patient(k).train_data,2);
+        minlen = min(len1,len2);
+        data1 = patient(i).train_data(1,1:minlen);
+        data2 = patient(k).train_data(1,1:minlen);
+        cor = corrcoef(data1, data2);
 
-            if(len1 == len2)
-                train1 = patient(i).train_data(j,:);
-                train2 = patient(k).train_data(j,:);
-                tmp = corrcoef(train1(1:len1), train2(1:len1));
-                
-                if(tmp == 1)
-                    %patients i and k have share same data
-                    correlation_matrix(i,1) = i;
-                    correlation_matrix(i,2) = k;
-                end
-            end
-            
+        correlation_matrix(i,k) = cor(1,2);
+        
+        if(cor == 1)
+            %patients i and k have share same data
+            fprintf(fid, 'Patients %d and %d have the same data.\n', i, k);
         end
+            
     end
 end
 
@@ -200,7 +195,61 @@ for i = 1:9
     best_feat_indices(i,2) = feat_idx2;
 end
 
-disp(best_feat_indices);
+%disp(best_feat_indices);
+
+errors = zeros(1,9);
+for i = 1:9
+    errors(1,i) = p_error_map(patient(i), best_feat_indices(i,1), HT_table_array(i,:));
+end
+disp(errors)
+
+% sanity check that our feature selection actually works 
+errors2 = zeros(1,9);
+for i = 1:9
+    errors2(1,i) = p_error_map(patient(i), 2, HT_table_array(i,:));
+end
+disp(errors2)
+
+weights_for_all_pat = zeros(9,7);
+for i = 1:9
+    weights_for_all_pat(i,:) = assign_weights(patient(i), HT_table_array(i,:));
+    patient(i).weights = weights_for_all_pat(i,:);
+end
+
+errors_weighted = zeros(1,9);
+for i = 1:9
+   errors_weighted(i) = calc_weighted_error(patient(i), HT_table_array); 
+end
+disp(errors_weighted)
+
+errors3 = zeros(1,9);
+for i = 1:9
+   errors3(i) = calc_weighted_error_top_two(patient(i), HT_table_array, best_feat_indices(i,1), best_feat_indices(i,2)); 
+end
+disp(errors3)
+
+
+for i = 1:9
+    patient(i).weighted_data = zeros(7,patient(i).len);
+    for j = 1:7
+        patient(i).weighted_data(j,:) = patient(i).all_data(j,:) * patient(i).weights(1,j);
+        patient(i).train_weighted_data = patient(i).weighted_data_flr(:, 1:floor(((2/3)*patient(i).len)));
+        patient(i).test_weighted_data = patient(i).weighted_data_flr(:, (floor(((2/3)*patient(i).len))+1):patient(i).len);
+    end
+end
+
+errors4 = zeros(1,9);
+for i = 1:9
+    errors4(1,i) = p_error_map_whole(patient(i), 2, HT_table_array(i,:));
+end
+disp(errors4)
+
+sum(errors)
+sum(errors2)
+sum(errors_weighted)
+sum(errors3)
+
+
 
 fprintf(fid, 'TASK 2.2\n\n');
 fprintf(fid, 'For this task, we implemented two ways to select the top two features. The first way was to find\n');
@@ -217,3 +266,20 @@ fprintf(fid, 'Patient 6: 1 \t 3\n');
 fprintf(fid, 'Patient 7: 5 \t 3\n');
 fprintf(fid, 'Patient 8: 1 \t 3\n');
 fprintf(fid, 'Patient 9: 1 \t 3\n\n');
+
+%%
+cor_mat_1 = zeros(7,7);
+for i = 1:7
+    for k = 1:7
+        data1 = patient(1).train_data(i,:);
+        data2 = patient(1).train_data(k,:);
+        cor = corrcoef(data1, data2);
+        cor_mat_1(i,k) = cor(1,2);
+    end
+end
+
+for i = 1:7
+    cor_mat_1(i,i) = 0
+end
+
+disp(abs(cor_mat_1))
