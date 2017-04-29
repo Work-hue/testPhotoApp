@@ -47,10 +47,6 @@ and P(Error). These values are presented in reference to both ML and MAP rules.
 
 TASK 2.1
 
-TASK 2.1
-
-TASK 2.1
-
 Patients 6 and 9 have the same data.
 
 Patients 9 and 6 have the same data.
@@ -60,25 +56,81 @@ from the datasets of the same patients correlating with themselves, we can also 
 patients that have exactly the same data. These patients are patients 6 and 9. This redundancy is problematic and
 to improve our data overall we can choose to eliminate either patients data.
 
-TASK 2.1
+TASK 2.2
 
-Patients 6 and 9 have the same data.
+For this task, we implemented two ways to select the top two features. The first way was to find
+the top two features that had the lowest min(ML error, MAP error) value. This method is expected to work because
+intuitively, a feature is good if it has the lowest error using the MAP or ML decision rules. 
+The second way was to find the top two features that had the closest correlation to the golden alarms.
+It is a good method because intuitively, a feature has a strong influence on the actual result if it is 
+strongly correlated with the golden labels.
 
-Patients 9 and 6 have the same data.
+We found that the top two features for the three patients we chose (1,2,3) are:
 
-The correlation matrix is stored in the correlation_matrix variable. As one can see in the data structure, apart
-from the datasets of the same patients correlating with themselves, we can also see that there are datasets of different
-patients that have exactly the same data. These patients are patients 6 and 9. This redundancy is problematic and
-to improve our data overall we can choose to eliminate either patients data.
+Patient 1: 1 	 3
+Patient 2: 1 	 3
+Patient 3: 2 	 4
 
-TASK 2.1
+We attempted to conclude a better pair of features by experimenting with metrics 3 and 4. After doing a majority vote
+using metrics 1 and 2, we wanted to verify the pair of features we obtained using metric 3s feature correlation.
+When taking the minimum correlation between pairs of features, we noticed that the pairs we got differed from the pairs obtained
+we obtained earlier. From this point, we concluded that there was no evidence that justified which pair to choose from the pool.
 
-Patients 6 and 9 have the same data.
+We also attempted to use metric 4 to create a new feature consisting of a weighted sum of the original features.
+We calculated the weights of each feature based on its accuracy in MAP decision rule. The weights are stored in patient(i).weights
+variable. However, we did not make use of the weights to find our top two choices of features, because we decided that there is no
+convenient way to test on the new feature created.
 
-Patients 9 and 6 have the same data.
+ 
+TASK 2.2
 
-The correlation matrix is stored in the correlation_matrix variable. As one can see in the data structure, apart
-from the datasets of the same patients correlating with themselves, we can also see that there are datasets of different
-patients that have exactly the same data. These patients are patients 6 and 9. This redundancy is problematic and
-to improve our data overall we can choose to eliminate either patients data.
+For this task, we implemented two ways to select the top two features. The first way was to find
+the top two features that had the lowest min(ML error, MAP error) value. This method is expected to work because
+intuitively, a feature is good if it has the lowest error using the MAP or ML decision rules. 
+The second way was to find the top two features that had the closest correlation to the golden alarms.
+It is a good method because intuitively, a feature has a strong influence on the actual result if it is 
+strongly correlated with the golden labels.
 
+We found that the top two features for the three patients we chose (1,2,3) are:
+
+Patient 1: 1 	 3
+Patient 2: 1 	 3
+Patient 3: 2 	 4
+
+We attempted to conclude a better pair of features by experimenting with metrics 3 and 4. After doing a majority vote
+using metrics 1 and 2, we wanted to verify the pair of features we obtained using metric 3s feature correlation.
+When taking the minimum correlation between pairs of features, we noticed that the pairs we got differed from the pairs obtained
+we obtained earlier. From this point, we concluded that there was no evidence that justified which pair to choose from the pool.
+
+We also attempted to use metric 4 to create a new feature consisting of a weighted sum of the original features.
+We calculated the weights of each feature based on its accuracy in MAP decision rule. The weights are stored in patient(i).weights
+variable. However, we did not make use of the weights to find our top two choices of features, because we decided that there is no
+convenient way to test on the new feature created.
+
+ 
+TASK 2.2
+
+For this task, we implemented two ways to select the top two features. The first way was to find
+the top two features that had the lowest min(ML error, MAP error) value. This method is expected to work because
+intuitively, a feature is good if it has the lowest error using the MAP or ML decision rules. 
+The second way was to find the top two features that had the closest correlation to the golden alarms.
+It is a good method because intuitively, a feature has a strong influence on the actual result if it is 
+strongly correlated with the golden labels.
+
+We found that the top two features for the three patients we chose (1,2,3) are:
+
+Patient 1: 1 	 3
+Patient 2: 1 	 3
+Patient 3: 2 	 4
+
+We attempted to conclude a better pair of features by experimenting with metrics 3 and 4. After doing a majority vote
+using metrics 1 and 2, we wanted to verify the pair of features we obtained using metric 3s feature correlation.
+When taking the minimum correlation between pairs of features, we noticed that the pairs we got differed from the pairs obtained
+we obtained earlier. From this point, we concluded that there was no evidence that justified which pair to choose from the pool.
+
+We also attempted to use metric 4 to create a new feature consisting of a weighted sum of the original features.
+We calculated the weights of each feature based on its accuracy in MAP decision rule. The weights are stored in patient(i).weights
+variable. However, we did not make use of the weights to find our top two choices of features, because we decided that there is no
+convenient way to test on the new feature created.
+
+ 

@@ -127,7 +127,7 @@ fprintf(fid, 'TASK 1.1E\n\n');
 fprintf(fid, 'For this task, we constructed the 9x7 HT_table_array. Each index into the array is an Fx5 array,\n');
 fprintf(fid, 'where F is total number of distinct values a particular feature can take.\n\n');
 
-%% Task 1.2
+%% TASK 1.2
 
 Error_table_array = cell(9,7);
 
@@ -145,7 +145,7 @@ fprintf(fid, 'For this task, we constructed the 9x7 Error_table_array. Each inde
 fprintf(fid, 'This smaller array contains the following information: P(False Alarm), P(Missed Detection),\n');
 fprintf(fid, 'and P(Error). These values are presented in reference to both ML and MAP rules.\n\n');
 
-%% Task 2.1A
+%% TASK 2.1
 
 fprintf(fid, 'TASK 2.1\n\n');
 
@@ -175,7 +175,7 @@ fprintf(fid, 'from the datasets of the same patients correlating with themselves
 fprintf(fid, 'patients that have exactly the same data. These patients are patients 6 and 9. This redundancy is problematic and\n');
 fprintf(fid, 'to improve our data overall we can choose to eliminate either patients data.\n\n');
 
-%% Task 2.2
+%% TASK 2.2
 
 % debug
 %[feat_idx1, feat_idx2] = select_two_feats_ML_MAP(patient(1), HT_table_array(1,:))
@@ -186,9 +186,9 @@ fprintf(fid, 'to improve our data overall we can choose to eliminate either pati
 % for each patient, use a vote to select the best two features
 % break ties arbitrarily
 
-best_feat_indices = zeros(3,2);
+best_feat_indices = zeros(9,2);
 
-for i = 1:3
+for i = 1:9
     votes = zeros(1,7);
     [feat_idx1, feat_idx2] = select_two_feats_ML_MAP(patient(i), HT_table_array(i,:));
     votes(1,feat_idx1) = votes(1,feat_idx1)+1;
@@ -208,9 +208,9 @@ end
 
 % metric 3 - correlation (not used)
 
-best_feat_corr = zeros(3,2);
+best_feat_corr = zeros(9,2);
 
-for i = 1:3
+for i = 1:9
     patient(i).feat_corr = feature_corrs(patient(i));
     min_corr = min(min(patient(i).feat_corr));
     [min_row, min_col] = find(patient(i).feat_corr==min_corr);
@@ -266,3 +266,28 @@ fprintf(fid, 'We calculated the weights of each feature based on its accuracy in
 fprintf(fid, 'variable. However, we did not make use of the weights to find our top two choices of features, because we decided that there is no\n');
 fprintf(fid, 'convenient way to test on the new feature created.\n\n');
 fprintf(fid, ' \n');
+
+%% TASK 3.1ABC
+
+for i = 1:9
+    f1 = best_feat_indices(i,1);
+    f2 = best_feat_indices(i,2);
+    patient(i).Joint_HT_table = joint_ht(patient(i),f1,f2);
+end
+
+%% TASK 3.1D
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
