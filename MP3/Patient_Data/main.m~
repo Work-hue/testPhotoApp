@@ -649,5 +649,5 @@ end
 %% Slides
 for i = 1:9
     [joint_error_table_array, ml_error, map_error, avg_error] = calc_error_two_features_one_patient(patient(i), best_feat_err_corr_four(i,1),best_feat_err_corr_four(i,2));
-    disp(strcat(num2str(ml_error),'--',num2str(map_error)));
+    disp('%'ml_error map_error);
 end
