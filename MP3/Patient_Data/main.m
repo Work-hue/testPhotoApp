@@ -400,9 +400,13 @@ for i = 1:9
     patient(i).Joint_HT_table = joint_ht(patient(i),f1,f2);
 end
 
+fprintf(fid, 'TASK 3.1ABC\n\n');
+fprintf(fid, 'We calculated the joint ht table for all of the nine patients.\n');
+fprintf(fid, 'For patient i, we stored the table in patient(i).Joint_HT_table\n\n');
+
 %% TASK 3.1D
 
-for i = 1:3
+for i = [4,5,7]
     f1 = best_feat_indices(i,1);
     f2 = best_feat_indices(i,2);
     feat1 = patient(i).mats{1,f1};
@@ -421,11 +425,31 @@ for i = 1:3
         end
     end
     
+    title_str = strcat('Patient ',int2str(i));
+    x_str = 'Feature 2 Value';
+    y_str = 'Feature 1 Value';
+    
     figure
     mesh(feat2(1,:),feat1(1,:),pmf_h1);
+    z_str = 'Conditional Probability Given H1';
+    xlabel(x_str);
+    ylabel(y_str);
+    zlabel(z_str);
+    title(title_str);
     figure
     mesh(feat2(1,:)',feat1(1,:)',pmf_h0);
+    z_str = 'Conditional Probability Given H0';
+    xlabel(x_str);
+    ylabel(y_str);
+    zlabel(z_str);
+    title(title_str);
 end
+
+fprintf(fid, 'TASK 3.1D\n\n');
+fprintf(fid, 'We plotted the conditional PMFs for patients 4, 5, and 7.\n');
+fprintf(fid, 'For each patient, there are two plots, one for H1, the other for H0.\n');
+fprintf(fid, 'In each plot, a point represents how likely an alarm exists given the two feature values\n'); 
+fprintf(fid, 'and given either H1 or H0.\n\n');
 
 %% TASK 3.2A
 
@@ -458,12 +482,6 @@ for i = 1:9
                 patient(i).joint_ml_vec(1,j) = 1;
                 patient(i).joint_map_vec(1,j) = 1;
             else
-                
-                % idx2_arr should be one number
-                %if size(idx2_arr) ~= 1
-                %    'error: size(idx2_arr) ~= 1'
-                %end
-                
                 % fill in the ml and map decision vectors
                 patient(i).joint_ml_vec(1,j) = jht_f1(idx2_arr(1,1),5);
                 patient(i).joint_map_vec(1,j) = jht_f1(idx2_arr(1,1),6);
@@ -494,6 +512,10 @@ for i = 1:9
     joint_error_table_array{1,i} = mat;
 end
 
+fprintf(fid, 'TASK 3.2AB\n\n');
+fprintf(fid, 'We calculated one error table for each of the nine patients.\n');
+fprintf(fid, 'The table for patient i is stored in joint_error_table_array{1,i}. \n\n');
+
 %% TASK 3.2C
 for i = 1:9
     figure(i);
@@ -512,6 +534,10 @@ for i = 1:9
     xlabel(['Golden']);
     ylabel('Alarm');
 end
+
+fprintf(fid, 'TASK 3.2C\n\n');
+fprintf(fid, 'For each patient, we plotted one graph, containing three subgraphs.\n');
+fprintf(fid, 'Those three subgraphs correspond to the alarms of ML prediction, MAP prediction, and golden label.\n\n');
 
 %% TASK 3.3B
 joint_error_table_array_try_array = cell(1,15);
@@ -560,53 +586,43 @@ end
 
 % 7th: for each patient, try all pairs of features, select the pair that
 % gives the lowest average error
-% commented out since it's not a good approach
-% best_feat_indices_avg_error = zeros(9,2);
-% for i = 1:9
-%     min_f1 = 0;
-%     min_f2 = 0;
-%     min_avg_err = 1;
-%     for j = 1:7
-%         for k = j+1:7
-%             [joint_error_table_array, ml_error, map_error, avg_error] = calc_error_two_features_one_patient(patient(i), j,k);
-%             if (avg_error<min_avg_err)
-%                 min_avg_err = avg_error;
-%                 min_f1 = j;
-%                 min_f2 = k;
-%             end
-%         end
-%     end
-%     best_feat_indices_avg_error(i,1) = min_f1;
-%     best_feat_indices_avg_error(i,2) = min_f2;
-% end
-% [joint_error_table_array_try_array{1,7}, ml_error_array{1,7}, map_error_array{1,7}, avg_error_array{1,7}] = calc_error_two_features(patient, best_feat_indices_avg_error);
+% deleted since it's not a good approach because it uses test data
 
 % 8th: for each patient, select the pair that gives the best ROC curve
 best_feat_roc = [1,3; 1,3; 4,2; 3,1; 1,2; 1,3; 5,3; 1,3; 1,3];
 [joint_error_table_array_try_array{1,8}, ml_error_array{1,8}, map_error_array{1,8}, avg_error_array{1,8}] = calc_error_two_features_train(patient, best_feat_roc);
 
 % 9th: for each patient, select the least correlated pair out of three
+% features that give the lowest error
 [joint_error_table_array_try_array{1,9}, ml_error_array{1,9}, map_error_array{1,9}, avg_error_array{1,9}] = calc_error_two_features_train(patient, best_feat_err_corr_three);
 
 % 10th: for each patient, select the least correlated pair out of four
+% features that give the lowest error
 [joint_error_table_array_try_array{1,10}, ml_error_array{1,10}, map_error_array{1,10}, avg_error_array{1,10}] = calc_error_two_features_train(patient, best_feat_err_corr_four);
 
 % 11th: for each patient, select the least correlated pair out of five
+% features that give the lowest error
 [joint_error_table_array_try_array{1,11}, ml_error_array{1,11}, map_error_array{1,11}, avg_error_array{1,11}] = calc_error_two_features_train(patient, best_feat_err_corr_five);
 
 % 12th: for each patient, select the least correlated pair out of six
+% features that give the lowest error
 [joint_error_table_array_try_array{1,12}, ml_error_array{1,12}, map_error_array{1,12}, avg_error_array{1,12}] = calc_error_two_features_train(patient, best_feat_err_corr_six);
 
+% selected: best_feat_err_corr_four
+fprintf(fid, 'TASK 3.2C\n\n');
+fprintf(fid, 'For each of patients 4, 5, and 7, we tried different pairs of features and compared their performances.\n');
+fprintf(fid, 'Based on their performances, we decided to use the following rule to select the pair of features for each patient:\n');
+fprintf(fid, 'For each patient, we first select four features that lead to the lowest errors.');
 
-% goal: best_feat_indices_final;
+
 
 %% TASK 3.4
 
 for i = 1:9
     test_data_size = size(patient(i).test_data,2);
     scores_test = zeros(1,test_data_size);
-    f1 = best_feat_err_corr_four(i,1); % to be revised
-    f2 = best_feat_err_corr_four(i,2); % to be revised 
+    f1 = best_feat_err_corr_four(i,1); % selected pair of features
+    f2 = best_feat_err_corr_four(i,2); % selected pair of features
     jht = patient(i).Joint_HT_table;
     
     for j = 1:test_data_size
@@ -625,12 +641,6 @@ for i = 1:9
             if size(idx2_arr,1) == 0
                 scores_test(1,j) = 1;
             else
-                
-                % idx2_arr should be one number
-                %if size(idx2_arr) ~= 1
-                %    'error: size(idx2_arr) ~= 1'
-                %end
-                
                 % fill in the ml and map decision vectors
                 scores_test(1,j) = jht_f1(idx2_arr(1,1),3);
             end

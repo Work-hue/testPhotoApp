@@ -82,3 +82,27 @@ variable. However, we did not make use of the weights to find our top two choice
 convenient way to test on the new feature created.
 
  
+TASK 3.1ABC
+
+We calculated the joint ht table for all of the nine patients.
+For patient i, we stored the table in patient(i).Joint_HT_table
+
+TASK 3.1D
+
+We plotted the conditional PMFs for patients 1, 2, and 3.
+For each patient, there are two plots, one for H1, the other for H0.
+In each plot, a point represents how likely an alarm exists given the two feature values
+and given either H1 or H0.
+
+TASK 3.2AB
+
+We calculated one error table for each of the nine patients.
+The table for patient i is stored in joint_error_table_array{1,i}. 
+
+TASK 3.1D
+
+We plotted the conditional PMFs for patients 4, 5, and 7.
+For each patient, there are two plots, one for H1, the other for H0.
+In each plot, a point represents how likely an alarm exists given the two feature values
+and given either H1 or H0.
+
