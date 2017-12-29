@@ -1,0 +1,192 @@
+TASK 0
+
+In this task, we created an array of patient structures to keep track of all patient data.
+Each module loaded consisted of "all_data" and "all_labels" vectors. These vectors were
+stored in the patient structure. Next, the test and training data/label sets were created for
+each patient and appended.
+
+TASK 1.1A
+
+The following are the prior probabilities of H1 and H0 respectively for each patient.
+
+P(H1)=2.651779e-02 			 P(H0)=9.734822e-01
+P(H1)=1.634684e-02 			 P(H0)=9.836532e-01
+P(H1)=2.094972e-03 			 P(H0)=9.979050e-01
+P(H1)=2.492522e-03 			 P(H0)=9.975075e-01
+P(H1)=1.046025e-03 			 P(H0)=9.989540e-01
+P(H1)=2.176966e-02 			 P(H0)=9.782303e-01
+P(H1)=1.710297e-02 			 P(H0)=9.828970e-01
+P(H1)=7.790368e-03 			 P(H0)=9.922096e-01
+P(H1)=2.176966e-02 			 P(H0)=9.782303e-01
+
+TASK 1.1B
+
+For this task, we constructed the likelihood matrices for each of the seven features
+for each patient. This information can be seen in the patients structure. For each patient,
+there exists a 1x7 cell called "mats".
+
+TASK 1.1C
+
+When the code runs, 9 figures will be presented. These figures summarize our results as required.
+
+TASK 1.1D
+
+For this task, we constructed the ML and MAP vectors for each patient. These vectors
+were appended to each patient structure in the patient array.
+
+TASK 1.1E
+
+For this task, we constructed the 9x7 HT_table_array. Each index into the array is an Fx5 array,
+where F is total number of distinct values a particular feature can take.
+
+TASK 1.2
+
+For this task, we constructed the 9x7 Error_table_array. Each index into the array is a 2x3 array.
+This smaller array contains the following information: P(False Alarm), P(Missed Detection),
+and P(Error). These values are presented in reference to both ML and MAP rules.
+
+TASK 2.1
+
+Patients 6 and 9 have the same data.
+
+Patients 9 and 6 have the same data.
+
+The correlation matrix is stored in the correlation_matrix variable. As one can see in the data structure, apart
+from the datasets of the same patients correlating with themselves, we can also see that there are datasets of different
+patients that have exactly the same data. These patients are patients 6 and 9. This redundancy is problematic and
+to improve our data overall we can choose to eliminate either patients data.
+
+TASK 2.2
+
+For this task, we implemented two ways to select the top two features. The first way was to find
+the top two features that had the lowest min(ML error, MAP error) value. This method is expected to work because
+intuitively, a feature is good if it has the lowest error using the MAP or ML decision rules. 
+The second way was to find the top two features that had the closest correlation to the golden alarms.
+It is a good method because intuitively, a feature has a strong influence on the actual result if it is 
+strongly correlated with the golden labels.
+
+We found that the top two features for the three patients we chose (4,5,7) are:
+
+Patient 4: 3 	 1
+Patient 5: 1 	 2
+Patient 7: 5 	 3
+
+Although in this task, we used only metric 1 and 2 to select our pair of features, we will use a variety of tests
+and metrics later in task 3. This will hopefully help us better select the best pair of features for each patient.
+
+TASK 3.1ABC
+
+We calculated the joint ht table for all of the nine patients.
+For patient i, we stored the table in patient(i).Joint_HT_table
+
+TASK 3.1D
+
+We plotted the conditional PMFs for patients 4, 5, and 7.
+For each patient, there are two plots, one for the condition on H1, the other on H0.
+In each plot, a point represents how likely an alarm exists given the two feature values Xi and Yj,
+and given either H1 or H0.
+
+TASK 3.2AB
+
+We calculated an error table for each of the nine patients.
+The table for patient i is stored in joint_error_table_array{1,i} which is a 9*2 array.
+
+TASK 3.2C
+
+For each patient, we graphed one plot, containing three subplots.
+Those three subplots correspond to the alarms denoted by ML prediction, MAP prediction, and the golden labels.
+
+TASK 3.3B
+
+For each of patients 4, 5, and 7, we tried different pairs of features and compared their performances.
+Based on their performances, we decided to use the following rule to select the pair of features for each patient:
+
+For each patient, we first select four features with the lowest errors and the highest correlation between 
+their predictions and the golden labels. This is simply running metric 1 and 2, with a voter system.
+Then, out of the four features, we select two of them, which have the lowest correlation.
+
+Hence, we have selected the best pair of features for each patient, and our results are stored in 
+best_feat_err_corr_four, which is a 9*2 array. The best pair of features for patient i is stored in the i-th row of the array.
+
+The selection is copied below: 
+
+Patient 1: 1 4
+Patient 2: 4 5
+Patient 3: 2 7
+Patient 4: 3 1
+Patient 5: 1 4
+Patient 6: 3 5
+Patient 7: 5 3
+Patient 8: 3 5
+Patient 9: 3 5
+
+TASK 3.4
+
+We plotted the ROC curves for patients 4, 5, and 7. Please see the generated graphs.
+The perfcurve function tries different thresholds and makes predictions for the alarms.
+Therefore, an ROC curve is good if it is close to the top, i.e. it goes up fast to the top edge,
+because it means high true positive rate and low false positive rate.
+
+Bonus Task:
+
+We present our performance here:
+
+In the following, row i contains the ML error and the MAP error for patient i,
+based on our selection of two features for patient i:
+
+Patient1: ML:0.039079 MAP:0.016748
+Patient2: ML:0.09517 MAP:0.056818
+Patient3: ML:0.023045 MAP:0.023045
+Patient4: ML:0.077689 MAP:0.017928
+Patient5: ML:0.020223 MAP:0.013947
+Patient6: ML:0.23368 MAP:0.022456
+Patient7: ML:0.096301 MAP:0.020237
+Patient8: ML:0.10623 MAP:0.031161
+Patient9: ML:0.23368 MAP:0.022456
+
+Answering Questions From PowerPoint Slides:
+
+Our 3 selected patients are patients 4, 5, and 7. The average probability of error for each are:
+
+Patient4: ML:0.077689 	 MAP:0.017928
+Patient5: ML:0.020223 	 MAP:0.013947
+Patient7: ML:0.096301 	 MAP:0.020237
+
+Compare the results generated by the ML and MAP decision rules based on:
+
+- Different features -
+
+See section 1.2B where we construct the Error_table_array. In this 9*7 cell array, you will notice that for each patient and each feature, the
+MAP decision rule will generate a lower probability of error than the probability of error generated by the ML decision rule.
+
+- Different selected pairs of features -
+
+See section 3.2B where we construct the joint_error_table_array. In this 1*9 array, you will notice that on average, the probabilty of error
+for the MAP decision rule here is less than the probability of error for MAP decision rule calculated in task 1.2B, which is on a
+per patient per feature basis. Furthermore, when speaking in terms of just the joint distribution, the probability of error for the MAP decision rule
+is lower than the probability of error for the ML decision rule, as was noted when doing this check for single features in task 1.2B.
+
+- Different criteria for choosing the pairs -
+
+We tried 11 methods for choosing the best pair of features in TASK 3.3B, and compared their performances.  
+Based on their performances, we decided to use the following rule to select the pair of features for each patient:
+
+For each patient, we first select four features with the lowest errors and the highest correlation between 
+their predictions and the golden labels. This is simply running metric 1 and 2, with a voter system.
+Then, out of the four features, we select two of them which have the lowest correlation.
+
+Hence, we have selected the best pair of features for each patient. 
+In general, we found that methods that consider all of metrics 1, 2, and 3 perform better than methods that only
+consider one or two metrics.
+
+- Different error metrics (false alarms, miss detection, and error) -
+
+We found that MAP always results in lower rates of false alarms and error than ML does.
+However, MAP sometimes gives higher rates of missed detection than ML does. We believe this is because
+most of the data have no alarms, which means almost always predicting zeros can result in quite low probability of error
+despite missing most of the alarms. Therefore, probability of error by itself is not a comprehensive measure of performance.
+Other measures of performance should be considered as well. For example, by looking at the ROC curves, we observed that
+always predicting zeros is close to a random guess, with similar true positive rates and false positive rates. Hence ROC curves
+can help us realize that always predicting zeros is a bad decision rule, whereas p(error) by itself cannot.
+Therefore, different error metrics can provide different information when comparing the decision rules.
+
