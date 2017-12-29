@@ -82,6 +82,8 @@ for i = 1:9
         title('Probabilities of H0 & H1 vs. Feature');
         legend('H0 pmf', 'H1 pmf');
     end
+    %imagename = strcat(num2str(i));
+    %saveas(gcf,imagename,'jpeg');
 end
 
 
@@ -142,7 +144,7 @@ for i = 1:9
 end
 
 fprintf(fid, 'TASK 1.2\n\n');
-fprintf(fid, 'For this task, we constructed the 9x7 Error_table_array. Each index into the array is an 2x3 array.\n');
+fprintf(fid, 'For this task, we constructed the 9x7 Error_table_array. Each index into the array is a 2x3 array.\n');
 fprintf(fid, 'This smaller array contains the following information: P(False Alarm), P(Missed Detection),\n');
 fprintf(fid, 'and P(Error). These values are presented in reference to both ML and MAP rules.\n\n');
 
@@ -255,7 +257,8 @@ for i = 1:9
     best_feat_indices_six(i,6) = feat_idx6;
 end
 
-% metric 3 - correlation (not used)
+% metric 3 - correlation (calculated now but used later in task 3)
+% this is done now because it is necessary for the code directly below
 
 best_feat_corr = zeros(9,2);
 
@@ -270,7 +273,9 @@ for i = 1:9
 end
 
 % the least correlated pair out of three
+
 best_feat_err_corr_three = zeros(9,2);
+
 for i = 1:9
     minval = 1;
     min1 = 1;
@@ -289,7 +294,9 @@ for i = 1:9
 end
 
 % the least correlated pair out of four
+
 best_feat_err_corr_four = zeros(9,2);
+
 for i = 1:9
     minval = 1;
     min1 = 1;
@@ -308,7 +315,9 @@ for i = 1:9
 end
 
 % the least correlated pair out of five
+
 best_feat_err_corr_five = zeros(9,2);
+
 for i = 1:9
     minval = 1;
     min1 = 1;
@@ -327,7 +336,9 @@ for i = 1:9
 end
 
 % the least correlated pair out of six
+
 best_feat_err_corr_six = zeros(9,2);
+
 for i = 1:9
     minval = 1;
     min1 = 1;
@@ -345,21 +356,6 @@ for i = 1:9
     best_feat_err_corr_six(i,2) = min2;
 end
 
-% This section calculates errors
-
-% errors = zeros(1,9);
-% for i = 1:9
-%     errors(1,i) = p_error_map(patient(i), best_feat_indices(i,1), HT_table_array(i,:));
-% end
-% disp(errors)
-
-% % sanity check that our feature selection actually works
-% errors2 = zeros(1,9);
-% for i = 1:9
-%     errors2(1,i) = p_error_map(patient(i), 2, HT_table_array(i,:));
-% end
-% disp(errors2)
-
 % Technique 4: weights (calculated but not used)
 
 weights_for_all_pat = zeros(9,7);
@@ -368,7 +364,6 @@ for i = 1:9
     patient(i).weights = weights_for_all_pat(i,:);
 end
 
-
 fprintf(fid, 'TASK 2.2\n\n');
 fprintf(fid, 'For this task, we implemented two ways to select the top two features. The first way was to find\n');
 fprintf(fid, 'the top two features that had the lowest min(ML error, MAP error) value. This method is expected to work because\n');
@@ -376,21 +371,14 @@ fprintf(fid, 'intuitively, a feature is good if it has the lowest error using th
 fprintf(fid, 'The second way was to find the top two features that had the closest correlation to the golden alarms.\n');
 fprintf(fid, 'It is a good method because intuitively, a feature has a strong influence on the actual result if it is \n');
 fprintf(fid, 'strongly correlated with the golden labels.\n');
-fprintf(fid, '\nWe found that the top two features for the three patients we chose (1,2,3) are:\n\n');
+fprintf(fid, '\nWe found that the top two features for the three patients we chose (4,5,7) are:\n\n');
 
-fprintf(fid, 'Patient 1: 1 \t 3\n');
-fprintf(fid, 'Patient 2: 1 \t 3\n');
-fprintf(fid, 'Patient 3: 2 \t 4\n\n');
+fprintf(fid, 'Patient 4: 3 \t 1\n');
+fprintf(fid, 'Patient 5: 1 \t 2\n');
+fprintf(fid, 'Patient 7: 5 \t 3\n\n');
 
-fprintf(fid, 'We attempted to conclude a better pair of features by experimenting with metrics 3 and 4. After doing a majority vote\n');
-fprintf(fid, 'using metrics 1 and 2, we wanted to verify the pair of features we obtained using metric 3s feature correlation.\n');
-fprintf(fid, 'When taking the minimum correlation between pairs of features, we noticed that the pairs we got differed from the pairs obtained\n');
-fprintf(fid, 'we obtained earlier. From this point, we concluded that there was no evidence that justified which pair to choose from the pool.\n');
-fprintf(fid, '\nWe also attempted to use metric 4 to create a new feature consisting of a weighted sum of the original features.\n');
-fprintf(fid, 'We calculated the weights of each feature based on its accuracy in MAP decision rule. The weights are stored in patient(i).weights\n');
-fprintf(fid, 'variable. However, we did not make use of the weights to find our top two choices of features, because we decided that there is no\n');
-fprintf(fid, 'convenient way to test on the new feature created.\n\n');
-fprintf(fid, ' \n');
+fprintf(fid, 'Although in this task, we used only metric 1 and 2 to select our pair of features, we will use a variety of tests\n');
+fprintf(fid, 'and metrics later in task 3. This will hopefully help us better select the best pair of features for each patient.\n\n');
 
 %% TASK 3.1ABC
 
@@ -406,6 +394,7 @@ fprintf(fid, 'For patient i, we stored the table in patient(i).Joint_HT_table\n\
 
 %% TASK 3.1D
 
+fig_num = 0;
 for i = [4,5,7]
     f1 = best_feat_indices(i,1);
     f2 = best_feat_indices(i,2);
@@ -425,18 +414,21 @@ for i = [4,5,7]
         end
     end
     
-    title_str = strcat('Patient ',int2str(i));
+    title_str = strcat('Patient-',int2str(i));
     x_str = 'Feature 2 Value';
     y_str = 'Feature 1 Value';
     
-    figure
+    fig_num = fig_num + 1;
+    figure(fig_num+9);
     mesh(feat2(1,:),feat1(1,:),pmf_h1);
     z_str = 'Conditional Probability Given H1';
     xlabel(x_str);
     ylabel(y_str);
     zlabel(z_str);
     title(title_str);
-    figure
+    
+    fig_num = fig_num + 1;
+    figure(fig_num+9);
     mesh(feat2(1,:)',feat1(1,:)',pmf_h0);
     z_str = 'Conditional Probability Given H0';
     xlabel(x_str);
@@ -447,8 +439,8 @@ end
 
 fprintf(fid, 'TASK 3.1D\n\n');
 fprintf(fid, 'We plotted the conditional PMFs for patients 4, 5, and 7.\n');
-fprintf(fid, 'For each patient, there are two plots, one for H1, the other for H0.\n');
-fprintf(fid, 'In each plot, a point represents how likely an alarm exists given the two feature values\n'); 
+fprintf(fid, 'For each patient, there are two plots, one for the condition on H1, the other on H0.\n');
+fprintf(fid, 'In each plot, a point represents how likely an alarm exists given the two feature values Xi and Yj,\n'); 
 fprintf(fid, 'and given either H1 or H0.\n\n');
 
 %% TASK 3.2A
@@ -464,7 +456,6 @@ for i = 1:9
     patient(i).joint_map_vec = zeros(1,test_data_size);
     
     for j = 1:test_data_size
-        
         % find rows in Joint_HT_table corresponding to feature idx f1
         idx1_arr = find(jht(:,1)==patient(i).test_data(f1,j));
         
@@ -513,12 +504,13 @@ for i = 1:9
 end
 
 fprintf(fid, 'TASK 3.2AB\n\n');
-fprintf(fid, 'We calculated one error table for each of the nine patients.\n');
-fprintf(fid, 'The table for patient i is stored in joint_error_table_array{1,i}. \n\n');
+fprintf(fid, 'We calculated an error table for each of the nine patients.\n');
+fprintf(fid, 'The table for patient i is stored in joint_error_table_array{1,i} which is a 9*2 array.\n\n');
 
 %% TASK 3.2C
+
 for i = 1:9
-    figure(i);
+    figure(i+18);
     subplot(3, 1, 1);
     bar(patient(i).joint_ml_vec);
     xlabel(['ML']);
@@ -536,10 +528,11 @@ for i = 1:9
 end
 
 fprintf(fid, 'TASK 3.2C\n\n');
-fprintf(fid, 'For each patient, we plotted one graph, containing three subgraphs.\n');
-fprintf(fid, 'Those three subgraphs correspond to the alarms of ML prediction, MAP prediction, and golden label.\n\n');
+fprintf(fid, 'For each patient, we graphed one plot, containing three subplots.\n');
+fprintf(fid, 'Those three subplots correspond to the alarms denoted by ML prediction, MAP prediction, and the golden labels.\n\n');
 
 %% TASK 3.3B
+
 joint_error_table_array_try_array = cell(1,15);
 ml_error_array = cell(1,15);
 map_error_array = cell(1,15);
@@ -564,6 +557,7 @@ default_feat = ones(9,2);
 % 6th: for each patient, the first feature gives the lowest ml error,
 % the second feature gives the lowest map error
 best_feat_indices_ml_map = zeros(9,2);
+
 for i = 1:9
     min_ml_idx = 0;
     min_ml_err = 1;
@@ -609,21 +603,30 @@ best_feat_roc = [1,3; 1,3; 4,2; 3,1; 1,2; 1,3; 5,3; 1,3; 1,3];
 [joint_error_table_array_try_array{1,12}, ml_error_array{1,12}, map_error_array{1,12}, avg_error_array{1,12}] = calc_error_two_features_train(patient, best_feat_err_corr_six);
 
 % selected: best_feat_err_corr_four
-fprintf(fid, 'TASK 3.2C\n\n');
+fprintf(fid, 'TASK 3.3B\n\n');
 fprintf(fid, 'For each of patients 4, 5, and 7, we tried different pairs of features and compared their performances.\n');
-fprintf(fid, 'Based on their performances, we decided to use the following rule to select the pair of features for each patient:\n');
-fprintf(fid, 'For each patient, we first select four features that lead to the lowest errors.');
+fprintf(fid, 'Based on their performances, we decided to use the following rule to select the pair of features for each patient:\n\n');
+fprintf(fid, 'For each patient, we first select four features with the lowest errors and the highest correlation between \n');
+fprintf(fid, 'their predictions and the golden labels. This is simply running metric 1 and 2, with a voter system.\n');
+fprintf(fid, 'Then, out of the four features, we select two of them, which have the lowest correlation.\n\n');
+fprintf(fid, 'Hence, we have selected the best pair of features for each patient, and our results are stored in \n');
+fprintf(fid, 'best_feat_err_corr_four, which is a 9*2 array. The best pair of features for patient i is stored in the i-th row of the array.\n\n');
+fprintf(fid, 'The selection is copied below: \n\n');
 
+for i = 1:9
+    fprintf(fid, 'Patient %d: %d %d\n', i, best_feat_err_corr_four(i,1), best_feat_err_corr_four(i,2));
+end
 
+fprintf(fid, '\n');
 
 %% TASK 3.4
 
-for i = 1:9
+for i = [4,5,7]
     test_data_size = size(patient(i).test_data,2);
     scores_test = zeros(1,test_data_size);
     f1 = best_feat_err_corr_four(i,1); % selected pair of features
     f2 = best_feat_err_corr_four(i,2); % selected pair of features
-    jht = patient(i).Joint_HT_table;
+    jht = patient(i).Joint_HT_table; % create a temporary copy of the patients joint distribution table
     
     for j = 1:test_data_size
         % find rows in Joint_HT_table corresponding to feature idx f1
@@ -649,15 +652,72 @@ for i = 1:9
     
     % plot performance curve
     [X,Y] = perfcurve(patient(i).test_labels,scores_test,1);
-    figure(i);
+    figure(i+27);
     plot(X,Y);
     xlabel('False positive rate')
     ylabel('True positive rate')
-    title('ROC Curve')
+    title_str = strcat('ROC Curve for Patient',num2str(i));
+    title(title_str);
 end
 
+fprintf(fid, 'TASK 3.4\n\n');
+fprintf(fid, 'We plotted the ROC curves for patients 4, 5, and 7. Please see the generated graphs.\n');
+fprintf(fid, 'The perfcurve function tries different thresholds and makes predictions for the alarms.\n');
+fprintf(fid, 'Therefore, an ROC curve is good if it is close to the top, i.e. it goes up fast to the top edge,\n');
+fprintf(fid, 'because it means high true positive rate and low false positive rate.\n\n');
+
 %% Slides
+
+fprintf(fid, 'Bonus Task:\n\n');
+fprintf(fid, 'We present our performance here:\n\n');
+fprintf(fid, 'In the following, row i contains the ML error and the MAP error for patient i,\n');
+fprintf(fid, 'based on our selection of two features for patient i:\n\n');
+
+
 for i = 1:9
-    [joint_error_table_array, ml_error, map_error, avg_error] = calc_error_two_features_one_patient(patient(i), best_feat_err_corr_four(i,1),best_feat_err_corr_four(i,2));
-    disp(strcat(num2str(ml_error),'--',num2str(map_error)));
+    [joint_error_table_array_final, ml_error, map_error, avg_error] = calc_error_two_features_one_patient(patient(i), best_feat_err_corr_four(i,1),best_feat_err_corr_four(i,2));
+    disp_str = strcat('Patient ', num2str(i), ': ML: ', num2str(ml_error), ' MAP: ', num2str(map_error));
+    disp(disp_str);
+    fprintf(fid, '%s\n', disp_str);
 end
+
+%% Powerpoint Questions 
+
+fprintf(fid, '\nAnswering Questions From PowerPoint Slides:\n\n');
+fprintf(fid, 'Our 3 selected patients are patients 4, 5, and 7. The average probability of error for each are:\n\n');
+fprintf(fid, 'Patient4: ML:0.077689 \t MAP:0.017928\n');
+fprintf(fid, 'Patient5: ML:0.020223 \t MAP:0.013947\n');
+fprintf(fid, 'Patient7: ML:0.096301 \t MAP:0.020237\n\n');
+
+fprintf(fid, 'Compare the results generated by the ML and MAP decision rules based on:\n\n');
+
+fprintf(fid, '- Different features -\n\n');
+fprintf(fid, 'See section 1.2B where we construct the Error_table_array. In this 9*7 cell array, you will notice that for each patient and each feature, the\n');
+fprintf(fid, 'MAP decision rule will generate a lower probability of error than the probability of error generated by the ML decision rule.\n\n');
+
+fprintf(fid, '- Different selected pairs of features -\n\n');
+fprintf(fid, 'See section 3.2B where we construct the joint_error_table_array. In this 1*9 array, you will notice that on average, the probabilty of error\n');
+fprintf(fid, 'for the MAP decision rule here is less than the probability of error for MAP decision rule calculated in task 1.2B, which is on a\n');
+fprintf(fid, 'per patient per feature basis. Furthermore, when speaking in terms of just the joint distribution, the probability of error for the MAP decision rule\n');
+fprintf(fid, 'is lower than the probability of error for the ML decision rule, as was noted when doing this check for single features in task 1.2B.\n\n');
+
+fprintf(fid, '- Different criteria for choosing the pairs -\n\n');
+fprintf(fid, 'We tried 11 methods for choosing the best pair of features in TASK 3.3B, and compared their performances.  \n');
+fprintf(fid, 'Based on their performances, we decided to use the following rule to select the pair of features for each patient:\n\n');
+fprintf(fid, 'For each patient, we first select four features with the lowest errors and the highest correlation between \n');
+fprintf(fid, 'their predictions and the golden labels. This is simply running metric 1 and 2, with a voter system.\n');
+fprintf(fid, 'Then, out of the four features, we select two of them which have the lowest correlation.\n\n');
+fprintf(fid, 'Hence, we have selected the best pair of features for each patient. \n');
+fprintf(fid, 'In general, we found that methods that consider all of metrics 1, 2, and 3 perform better than methods that only\n');
+fprintf(fid, 'consider one or two metrics.\n\n');
+
+fprintf(fid, '- Different error metrics (false alarms, miss detection, and error) -\n\n');
+fprintf(fid, 'We found that MAP always results in lower rates of false alarms and error than ML does.\n');
+fprintf(fid, 'However, MAP sometimes gives higher rates of missed detection than ML does. We believe this is because\n');
+fprintf(fid, 'most of the data have no alarms, which means almost always predicting zeros can result in quite low probability of error\n');
+fprintf(fid, 'despite missing most of the alarms. Therefore, probability of error by itself is not a comprehensive measure of performance.\n');
+fprintf(fid, 'Other measures of performance should be considered as well. For example, by looking at the ROC curves, we observed that\n');
+fprintf(fid, 'always predicting zeros is close to a random guess, with similar true positive rates and false positive rates. Hence ROC curves\n');
+fprintf(fid, 'can help us realize that always predicting zeros is a bad decision rule, whereas p(error) by itself cannot.\n');
+fprintf(fid, 'Therefore, different error metrics can provide different information when comparing the decision rules.\n\n');
+
